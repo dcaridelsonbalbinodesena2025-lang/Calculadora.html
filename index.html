@@ -43,19 +43,17 @@
         }
 
         #display-container {
-            flex: 1;
-            max-height: 100px; 
-            /* PADDING INTERNO AUMENTADO PARA O CONTEÚDO NÃO TOCAR NA BORDA DO CARD */
-            padding: 4px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            overflow-y: auto; 
-            border: 2px solid #333; 
-            border-radius: 15px;
-            background: #050505;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-        }
+    flex: 0 1 auto;      /* Mudar de 1 para 0 1 auto (não estica mais) */
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    overflow-y: auto; 
+    border: 2px solid #333; 
+    border-radius: 10px;
+    background: #050505;
+    margin-bottom: 5px;  /* Espaço pequeno antes dos campos de Time A/B */
+}
 
         .market-section { font-size: 13px; line-height: 1.3; font-family: 'Courier New', monospace; }
         .section-title { text-align: center; margin: 1px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
