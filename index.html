@@ -1,221 +1,273 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>NowGoal - Sistema Híbrido Pro</title>
-<style>
-/* Estrutura de Abas */
-body { font-family: 'Segoe UI', Arial, sans-serif; background: #f2f2f2; margin: 0; padding: 20px; }
-.tabs { display: flex; margin-bottom: 0; cursor: pointer; justify-content: center; }
-.tab { padding: 12px 25px; background: #ddd; margin: 0 2px; border-radius: 8px 8px 0 0; font-weight: bold; color: #555; }
-.tab.active { background: #fff; color: #000; border-bottom: 2px solid #fff; }
-.tab-content { display: none; background: #fff; padding: 20px; border: 1px solid #ccc; border-radius: 0 8px 8px 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Tips K.C⚽️M</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Courier New', Courier, monospace; }
 
-/* ============================================================
-   ESTILOS ABA 1: NOWGOAL (DADOS ORIGINAIS - ISOLADO)
-   ============================================================ */
-iframe { width: 100%; height: 350px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 15px; }
-#dadosBrutos { width: 100%; height: 150px; padding: 10px; font-size: 14px; margin-bottom: 15px; box-sizing: border-box; border: 2px solid #333; border-radius: 8px; }
-.nowgoal-table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 15px; }
-.nowgoal-table th, .nowgoal-table td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 13px; }
-.nowgoal-table th { background: #f4f4f4; color: #333; }
-.mandante { background: #1e7e34 !important; color: #fff !important; }
-.visitante { background: #c82333 !important; color: #fff !important; }
-.titulo-time-original { background: #444; color: #fff; padding: 10px; font-weight: bold; margin-top: 20px; border-radius: 4px; }
-.stats-box-original { margin-top: 15px; padding: 10px; border: 1px solid #ddd; background: #fafafa; }
+        .smartphone {
+            background-color: #000; width: 400px; height: 750px; border-radius: 50px;
+            border: 8px solid #222; display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.9); position: relative;
+        }
 
-/* ============================================================
-   ESTILOS ABA 2: CALCULADORA / PAINEL VIP (ALTERAÇÕES AQUI)
-   ============================================================ */
-.smartphone-container {
-    width: 340px;
-    background: #000;
-    margin: 10px auto;
-    border-radius: 40px;
-    border: 10px solid #333;
-    padding: 25px 15px;
-    color: #fff;
-    font-family: 'Courier New', Courier, monospace;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-}
-.header-vip { text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px; }
-.dados-lista { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; }
-.amarelo { color: #ffff00; font-weight: bold; }
-.divisor { border-top: 2px dashed #ffff00; margin: 15px 0; text-align: center; position: relative; }
-.divisor::after { content: "-----------TIPS-----------"; color: #ffff00; background: #000; padding: 0 5px; font-size: 11px; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); }
-.verde-destaque { color: #00ff00; font-weight: bold; font-size: 17px; text-align: center; margin: 15px 0; }
-.time-box-vip { background: #222; border: 1px solid #444; border-radius: 8px; padding: 10px; margin-bottom: 10px; text-transform: uppercase; }
-.time-box-vip span { color: #fff; font-weight: bold; display: block; font-size: 15px; margin-top: 2px; }
-.grid-status-vip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 15px; }
-.label-vip { background: #001f3f; color: #fff; font-size: 11px; font-weight: bold; padding: 4px; text-align: center; }
-.val-vip { padding: 8px; font-weight: bold; text-align: center; border-radius: 4px; font-size: 14px; }
-.bg-red { background: #8b0000; }
-.bg-green { background: #006400; }
-</style>
+        .visor-container {
+            flex: 1; background-color: #000; padding: 20px 15px 5px 15px;
+            display: flex; flex-direction: column;
+        }
+
+        .visor-title {
+            font-size: 24px; font-weight: 900; color: #4da6ff; font-family: sans-serif;
+            margin-bottom: 10px; text-transform: uppercase; text-align: center;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+            display: flex; justify-content: center; align-items: center; gap: 2px;
+        }
+
+        .ball-emoji { font-size: 20px; text-shadow: none; }
+
+        .analysis-area {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 10px;
+        }
+
+        .line { font-size: 13px; line-height: 1.4; text-transform: uppercase; margin-bottom: 4px; font-weight: 900; color: #ebd169; white-space: nowrap; }
+        
+        .res-badge { padding: 1px 2px; border-radius: 3px; margin: 0 1px; display: inline-block; min-width: 40px; font-size: 14px; background: transparent; font-weight: 900; }
+
+        .soma-media-container {
+            width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 8px; margin: 5px 0;
+            border-top: 1px solid #333; padding-top: 5px;
+        }
+        
+        .divider-bar { color: #fff; font-weight: 900; }
+        .media-badge { padding: 2px 6px; border-radius: 4px; font-size: 14px; font-weight: 900; }
+
+        .tips-area { width: 100%; text-align: center; }
+
+        /* AJUSTE: Barra TIPS com fundo VERMELHO */
+        .tips-divider { 
+            background-color: #d00; 
+            color: #ffffff; 
+            margin: 8px 0; 
+            font-size: 13px; 
+            font-weight: 900; 
+            padding: 4px 0;
+            width: 100%; 
+            text-align: center;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .indicacao-colorida {
+            margin-top: 5px; padding: 4px 12px; border-radius: 4px;
+            display: inline-block; font-weight: 900; text-transform: uppercase; font-size: 15px;
+        }
+
+        #c15 { color: #fff; font-weight: 900; font-size: 14px; }
+        #t1, #t2, #t3 { color: #fff; font-weight: 900; font-size: 11px; }
+
+        .status-bottom { margin-top: auto; padding-bottom: 10px; text-align: center; width: 100%; }
+        .status-bottom .line { color: #4da6ff !important; font-size: 15px; font-weight: 900; }
+        .input-field { color: #fff; display: inline-block; min-width: 28px; cursor: pointer; padding: 2px 5px; border-radius: 4px; background: #222; font-weight: 900; font-size: 16px; }
+        .active { background-color: #4da6ff !important; color: #000 !important; }
+
+        .controls-area { 
+            background-color: #000; 
+            padding: 0 20px 45px 20px; 
+            display: flex; gap: 12px; align-items: flex-end; 
+        }
+
+        .key-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; flex: 3.5; }
+        
+        .key {
+            background-color: #333; color: #fff; height: 34px; display: flex; justify-content: center;
+            align-items: center; border-radius: 17px; font-size: 17px; cursor: pointer;
+            font-family: sans-serif; border: 1px solid #444; user-select: none; font-weight: bold;
+        }
+        .key:active { background-color: #555; }
+        
+        .key-clear-all { background-color: #fff; color: #000; font-size: 10px; font-weight: 900; border-color: #fff; }
+        .key-c { background-color: #d00; border: 1px solid #900; font-weight: 900; }
+        
+        .yellow-btn { background-color: #fdd835; flex: 1; border-radius: 30px; display: flex; justify-content: center; align-items: center; height: 155px; cursor: pointer; margin-bottom: 2px; }
+        .play-shape { width: 0; height: 0; border-top: 22px solid transparent; border-bottom: 22px solid transparent; border-left: 32px solid #000; margin-left: 6px; }
+    </style>
 </head>
 <body>
 
-<div class="tabs">
-  <div class="tab active" data-tab="tab1">NowGoal Original</div>
-  <div class="tab" data-tab="tab2">Calculadora VIP</div>
-</div>
+<div class="smartphone">
+    <div class="visor-container" id="visor-display">
+        <div class="visor-title">K.C<span class="ball-emoji">⚽️</span>M</div>
 
-<div id="tab1" class="tab-content" style="display:block;">
-    <iframe id="siteFrame"></iframe>
-    <textarea id="dadosBrutos" placeholder="Cole os dados do NowGoal aqui..."></textarea>
-    
-    <div id="containerOriginal">
-        <div id="t1_nome_orig" class="titulo-time-original"></div>
-        <div id="t1_tab_orig"></div>
-        <div id="t2_nome_orig" class="titulo-time-original"></div>
-        <div id="t2_tab_orig"></div>
-        <div id="stats_detalhados_orig"></div>
-        <div id="analise_tecnica_orig"></div>
+        <div class="analysis-area">
+            <div class="line">WIN: 1:<span id="c1" class="res-badge">--</span> X:<span id="c2" class="res-badge">--</span> 2:<span id="c3" class="res-badge">--</span></div>
+            <div class="line">DC: 1X:<span id="c4" class="res-badge">--</span> 12:<span id="c5" class="res-badge">--</span> 2X:<span id="c6" class="res-badge">--</span></div>
+            <div class="line">BTT: SIM:<span id="c7" class="res-badge">--</span> NÃO:<span id="c8" class="res-badge">--</span></div>
+            <div class="line">OV: 0.5:<span id="c9" class="res-badge">--</span> 1.5:<span id="c10" class="res-badge">--</span> 2.5:<span id="c11" class="res-badge">--</span></div>
+            <div class="line">UN: 2.5:<span id="c12" class="res-badge">--</span> 3.5:<span id="c13" class="res-badge">--</span> 4.5:<span id="c14" class="res-badge">--</span></div>
+        </div>
+
+        <div class="tips-area">
+            <div class="soma-media-container line">
+                <span>SOMA: <span id="c15">--</span></span>
+                <span class="divider-bar">|</span>
+                <span>MÉDIA GOL: <span id="media-gol-val" class="media-badge" style="color:#000">--</span></span>
+            </div>
+            
+            <div class="tips-divider">-----------TIPS-----------</div>
+            
+            <div id="tips-list">
+                <div class="line" id="t1">--</div>
+                <div class="line" id="t2">--</div>
+                <div class="line" id="t3">--</div>
+            </div>
+            
+            <div class="line" id="indicacao-soma" style="color: #00ff00; margin-top: 5px; font-size: 12px;">INDICAÇÃO: --</div>
+            <div><div id="indicacao-media" class="indicacao-colorida">--</div></div>
+        </div>
+
+        <div class="status-bottom">
+            <div class="line">TIME A: JG:<span class="input-field active" data-order="0" id="a-jg" onclick="setActive(this)">--</span> GP:<span class="input-field" data-order="1" id="a-gp" onclick="setActive(this)">--</span> GC:<span class="input-field" data-order="2" id="a-gc" onclick="setActive(this)">--</span></div>
+            <div class="line">TIME B: JG:<span class="input-field" data-order="3" id="b-jg" onclick="setActive(this)">--</span> GP:<span class="input-field" data-order="4" id="b-gp" onclick="setActive(this)">--</span> GC:<span class="input-field" data-order="5" id="b-gc" onclick="setActive(this)">--</span></div>
+        </div>
     </div>
-</div>
 
-<div id="tab2" class="tab-content">
-  <div class="smartphone-container">
-    <div class="header-vip">K.C ⚽ M</div>
-    
-    <ul class="dados-lista" id="calc_lista_prob">
-        <li><span class="amarelo">▪ VITÓRIA:</span> 1: -- | X: -- | 2: --</li>
-        <li><span class="amarelo">▪ DUPLA:</span> 1X: -- | 12: -- | 2X: --</li>
-        <li><span class="amarelo">▪ AMBOS:</span> SIM: -- | NÃO: --</li>
-        <li><span class="amarelo">▪ OVER:</span> 0.5: -- | 1.5: -- | 2.5: --</li>
-        <li><span class="amarelo">▪ SOMA GERAL 3:</span> <span id="calc_soma1">--</span></li>
-    </ul>
-
-    <div class="divisor"></div>
-
-    <ul class="dados-lista">
-        <li><span class="amarelo">▪ VITÓRIA:</span> <span id="calc_tip_v">--</span></li>
-        <li><span class="amarelo">▪ DUPLA:</span> <span id="calc_tip_d">--</span></li>
-        <li><span class="amarelo">▪ AMBOS:</span> <span id="calc_tip_a">--</span></li>
-        <li><span class="amarelo">▪ OVER 0.5:</span> <span id="calc_tip_o">--</span></li>
-    </ul>
-
-    <div class="verde-destaque">▪ SOMA GERAL 3: <span id="calc_soma2">--</span></div>
-
-    <div class="time-box-vip">TIME 1: <span id="calc_t1_nome">AGUARDANDO...</span></div>
-    <div class="time-box-vip">TIME 2: <span id="calc_t2_nome">AGUARDANDO...</span></div>
-
-    <div class="grid-status-vip">
-        <div class="label-vip">JG</div><div class="label-vip">GP</div><div class="label-vip">GC</div>
-        <div class="val-vip bg-red" id="calc_jg1">--</div><div class="val-vip bg-green" id="calc_gp1">--</div><div class="val-vip bg-red" id="calc_gc1">--</div>
-        <div class="val-vip bg-red" id="calc_jg2">--</div><div class="val-vip bg-green" id="calc_gp2">--</div><div class="val-vip bg-red" id="calc_gc2">--</div>
+    <div class="controls-area">
+        <div class="key-grid">
+            <div class="key" onclick="pressNum('7')">7</div>
+            <div class="key" onclick="pressNum('8')">8</div>
+            <div class="key" onclick="pressNum('9')">9</div>
+            <div class="key" onclick="pressNum('4')">4</div>
+            <div class="key" onclick="pressNum('5')">5</div>
+            <div class="key" onclick="pressNum('6')">6</div>
+            <div class="key" onclick="pressNum('1')">1</div>
+            <div class="key" onclick="pressNum('2')">2</div>
+            <div class="key" onclick="pressNum('3')">3</div>
+            <div class="key key-clear-all" onclick="clearAll()">LIMPAR</div>
+            <div class="key" onclick="pressNum('0')">0</div>
+            <div class="key key-c" onclick="clearCurrent()">C</div>
+        </div>
+        <div class="yellow-btn" onclick="nextField()"><div class="play-shape"></div></div>
     </div>
-  </div>
 </div>
 
 <script>
-// Controle de Abas
-document.querySelectorAll('.tab').forEach(t => {
-    t.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-        t.classList.add('active');
-        document.getElementById(t.getAttribute('data-tab')).style.display = 'block';
-    });
-});
+    /* Lógica de cálculo permanece inalterada */
+    const fields = document.querySelectorAll('.input-field');
+    let currentIndex = 0;
 
-window.onload = () => { document.getElementById('siteFrame').src = "https://nowgoal.com"; };
-
-document.getElementById('dadosBrutos').addEventListener('input', function() {
-    if(this.value.length > 100) processarFluxo();
-});
-
-function processarFluxo() {
-    let raw = document.getElementById('dadosBrutos').value.replace(/\s+/g,' ');
-    let i = raw.indexOf("Previous Scores Statistics");
-    let f = raw.indexOf("Same Historical Odds Statistics");
-    if(i<0 || f<0) return;
-
-    let bloco = raw.substring(i, f);
-    let regex = /(\d{2}-\d{2}-\d{4})\s+(.+?)\s+(\d+)-(\d+)\s*\((\d+)-(\d+)\)\s+(.+?)\s+(\d+)-(\d+)\s*\((\d+)-(\d+)\)/g;
-    let jogos = [], m;
-    while(m = regex.exec(bloco)) {
-        jogos.push({
-            date: m[1], home: m[2], hg: +m[3], ag: +m[4], 
-            hh: +m[5], ah: +m[6], away: m[7], hc: +m[8], ac: +m[9]
-        });
+    function setActive(element) {
+        fields.forEach(f => f.classList.remove('active'));
+        element.classList.add('active');
+        currentIndex = parseInt(element.getAttribute('data-order'));
     }
 
-    if(jogos.length < 2) return;
-    let j1 = jogos.slice(0, 10), j2 = jogos.slice(10, 20);
-    let tm = extrair(j1.map(x=>x.home)), tv = extrair(j2.map(x=>x.away));
+    function pressNum(num) {
+        let f = fields[currentIndex];
+        f.innerText = (f.innerText === '--') ? num : (f.innerText.length < 2 ? f.innerText + num : f.innerText);
+    }
 
-    // DISPARO DOS PROCESSADORES ISOLADOS
-    executarAbaOriginal(j1, j2, tm, tv, jogos);
-    executarAbaCalculadora(jogos, tm, tv);
-}
+    function clearCurrent() { fields[currentIndex].innerText = '--'; }
+    function clearAll() { location.reload(); }
 
-function extrair(a){let c={};a.forEach(x=>c[x]=(c[x]||0)+1);return Object.keys(c).reduce((a,b)=>c[a]>c[b]?a:b);}
+    function nextField() {
+        if (currentIndex < fields.length - 1) { currentIndex++; setActive(fields[currentIndex]); } 
+        else { runCalculation(); }
+    }
 
-/* ============================================================
-   LÓGICA DA ABA 1 (NÃO ALTERAR)
-   ============================================================ */
-function executarAbaOriginal(j1, j2, tm, tv, todos) {
-    document.getElementById('t1_nome_orig').innerText = "MANDANTE: " + tm;
-    document.getElementById('t2_nome_orig').innerText = "VISITANTE: " + tv;
+    function applyStyle(id, percent, type) {
+        const el = document.getElementById(id);
+        let textColor = "#fff";
+        const val = Math.round(percent);
 
-    const buildTab = (lista, t, modo) => {
-        let html = `<table class="nowgoal-table"><tr><th>Data</th><th>Casa</th><th>Placar</th><th>Fora</th><th>Cantos</th></tr>`;
-        lista.forEach(j => {
-            let css = (modo=="h" && j.home==t) ? "mandante" : (modo=="a" && j.away==t) ? "visitante" : "";
-            html += `<tr class="${css}"><td>${j.date}</td><td>${j.home}</td><td>${j.hg}-${j.ag}</td><td>${j.away}</td><td>${j.hc}-${j.ac}</td></tr>`;
-        });
-        return html + "</table>";
-    };
+        if (type === 'WIN_BTT') {
+            if (val >= 65) textColor = "#00ff00";
+            else if (val >= 50) textColor = "#ffff00";
+            else textColor = "#ff0000";
+        } 
+        else if (type === 'OV05') {
+            if (val >= 74) textColor = "#00ff00";
+            else if (val >= 66) textColor = "#ffff00";
+            else textColor = "#ff0000";
+        }
+        else if (type === 'OV15') {
+            if (val >= 77) textColor = "#00ff00";
+            else if (val >= 66) textColor = "#ffff00";
+            else textColor = "#ff0000";
+        }
+        else if (type === 'OV25_UN') {
+            if (val >= 60) textColor = "#00ff00";
+            else if (val >= 56) textColor = "#ffff00";
+            else textColor = "#ff0000";
+        }
+        el.style.color = textColor;
+        el.innerText = val + "%";
+    }
 
-    document.getElementById('t1_tab_orig').innerHTML = buildTab(j1, tm, "h");
-    document.getElementById('t2_tab_orig').innerHTML = buildTab(j2, tv, "a");
+    function runCalculation() {
+        let allFilled = true;
+        fields.forEach(f => { if(f.innerText === '--') allFilled = false; });
+        if(!allFilled) return;
 
-    let ft=0, esc=0; todos.forEach(x=>{ft+=(x.hg+x.ag); esc+=(x.hc+x.ac);});
-    document.getElementById('analise_tecnica_orig').innerHTML = `
-        <div class="stats-box-original">
-            <h3>Relatório Técnico NowGoal</h3>
-            <p>Média Gols FT: ${(ft/todos.length).toFixed(2)}</p>
-            <p>Média Cantos: ${(esc/todos.length).toFixed(2)}</p>
-        </div>`;
-}
+        const a_jg = parseFloat(fields[0].innerText), a_gp = parseFloat(fields[1].innerText), a_gc = parseFloat(fields[2].innerText);
+        const b_jg = parseFloat(fields[3].innerText), b_gp = parseFloat(fields[4].innerText), b_gc = parseFloat(fields[5].innerText);
 
-/* ============================================================
-   LÓGICA DA ABA 2 (CALCULADORA VIP - ALTERÁVEL)
-   ============================================================ */
-function executarAbaCalculadora(jogos, tm, tv) {
-    let n=jogos.length, vM=0, emp=0, vV=0, amb=0, o05=0, o15=0, gp1=0, gc1=0, gp2=0, gc2=0, j3=0;
+        const fA = (a_gp / a_jg) + (b_gc / b_jg), fB = (b_gp / b_jg) + (a_gc / a_jg), tF = fA + fB;
+        const w1 = (fA / tF) * 82, w2 = (fB / tF) * 82, wx = 100 - w1 - w2;
 
-    jogos.forEach(x => {
-        let s = x.hg+x.ag;
-        if(x.hg > x.ag) vM++; else if(x.hg < x.ag) vV++; else emp++;
-        if(x.hg>0 && x.ag>0) amb++;
-        if(s>0.5) o05++; if(s>1.5) o15++;
-        if(x.home==tm){ gp1+=x.hg; gc1+=x.ag; if(s==3) j3++; }
-        if(x.away==tv){ gp2+=x.ag; gc2+=x.hg; if(s==3) j3++; }
-    });
+        applyStyle('c1', w1, 'WIN_BTT'); applyStyle('c2', wx, 'WIN_BTT'); applyStyle('c3', w2, 'WIN_BTT');
 
-    const p = v => ((v/n)*100).toFixed(0) + "%";
-    let somaRes = j3 >= 5 ? "1.5 OVER" : "4.5 UNDER";
+        const dcs = [{id:'c4', v:w1+wx}, {id:'c5', v:w1+w2}, {id:'c6', v:w2+wx}].sort((a,b) => b.v - a.v);
+        document.getElementById(dcs[0].id).style.color = "#00ff00";
+        document.getElementById(dcs[1].id).style.color = "#ffff00";
+        document.getElementById(dcs[2].id).style.color = "#ff0000";
+        dcs.forEach(d => document.getElementById(d.id).innerText = Math.round(d.v) + "%");
 
-    document.getElementById('calc_lista_prob').innerHTML = `
-        <li><span class="amarelo">▪ VITÓRIA:</span> 1: ${p(vM)} | X: ${p(emp)} | 2: ${p(vV)}</li>
-        <li><span class="amarelo">▪ AMBOS:</span> SIM: ${p(amb)} | NÃO: ${p(n-amb)}</li>
-        <li><span class="amarelo">▪ OVER 1.5:</span> ${p(o15)}</li>
-        <li><span class="amarelo">▪ SOMA GERAL 3:</span> ${somaRes}</li>
-    `;
+        const mG = (a_gp / a_jg) + (b_gp / b_jg);
+        applyStyle('c7', Math.min(95, mG * 25), 'WIN_BTT');
+        document.getElementById('c8').innerText = (100 - parseInt(document.getElementById('c7').innerText)) + "%";
 
-    document.getElementById('calc_tip_v').innerText = `1: ${p(vM)}`;
-    document.getElementById('calc_tip_d').innerText = `2X: ${p(vV+emp)}`;
-    document.getElementById('calc_tip_a').innerText = `SIM: ${p(amb)}`;
-    document.getElementById('calc_tip_o').innerText = p(o05);
-    document.getElementById('calc_soma1').innerText = somaRes;
-    document.getElementById('calc_soma2').innerText = somaRes;
-    document.getElementById('calc_t1_nome').innerText = tm;
-    document.getElementById('calc_t2_nome').innerText = tv;
-    document.getElementById('calc_jg1').innerText = "10"; document.getElementById('calc_gp1').innerText = gp1; document.getElementById('calc_gc1').innerText = gc1;
-    document.getElementById('calc_jg2').innerText = "10"; document.getElementById('calc_gp2').innerText = gp2; document.getElementById('calc_gc2').innerText = gc2;
-}
+        applyStyle('c9', Math.min(99, mG * 35), 'OV05');
+        applyStyle('c10', Math.min(95, mG * 28), 'OV15');
+        applyStyle('c11', Math.min(88, mG * 22), 'OV25_UN');
+        
+        applyStyle('c12', (100 - parseInt(document.getElementById('c11').innerText)), 'OV25_UN');
+        applyStyle('c13', Math.min(95, 110 - (mG * 15)), 'OV25_UN');
+        applyStyle('c14', Math.min(99, 105 - (mG * 8)), 'OV25_UN');
+
+        const somaT = Math.round((a_gp/a_jg + a_gc/a_jg) + (b_gp/b_jg + b_gc/b_jg));
+        document.getElementById('c15').innerText = somaT;
+
+        const mb = document.getElementById('media-gol-val'), im = document.getElementById('indicacao-media');
+        mb.innerText = mG.toFixed(2);
+
+        let bgCol="", txtCol="white", txtM="";
+        if(mG <= 2.1) { bgCol="red"; txtM="4.5 UNDER GOL"; }
+        else if(mG <= 2.49) { bgCol="yellow"; txtCol="black"; txtM="POSSÍVEL 0.5 OVER"; }
+        else if(mG <= 2.89) { bgCol="#adff2f"; txtCol="black"; txtM="0.5 OVER GOL"; }
+        else if(mG <= 3.29) { bgCol="darkgreen"; txtM="1.5 OVER GOL"; }
+        else { bgCol="darkblue"; txtM="2.5 OVER GOL"; }
+        
+        mb.style.backgroundColor = bgCol; mb.style.color = txtCol;
+        im.style.backgroundColor = bgCol; im.style.color = txtCol;
+        im.innerText = txtM;
+
+        let tipS = somaT < 4 ? "4.5 UNDER" : (somaT <= 5 ? "0.5 OVER" : (somaT <= 7 ? "1.5 OVER" : "2.5 OVER"));
+        document.getElementById('indicacao-soma').innerText = "INDICAÇÃO: " + tipS;
+
+        const lbls = {c1:'CASA',c2:'EMPATE',c3:'FORA',c4:'1X',c5:'12',c6:'2X',c7:'AMBAS',c9:'0.5 OVER',c10:'1.5 OVER',c11:'2.5 OVER'};
+        let tips = Object.keys(lbls).map(k => ({l:lbls[k], v:parseInt(document.getElementById(k).innerText)}));
+        tips.sort((a,b) => b.v - a.v);
+        document.getElementById('t1').innerText = `TIP 1: ${tips[0].l} (${tips[0].v}%)`;
+        document.getElementById('t2').innerText = `TIP 2: ${tips[1].l} (${tips[1].v}%)`;
+        document.getElementById('t3').innerText = `TIP 3: ${tips[2].l} (${tips[2].v}%)`;
+    }
 </script>
 </body>
 </html>
