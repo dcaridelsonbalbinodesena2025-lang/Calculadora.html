@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>NowGoal - Sistema Híbrido Pro</title>
+<style>
+/* Estrutura de Abas */
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f2f2f2; margin: 0; padding: 20px; }
+.tabs { display: flex; margin-bottom: 0; cursor: pointer; justify-content: center; }
+.tab { padding: 12px 25px; background: #ddd; margin: 0 2px; border-radius: 8px 8px 0 0; font-weight: bold; color: #555; }
+.tab.active { background: #fff; color: #000; border-bottom: 2px solid #fff; }
+.tab-content { display: none; background: #fff; padding: 20px; border: 1px solid #ccc; border-radius: 0 8px 8px 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+/* ============================================================
+   ESTILOS ABA 1: NOWGOAL (DADOS ORIGINAIS - ISOLADO)
+   ============================================================ */
+iframe { width: 100%; height: 350px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 15px; }
+#dadosBrutos { width: 100%; height: 150px; padding: 10px; font-size: 14px; margin-bottom: 15px; box-sizing: border-box; border: 2px solid #333; border-radius: 8px; }
+.nowgoal-table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 15px; }
+.nowgoal-table th, .nowgoal-table td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 13px; }
+.nowgoal-table th { background: #f4f4f4; color: #333; }
+.mandante { background: #1e7e34 !important; color: #fff !important; }
+.visitante { background: #c82333 !important; color: #fff !important; }
+.titulo-time-original { background: #444; color: #fff; padding: 10px; font-weight: bold; margin-top: 20px; border-radius: 4px; }
+.stats-box-original { margin-top: 15px; padding: 10px; border: 1px solid #ddd; background: #fafafa; }
+
+/* ============================================================
+   ESTILOS ABA 2: CALCULADORA / PAINEL VIP (ALTERAÇÕES AQUI)
+   ============================================================ */
+.smartphone-container {
+    width: 340px;
+    background: #000;
+    margin: 10px auto;
+    border-radius: 40px;
+    border: 10px solid #333;
+    padding: 25px 15px;
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.header-vip { text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px; }
+.dados-lista { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.8; }
+.amarelo { color: #ffff00; font-weight: bold; }
+.divisor { border-top: 2px dashed #ffff00; margin: 15px 0; text-align: center; position: relative; }
+.divisor::after { content: "-----------TIPS-----------"; color: #ffff00; background: #000; padding: 0 5px; font-size: 11px; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); }
+.verde-destaque { color: #00ff00; font-weight: bold; font-size: 17px; text-align: center; margin: 15px 0; }
+.time-box-vip { background: #222; border: 1px solid #444; border-radius: 8px; padding: 10px; margin-bottom: 10px; text-transform: uppercase; }
+.time-box-vip span { color: #fff; font-weight: bold; display: block; font-size: 15px; margin-top: 2px; }
+.grid-status-vip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 15px; }
+.label-vip { background: #001f3f; color: #fff; font-size: 11px; font-weight: bold; padding: 4px; text-align: center; }
+.val-vip { padding: 8px; font-weight: bold; text-align: center; border-radius: 4px; font-size: 14px; }
+.bg-red { background: #8b0000; }
+.bg-green { background: #006400; }
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <div class="tab active" data-tab="tab1">NowGoal Original</div>
+  <div class="tab" data-tab="tab2">Calculadora VIP</div>
+</div>
+
+<div id="tab1" class="tab-content" style="display:block;">
+    <iframe id="siteFrame"></iframe>
+    <textarea id="dadosBrutos" placeholder="Cole os dados do NowGoal aqui..."></textarea>
+    
+    <div id="containerOriginal">
+        <div id="t1_nome_orig" class="titulo-time-original"></div>
+        <div id="t1_tab_orig"></div>
+        <div id="t2_nome_orig" class="titulo-time-original"></div>
+        <div id="t2_tab_orig"></div>
+        <div id="stats_detalhados_orig"></div>
+        <div id="analise_tecnica_orig"></div>
+    </div>
+</div>
+
+<div id="tab2" class="tab-content">
+  <div class="smartphone-container">
+    <div class="header-vip">K.C ⚽ M</div>
+    
+    <ul class="dados-lista" id="calc_lista_prob">
+        <li><span class="amarelo">▪ VITÓRIA:</span> 1: -- | X: -- | 2: --</li>
+        <li><span class="amarelo">▪ DUPLA:</span> 1X: -- | 12: -- | 2X: --</li>
+        <li><span class="amarelo">▪ AMBOS:</span> SIM: -- | NÃO: --</li>
+        <li><span class="amarelo">▪ OVER:</span> 0.5: -- | 1.5: -- | 2.5: --</li>
+        <li><span class="amarelo">▪ SOMA GERAL 3:</span> <span id="calc_soma1">--</span></li>
+    </ul>
+
+    <div class="divisor"></div>
+
+    <ul class="dados-lista">
+        <li><span class="amarelo">▪ VITÓRIA:</span> <span id="calc_tip_v">--</span></li>
+        <li><span class="amarelo">▪ DUPLA:</span> <span id="calc_tip_d">--</span></li>
+        <li><span class="amarelo">▪ AMBOS:</span> <span id="calc_tip_a">--</span></li>
+        <li><span class="amarelo">▪ OVER 0.5:</span> <span id="calc_tip_o">--</span></li>
+    </ul>
+
+    <div class="verde-destaque">▪ SOMA GERAL 3: <span id="calc_soma2">--</span></div>
+
+    <div class="time-box-vip">TIME 1: <span id="calc_t1_nome">AGUARDANDO...</span></div>
+    <div class="time-box-vip">TIME 2: <span id="calc_t2_nome">AGUARDANDO...</span></div>
+
+    <div class="grid-status-vip">
+        <div class="label-vip">JG</div><div class="label-vip">GP</div><div class="label-vip">GC</div>
+        <div class="val-vip bg-red" id="calc_jg1">--</div><div class="val-vip bg-green" id="calc_gp1">--</div><div class="val-vip bg-red" id="calc_gc1">--</div>
+        <div class="val-vip bg-red" id="calc_jg2">--</div><div class="val-vip bg-green" id="calc_gp2">--</div><div class="val-vip bg-red" id="calc_gc2">--</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Controle de Abas
+document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+        t.classList.add('active');
+        document.getElementById(t.getAttribute('data-tab')).style.display = 'block';
+    });
+});
+
+window.onload = () => { document.getElementById('siteFrame').src = "https://nowgoal.com"; };
+
+document.getElementById('dadosBrutos').addEventListener('input', function() {
+    if(this.value.length > 100) processarFluxo();
+});
+
+function processarFluxo() {
+    let raw = document.getElementById('dadosBrutos').value.replace(/\s+/g,' ');
+    let i = raw.indexOf("Previous Scores Statistics");
+    let f = raw.indexOf("Same Historical Odds Statistics");
+    if(i<0 || f<0) return;
+
+    let bloco = raw.substring(i, f);
+    let regex = /(\d{2}-\d{2}-\d{4})\s+(.+?)\s+(\d+)-(\d+)\s*\((\d+)-(\d+)\)\s+(.+?)\s+(\d+)-(\d+)\s*\((\d+)-(\d+)\)/g;
+    let jogos = [], m;
+    while(m = regex.exec(bloco)) {
+        jogos.push({
+            date: m[1], home: m[2], hg: +m[3], ag: +m[4], 
+            hh: +m[5], ah: +m[6], away: m[7], hc: +m[8], ac: +m[9]
+        });
+    }
+
+    if(jogos.length < 2) return;
+    let j1 = jogos.slice(0, 10), j2 = jogos.slice(10, 20);
+    let tm = extrair(j1.map(x=>x.home)), tv = extrair(j2.map(x=>x.away));
+
+    // DISPARO DOS PROCESSADORES ISOLADOS
+    executarAbaOriginal(j1, j2, tm, tv, jogos);
+    executarAbaCalculadora(jogos, tm, tv);
+}
+
+function extrair(a){let c={};a.forEach(x=>c[x]=(c[x]||0)+1);return Object.keys(c).reduce((a,b)=>c[a]>c[b]?a:b);}
+
+/* ============================================================
+   LÓGICA DA ABA 1 (NÃO ALTERAR)
+   ============================================================ */
+function executarAbaOriginal(j1, j2, tm, tv, todos) {
+    document.getElementById('t1_nome_orig').innerText = "MANDANTE: " + tm;
+    document.getElementById('t2_nome_orig').innerText = "VISITANTE: " + tv;
+
+    const buildTab = (lista, t, modo) => {
+        let html = `<table class="nowgoal-table"><tr><th>Data</th><th>Casa</th><th>Placar</th><th>Fora</th><th>Cantos</th></tr>`;
+        lista.forEach(j => {
+            let css = (modo=="h" && j.home==t) ? "mandante" : (modo=="a" && j.away==t) ? "visitante" : "";
+            html += `<tr class="${css}"><td>${j.date}</td><td>${j.home}</td><td>${j.hg}-${j.ag}</td><td>${j.away}</td><td>${j.hc}-${j.ac}</td></tr>`;
+        });
+        return html + "</table>";
+    };
+
+    document.getElementById('t1_tab_orig').innerHTML = buildTab(j1, tm, "h");
+    document.getElementById('t2_tab_orig').innerHTML = buildTab(j2, tv, "a");
+
+    let ft=0, esc=0; todos.forEach(x=>{ft+=(x.hg+x.ag); esc+=(x.hc+x.ac);});
+    document.getElementById('analise_tecnica_orig').innerHTML = `
+        <div class="stats-box-original">
+            <h3>Relatório Técnico NowGoal</h3>
+            <p>Média Gols FT: ${(ft/todos.length).toFixed(2)}</p>
+            <p>Média Cantos: ${(esc/todos.length).toFixed(2)}</p>
+        </div>`;
+}
+
+/* ============================================================
+   LÓGICA DA ABA 2 (CALCULADORA VIP - ALTERÁVEL)
+   ============================================================ */
+function executarAbaCalculadora(jogos, tm, tv) {
+    let n=jogos.length, vM=0, emp=0, vV=0, amb=0, o05=0, o15=0, gp1=0, gc1=0, gp2=0, gc2=0, j3=0;
+
+    jogos.forEach(x => {
+        let s = x.hg+x.ag;
+        if(x.hg > x.ag) vM++; else if(x.hg < x.ag) vV++; else emp++;
+        if(x.hg>0 && x.ag>0) amb++;
+        if(s>0.5) o05++; if(s>1.5) o15++;
+        if(x.home==tm){ gp1+=x.hg; gc1+=x.ag; if(s==3) j3++; }
+        if(x.away==tv){ gp2+=x.ag; gc2+=x.hg; if(s==3) j3++; }
+    });
+
+    const p = v => ((v/n)*100).toFixed(0) + "%";
+    let somaRes = j3 >= 5 ? "1.5 OVER" : "4.5 UNDER";
+
+    document.getElementById('calc_lista_prob').innerHTML = `
+        <li><span class="amarelo">▪ VITÓRIA:</span> 1: ${p(vM)} | X: ${p(emp)} | 2: ${p(vV)}</li>
+        <li><span class="amarelo">▪ AMBOS:</span> SIM: ${p(amb)} | NÃO: ${p(n-amb)}</li>
+        <li><span class="amarelo">▪ OVER 1.5:</span> ${p(o15)}</li>
+        <li><span class="amarelo">▪ SOMA GERAL 3:</span> ${somaRes}</li>
+    `;
+
+    document.getElementById('calc_tip_v').innerText = `1: ${p(vM)}`;
+    document.getElementById('calc_tip_d').innerText = `2X: ${p(vV+emp)}`;
+    document.getElementById('calc_tip_a').innerText = `SIM: ${p(amb)}`;
+    document.getElementById('calc_tip_o').innerText = p(o05);
+    document.getElementById('calc_soma1').innerText = somaRes;
+    document.getElementById('calc_soma2').innerText = somaRes;
+    document.getElementById('calc_t1_nome').innerText = tm;
+    document.getElementById('calc_t2_nome').innerText = tv;
+    document.getElementById('calc_jg1').innerText = "10"; document.getElementById('calc_gp1').innerText = gp1; document.getElementById('calc_gc1').innerText = gc1;
+    document.getElementById('calc_jg2').innerText = "10"; document.getElementById('calc_gp2').innerText = gp2; document.getElementById('calc_gc2').innerText = gc2;
+}
+</script>
+</body>
+</html>
