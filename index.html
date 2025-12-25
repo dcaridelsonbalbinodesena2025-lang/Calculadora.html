@@ -6,9 +6,9 @@
     <title>Calculadora K.C⚽️M</title>
     <style>
         :root {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --keypad-bg: #111111;
+            --bg-color: #000;
+            --text-color: #fff;
+            --keypad-bg: #111;
             --button-bg: #2a2a2a;
             --accent-green: #00ff00;
             --accent-red: #ff3b30;
@@ -24,79 +24,73 @@
             font-family: 'Arial Black', sans-serif;
             display: flex;
             flex-direction: column;
-            height: 100vh; /* Ocupa exatamente a altura da tela */
-            overflow: hidden; /* Impede o scroll da página inteira */
+            height: 100vh; /* Altura exata da tela */
+            overflow: hidden; /* Trava o scroll geral */
+            text-transform: uppercase;
         }
 
         .app-header {
             text-align: center;
-            padding: 8px 0;
-            font-size: 18px;
+            padding: 5px 0;
+            font-size: 16px;
             color: #0044ff;
             text-shadow: 0 0 3px #fff;
-            flex-shrink: 0; /* Não deixa o título encolher */
+            flex-shrink: 0;
         }
 
-        /* ÁREA DE RESULTADOS - AGORA COM SCROLL SE PRECISAR */
+        /* ÁREA DE RESULTADOS - Única área que rola se não couber */
         #display-container {
-            flex: 1; /* Ocupa o espaço que sobrar */
+            flex: 1; 
             padding: 0 10px;
-            overflow-y: auto; /* Se os dados não couberem, cria scroll só aqui */
+            overflow-y: auto; 
             font-family: 'Courier New', monospace;
             font-size: 11px;
         }
 
-        .section-title { text-align: center; color: yellow; font-size: 10px; margin: 5px 0; }
+        .section-title { text-align: center; color: yellow; font-size: 9px; margin: 4px 0; }
         .market-row { 
             display: flex; 
             justify-content: space-between; 
-            border-bottom: 1px solid #222; 
-            padding: 2px 0;
-            white-space: nowrap;
+            border-bottom: 1px solid #1a1a1a; 
+            padding: 1px 0;
         }
 
-        .value { color: var(--text-color); font-weight: bold; margin-left: 2px; }
-        .badge { padding: 4px; border-radius: 3px; font-size: 11px; text-align: center; min-width: 120px; display: inline-block; }
+        .value { color: var(--text-color); font-weight: bold; }
+        .badge { padding: 3px; border-radius: 3px; font-size: 10px; text-align: center; min-width: 100px; display: inline-block; }
 
-        /* ÁREA DE INPUTS - FIXA ACIMA DO TECLADO */
-        .inputs {
+        /* INPUTS E TECLADO - Bloqueados para sempre aparecerem */
+        .controls-wrapper {
+            flex-shrink: 0; /* Não permite que esta área seja esmagada */
             background: #080808;
-            padding: 8px 10px;
             border-top: 1px solid #333;
-            flex-shrink: 0;
         }
 
-        .time-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .time-label { font-size: 12px; font-weight: bold; width: 55px; }
+        .inputs { padding: 5px 10px; }
+        .time-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px; }
+        .time-label { font-size: 11px; font-weight: bold; width: 50px; }
         .field-group { display: flex; align-items: center; gap: 2px; }
-        .field-label { font-size: 9px; color: #aaa; }
+        .field-label { font-size: 9px; color: #888; }
         
         .inputs .value {
-            font-size: 16px; 
+            font-size: 15px; 
             background: #1a1a1a; 
-            width: 40px; 
-            height: 28px; 
+            width: 35px; 
+            height: 25px; 
             display: flex; 
             align-items: center; 
             justify-content: center;
-            border-radius: 4px;
-            border: 1px solid #444;
+            border-radius: 3px;
+            border: 1px solid #333;
         }
 
-        .active-field { background-color: #fff !important; color: #000 !important; border-color: var(--accent-orange) !important; }
+        .active-field { background-color: #fff !important; color: #000 !important; }
 
-        /* TECLADO - AJUSTADO PARA NÃO CORTAR */
-        #keypad-container {
-            background: var(--keypad-bg);
-            padding: 5px 10px 10px 10px;
-            flex-shrink: 0;
-        }
-
+        #keypad-container { padding: 5px 10px 10px 10px; background: var(--keypad-bg); }
         #keypad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 5px;
-            max-width: 400px;
+            gap: 4px;
+            max-width: 380px;
             margin: 0 auto;
         }
 
@@ -104,21 +98,21 @@
             background: var(--button-bg);
             border: none;
             color: white;
-            height: 42px; /* Altura reduzida para caber tudo */
+            height: 38px; /* Altura otimizada para caber o botão azul */
             font-size: 18px;
-            border-radius: 6px;
+            border-radius: 5px;
             font-weight: bold;
         }
 
-        button:active { filter: brightness(1.5); }
-        .btn-clear { background: var(--accent-red); font-size: 11px; }
-        .btn-enter { background: var(--accent-orange); font-size: 22px; }
+        button:active { filter: brightness(1.4); }
+        .btn-clear { background: var(--accent-red); font-size: 10px; }
+        .btn-enter { background: var(--accent-orange); font-size: 20px; }
         .btn-fix { 
             grid-column: span 3; 
             background: var(--accent-blue); 
-            height: 32px; 
-            font-size: 11px; 
-            margin-top: 2px;
+            height: 30px; 
+            font-size: 10px; 
+            margin-top: 4px;
         }
     </style>
 </head>
@@ -149,31 +143,69 @@
         <div class="market-row">K.COM: <span id="kcom_box" class="badge">--</span></div>
     </div>
 
-    <div class="inputs">
-        <div class="time-row" style="color:var(--accent-green)">
-            <span class="time-label">TIME A</span>
-            <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value active-field">--</span></div>
-            <div class="field-group"><span class="field-label">GP:</span><span id="ta_gp" class="value">--</span></div>
-            <div class="field-group"><span class="field-label">GC:</span><span id="ta_gc" class="value">--</span></div>
+    <div class="controls-wrapper">
+        <div class="inputs">
+            <div class="time-row" style="color:var(--accent-green)">
+                <span class="time-label">TIME A</span>
+                <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value active-field">--</span></div>
+                <div class="field-group"><span class="field-label">GP:</span><span id="ta_gp" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GC:</span><span id="ta_gc" class="value">--</span></div>
+            </div>
+            <div class="time-row" style="color:var(--accent-red)">
+                <span class="time-label">TIME B</span>
+                <div class="field-group"><span class="field-label">JG:</span><span id="tb_jg" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GP:</span><span id="tb_gp" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GC:</span><span id="tb_gc" class="value">--</span></div>
+            </div>
         </div>
-        <div class="time-row" style="color:var(--accent-red)">
-            <span class="time-label">TIME B</span>
-            <div class="field-group"><span class="field-label">JG:</span><span id="tb_jg" class="value">--</span></div>
-            <div class="field-group"><span class="field-label">GP:</span><span id="tb_gp" class="value">--</span></div>
-            <div class="field-group"><span class="field-label">GC:</span><span id="tb_gc" class="value">--</span></div>
+
+        <div id="keypad-container">
+            <div id="keypad">
+                <button onclick="press(7)">7</button><button onclick="press(8)">8</button><button onclick="press(9)">9</button>
+                <button onclick="press(4)">4</button><button onclick="press(5)">5</button><button onclick="press(6)">6</button>
+                <button onclick="press(1)">1</button><button onclick="press(2)">2</button><button onclick="press(3)">3</button>
+                <button class="btn-clear" onclick="clearAll()">LIMPAR</button><button onclick="press(0)">0</button>
+                <button class="btn-enter" onclick="nextField()">➔</button>
+                <button class="btn-fix" onclick="fixField()">CORRIGIR CAMPO ATUAL</button>
+            </div>
         </div>
     </div>
 
-    <div id="keypad-container">
-        <div id="keypad">
-            <button onclick="press(7)">7</button><button onclick="press(8)">8</button><button onclick="press(9)">9</button>
-            <button onclick="press(4)">4</button><button onclick="press(5)">5</button><button onclick="press(6)">6</button>
-            <button onclick="press(1)">1</button><button onclick="press(2)">2</button><button onclick="press(3)">3</button>
-            <button class="btn-clear" onclick="clearAll()">LIMPAR</button><button onclick="press(0)">0</button>
-            <button class="btn-enter" onclick="nextField()">➔</button>
-            <button class="btn-fix" onclick="fixField()">CORRIGIR CAMPO ATUAL</button>
-        </div>
-    </div>
-    
-    </body>
+    <script>
+        // O restante do seu script original continua aqui...
+        const sequence = ['ta_jg', 'ta_gp', 'ta_gc', 'tb_jg', 'tb_gp', 'tb_gc'];
+        let currentIndex = 0;
+        let currentString = "";
+
+        function updateDisplay() {
+            sequence.forEach(id => document.getElementById(id).classList.remove('active-field'));
+            const fieldId = sequence[currentIndex];
+            const element = document.getElementById(fieldId);
+            element.classList.add('active-field');
+            element.innerText = currentString === "" ? "--" : currentString;
+        }
+
+        function press(num) { if (currentString.length < 3) { currentString += num; updateDisplay(); } }
+        function fixField() { currentString = ""; updateDisplay(); }
+
+        function nextField() {
+            if (currentIndex === sequence.length - 1) calculateAll();
+            else { currentIndex++; currentString = ""; updateDisplay(); }
+        }
+
+        function clearAll() {
+            document.querySelectorAll('.value').forEach(el => el.innerText = "--");
+            ['r3_box', 'kcom_box'].forEach(id => {
+                const el = document.getElementById(id);
+                el.innerText = "--"; el.style.background = "transparent";
+            });
+            currentIndex = 0; currentString = ""; updateDisplay();
+        }
+
+        function calculateAll() {
+            // Seus cálculos originais aqui...
+            // (Coloque aqui a função calculateAll que você já tem)
+        }
+    </script>
+</body>
 </html>
