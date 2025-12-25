@@ -2,272 +2,273 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Tips K.C⚽️M</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Calculadora K.C⚽️M</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Courier New', Courier, monospace; }
-
-        .smartphone {
-            background-color: #000; width: 400px; height: 750px; border-radius: 50px;
-            border: 8px solid #222; display: flex; flex-direction: column; overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9); position: relative;
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --keypad-bg: #111111;
+            --button-bg: #2a2a2a;
+            --accent-green: #00ff00;
+            --accent-red: #ff3b30;
+            --accent-orange: #ff9500;
+            --accent-blue: #007aff;
+            --divider-color: #333;
         }
 
-        .visor-container {
-            flex: 1; background-color: #000; padding: 20px 15px 5px 15px;
-            display: flex; flex-direction: column;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 
-        .visor-title {
-            font-size: 24px; font-weight: 900; color: #4da6ff; font-family: sans-serif;
-            margin-bottom: 10px; text-transform: uppercase; text-align: center;
-            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
-            display: flex; justify-content: center; align-items: center; gap: 2px;
-        }
-
-        .ball-emoji { font-size: 20px; text-shadow: none; }
-
-        .analysis-area {
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Arial Black', Gadget, sans-serif;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            padding-left: 10px;
+            height: 100vh;
+            overflow: hidden;
+            text-transform: uppercase;
         }
 
-        .line { font-size: 13px; line-height: 1.4; text-transform: uppercase; margin-bottom: 4px; font-weight: 900; color: #ebd169; white-space: nowrap; }
-        
-        .res-badge { padding: 1px 2px; border-radius: 3px; margin: 0 1px; display: inline-block; min-width: 40px; font-size: 14px; background: transparent; font-weight: 900; }
-
-        .soma-media-container {
-            width: 100%;
-            display: flex; justify-content: center; align-items: center; gap: 8px; margin: 5px 0;
-            border-top: 1px solid #333; padding-top: 5px;
-        }
-        
-        .divider-bar { color: #fff; font-weight: 900; }
-        .media-badge { padding: 2px 6px; border-radius: 4px; font-size: 14px; font-weight: 900; }
-
-        .tips-area { width: 100%; text-align: center; }
-
-        /* AJUSTE: Barra TIPS com fundo VERMELHO */
-        .tips-divider { 
-            background-color: #d00; 
-            color: #ffffff; 
-            margin: 8px 0; 
-            font-size: 13px; 
-            font-weight: 900; 
-            padding: 4px 0;
-            width: 100%; 
+        .app-header {
             text-align: center;
-            border-radius: 4px;
+            padding: 15px 0 10px 0;
+            font-size: 22px;
+            font-weight: 900;
+            color: #0044ff;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 3px #fff; 
             letter-spacing: 1px;
         }
 
-        .indicacao-colorida {
-            margin-top: 5px; padding: 4px 12px; border-radius: 4px;
-            display: inline-block; font-weight: 900; text-transform: uppercase; font-size: 15px;
+        #display-container {
+            flex: 1;
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto; 
         }
 
-        #c15 { color: #fff; font-weight: 900; font-size: 14px; }
-        #t1, #t2, #t3 { color: #fff; font-weight: 900; font-size: 11px; }
+        .market-section { font-size: 12px; line-height: 1.15; font-family: 'Courier New', monospace; }
+        .section-title { text-align: center; margin: 3px 0; letter-spacing: 1px; color: yellow; font-size: 9px; }
+        .market-row { margin: 1px 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
+        .label { font-weight: bold; }
+        .value { color: var(--text-color); margin-left: 2px; font-weight: bold; padding: 0 2px; min-width: 15px; text-align: center; }
 
-        .status-bottom { margin-top: auto; padding-bottom: 10px; text-align: center; width: 100%; }
-        .status-bottom .line { color: #4da6ff !important; font-size: 15px; font-weight: 900; }
-        .input-field { color: #fff; display: inline-block; min-width: 28px; cursor: pointer; padding: 2px 5px; border-radius: 4px; background: #222; font-weight: 900; font-size: 16px; }
-        .active { background-color: #4da6ff !important; color: #000 !important; }
-
-        .controls-area { 
-            background-color: #000; 
-            padding: 0 20px 45px 20px; 
-            display: flex; gap: 12px; align-items: flex-end; 
+        .badge { 
+            padding: 4px 8px; font-weight: 900; border-radius: 3px; font-size: 13px; 
+            margin-left: 5px; min-width: 140px; text-align: center; display: inline-block;
         }
 
-        .key-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; flex: 3.5; }
-        
-        .key {
-            background-color: #333; color: #fff; height: 34px; display: flex; justify-content: center;
-            align-items: center; border-radius: 17px; font-size: 17px; cursor: pointer;
-            font-family: sans-serif; border: 1px solid #444; user-select: none; font-weight: bold;
+        .inputs {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 8px 0; gap: 4px; background: #080808; border-top: 1px solid #222;
         }
-        .key:active { background-color: #555; }
+
+        .time-row { display: flex; justify-content: center; align-items: center; width: 100%; }
+        .time-label { font-weight: bold; font-size: 12px; min-width: 65px; text-align: left; }
+        .time-a { color: var(--accent-green); }
+        .time-b { color: var(--accent-red); }
+        .field-group { display: flex; align-items: center; margin: 0 3px; }
+        .field-label { font-size: 10px; color: #aaa; }
         
-        .key-clear-all { background-color: #fff; color: #000; font-size: 10px; font-weight: 900; border-color: #fff; }
-        .key-c { background-color: #d00; border: 1px solid #900; font-weight: 900; }
-        
-        .yellow-btn { background-color: #fdd835; flex: 1; border-radius: 30px; display: flex; justify-content: center; align-items: center; height: 155px; cursor: pointer; margin-bottom: 2px; }
-        .play-shape { width: 0; height: 0; border-top: 22px solid transparent; border-bottom: 22px solid transparent; border-left: 32px solid #000; margin-left: 6px; }
+        .inputs .value {
+            font-size: 16px; min-width: 35px; margin: 0 3px; padding: 1px 4px;
+            background: #1a1a1a; border-radius: 3px;
+        }
+
+        .active-field { background-color: #ffffff !important; color: #000000 !important; }
+
+        #keypad-container {
+            background: var(--keypad-bg); padding: 5px 10px 10px 10px; border-top: 1px solid var(--divider-color);
+        }
+
+        #keypad {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; width: 100%; max-width: 400px; margin: 0 auto;
+        }
+
+        button {
+            background: var(--button-bg); border: none; color: white; height: 34px; font-size: 18px; border-radius: 5px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        button:active { background: #444; }
+        .btn-clear { background: var(--accent-red); font-size: 10px; font-weight: bold; }
+        .btn-enter { background: var(--accent-orange); font-size: 20px; }
+        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 11px; font-weight: bold; height: 30px; margin-top: 4px; }
     </style>
 </head>
 <body>
 
-<div class="smartphone">
-    <div class="visor-container" id="visor-display">
-        <div class="visor-title">K.C<span class="ball-emoji">⚽️</span>M</div>
+    <div class="app-header">CALCULADORA K.C⚽️M</div>
 
-        <div class="analysis-area">
-            <div class="line">WIN: 1:<span id="c1" class="res-badge">--</span> X:<span id="c2" class="res-badge">--</span> 2:<span id="c3" class="res-badge">--</span></div>
-            <div class="line">DC: 1X:<span id="c4" class="res-badge">--</span> 12:<span id="c5" class="res-badge">--</span> 2X:<span id="c6" class="res-badge">--</span></div>
-            <div class="line">BTT: SIM:<span id="c7" class="res-badge">--</span> NÃO:<span id="c8" class="res-badge">--</span></div>
-            <div class="line">OV: 0.5:<span id="c9" class="res-badge">--</span> 1.5:<span id="c10" class="res-badge">--</span> 2.5:<span id="c11" class="res-badge">--</span></div>
-            <div class="line">UN: 2.5:<span id="c12" class="res-badge">--</span> 3.5:<span id="c13" class="res-badge">--</span> 4.5:<span id="c14" class="res-badge">--</span></div>
+    <div id="display-container">
+        <div class="market-section">
+            <div class="section-title">---------- MERCADOS ----------</div>
+            <div class="market-row"><span class="label">VITÓRIA:</span> 1:<span class="value" id="v1">--</span>|X:<span class="value" id="vx">--</span>|2:<span class="value" id="v2">--</span></div>
+            <div class="market-row"><span class="label">DUPLA CHANCE:</span> 1X:<span class="value" id="dc1x">--</span>|12:<span class="value" id="dc12">--</span>|X2:<span class="value" id="dcx2">--</span></div>
+            <div class="market-row"><span class="label">AMBAS MARCAM:</span> SIM:<span class="value" id="am_s">--</span>|NÃO:<span class="value" id="am_n">--</span></div>
+            <div class="market-row"><span class="label">OVER:</span> 0.5:<span class="value" id="ov05">--</span>|1.5:<span class="value" id="ov15">--</span>|2.5:<span class="value" id="ov25">--</span></div>
+            <div class="market-row"><span class="label">UNDER:</span> 3.5:<span class="value" id="un35">--</span>|4.5:<span class="value" id="un45">--</span>|5.5:<span class="value" id="un55">--</span></div>
+            <div class="market-row"><span class="label">GOL HT:</span> SIM:<span class="value" id="ht_s">--</span>|NÃO:<span class="value" id="ht_n">--</span></div>
+            <div class="market-row"><span class="label">MÉDIA GOL HT:</span> <span class="value" id="m_ht">--</span></div>
+            <div class="market-row"><span class="label">MARCA 1°:</span> C:<span class="value" id="mp_c">--</span> | F:<span class="value" id="mp_f">--</span></div>
+            <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span> <span class="value" id="m_part">--</span></div>
+            <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span> <span class="value" id="r_placar">--</span></div>
+
+            <div class="section-title">--------- SUGESTÕES ---------</div>
+            <div class="market-row">1° SUG: <span class="value" id="sug1">--</span></div>
+            <div class="market-row">2° SUG: <span class="value" id="sug2">--</span></div>
+            <div class="market-row">3° SUG: <span class="value" id="sug3">--</span></div>
+
+            <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
+            <div class="market-row"><span class="label">REGRA 3:</span> <span id="r3_box" class="badge">--</span></div>
+            <div class="market-row"><span class="label">K.COM:</span> <span id="kcom_box" class="badge">--</span></div>
         </div>
 
-        <div class="tips-area">
-            <div class="soma-media-container line">
-                <span>SOMA: <span id="c15">--</span></span>
-                <span class="divider-bar">|</span>
-                <span>MÉDIA GOL: <span id="media-gol-val" class="media-badge" style="color:#000">--</span></span>
+        <div class="inputs">
+            <div class="time-row time-a">
+                <span class="time-label">TIME A</span>
+                <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value active-field">--</span></div>
+                <div class="field-group"><span class="field-label">GP:</span><span id="ta_gp" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GC:</span><span id="ta_gc" class="value">--</span></div>
             </div>
-            
-            <div class="tips-divider">-----------TIPS-----------</div>
-            
-            <div id="tips-list">
-                <div class="line" id="t1">--</div>
-                <div class="line" id="t2">--</div>
-                <div class="line" id="t3">--</div>
+            <div class="time-row time-b">
+                <span class="time-label">TIME B</span>
+                <div class="field-group"><span class="field-label">JG:</span><span id="tb_jg" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GP:</span><span id="tb_gp" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GC:</span><span id="tb_gc" class="value">--</span></div>
             </div>
-            
-            <div class="line" id="indicacao-soma" style="color: #00ff00; margin-top: 5px; font-size: 12px;">INDICAÇÃO: --</div>
-            <div><div id="indicacao-media" class="indicacao-colorida">--</div></div>
-        </div>
-
-        <div class="status-bottom">
-            <div class="line">TIME A: JG:<span class="input-field active" data-order="0" id="a-jg" onclick="setActive(this)">--</span> GP:<span class="input-field" data-order="1" id="a-gp" onclick="setActive(this)">--</span> GC:<span class="input-field" data-order="2" id="a-gc" onclick="setActive(this)">--</span></div>
-            <div class="line">TIME B: JG:<span class="input-field" data-order="3" id="b-jg" onclick="setActive(this)">--</span> GP:<span class="input-field" data-order="4" id="b-gp" onclick="setActive(this)">--</span> GC:<span class="input-field" data-order="5" id="b-gc" onclick="setActive(this)">--</span></div>
         </div>
     </div>
 
-    <div class="controls-area">
-        <div class="key-grid">
-            <div class="key" onclick="pressNum('7')">7</div>
-            <div class="key" onclick="pressNum('8')">8</div>
-            <div class="key" onclick="pressNum('9')">9</div>
-            <div class="key" onclick="pressNum('4')">4</div>
-            <div class="key" onclick="pressNum('5')">5</div>
-            <div class="key" onclick="pressNum('6')">6</div>
-            <div class="key" onclick="pressNum('1')">1</div>
-            <div class="key" onclick="pressNum('2')">2</div>
-            <div class="key" onclick="pressNum('3')">3</div>
-            <div class="key key-clear-all" onclick="clearAll()">LIMPAR</div>
-            <div class="key" onclick="pressNum('0')">0</div>
-            <div class="key key-c" onclick="clearCurrent()">C</div>
+    <div id="keypad-container">
+        <div id="keypad">
+            <button onclick="press(7)">7</button><button onclick="press(8)">8</button><button onclick="press(9)">9</button>
+            <button onclick="press(4)">4</button><button onclick="press(5)">5</button><button onclick="press(6)">6</button>
+            <button onclick="press(1)">1</button><button onclick="press(2)">2</button><button onclick="press(3)">3</button>
+            <button class="btn-clear" onclick="clearAll()">LIMPAR</button><button onclick="press(0)">0</button>
+            <button class="btn-enter" onclick="nextField()">➔</button>
+            <button class="btn-fix" onclick="fixField()">CORRIGIR CAMPO ATUAL</button>
         </div>
-        <div class="yellow-btn" onclick="nextField()"><div class="play-shape"></div></div>
     </div>
-</div>
 
-<script>
-    /* Lógica de cálculo permanece inalterada */
-    const fields = document.querySelectorAll('.input-field');
-    let currentIndex = 0;
+    <script>
+        const sequence = ['ta_jg', 'ta_gp', 'ta_gc', 'tb_jg', 'tb_gp', 'tb_gc'];
+        let currentIndex = 0;
+        let currentString = "";
 
-    function setActive(element) {
-        fields.forEach(f => f.classList.remove('active'));
-        element.classList.add('active');
-        currentIndex = parseInt(element.getAttribute('data-order'));
-    }
-
-    function pressNum(num) {
-        let f = fields[currentIndex];
-        f.innerText = (f.innerText === '--') ? num : (f.innerText.length < 2 ? f.innerText + num : f.innerText);
-    }
-
-    function clearCurrent() { fields[currentIndex].innerText = '--'; }
-    function clearAll() { location.reload(); }
-
-    function nextField() {
-        if (currentIndex < fields.length - 1) { currentIndex++; setActive(fields[currentIndex]); } 
-        else { runCalculation(); }
-    }
-
-    function applyStyle(id, percent, type) {
-        const el = document.getElementById(id);
-        let textColor = "#fff";
-        const val = Math.round(percent);
-
-        if (type === 'WIN_BTT') {
-            if (val >= 65) textColor = "#00ff00";
-            else if (val >= 50) textColor = "#ffff00";
-            else textColor = "#ff0000";
-        } 
-        else if (type === 'OV05') {
-            if (val >= 74) textColor = "#00ff00";
-            else if (val >= 66) textColor = "#ffff00";
-            else textColor = "#ff0000";
+        function updateDisplay() {
+            sequence.forEach(id => document.getElementById(id).classList.remove('active-field'));
+            const fieldId = sequence[currentIndex];
+            const element = document.getElementById(fieldId);
+            element.classList.add('active-field');
+            element.innerText = currentString === "" ? "--" : currentString;
         }
-        else if (type === 'OV15') {
-            if (val >= 77) textColor = "#00ff00";
-            else if (val >= 66) textColor = "#ffff00";
-            else textColor = "#ff0000";
+
+        function press(num) { if (currentString.length < 3) { currentString += num; updateDisplay(); } }
+        function fixField() { currentString = ""; updateDisplay(); }
+
+        function nextField() {
+            if (currentIndex === sequence.length - 1) calculateAll();
+            else { currentIndex++; currentString = ""; updateDisplay(); }
         }
-        else if (type === 'OV25_UN') {
-            if (val >= 60) textColor = "#00ff00";
-            else if (val >= 56) textColor = "#ffff00";
-            else textColor = "#ff0000";
+
+        function applyBadge(el, text, bg, color) {
+            el.innerText = text; el.style.backgroundColor = bg; el.style.color = color;
         }
-        el.style.color = textColor;
-        el.innerText = val + "%";
-    }
 
-    function runCalculation() {
-        let allFilled = true;
-        fields.forEach(f => { if(f.innerText === '--') allFilled = false; });
-        if(!allFilled) return;
+        function calculateAll() {
+            const getV = (id) => parseFloat(document.getElementById(id).innerText) || 0;
+            const setV = (id, val) => document.getElementById(id).innerText = val;
 
-        const a_jg = parseFloat(fields[0].innerText), a_gp = parseFloat(fields[1].innerText), a_gc = parseFloat(fields[2].innerText);
-        const b_jg = parseFloat(fields[3].innerText), b_gp = parseFloat(fields[4].innerText), b_gc = parseFloat(fields[5].innerText);
+            const jgA = getV('ta_jg'), gpA = getV('ta_gp'), gcA = getV('ta_gc');
+            const jgB = getV('tb_jg'), gpB = getV('tb_gp'), gcB = getV('tb_gc');
 
-        const fA = (a_gp / a_jg) + (b_gc / b_jg), fB = (b_gp / b_jg) + (a_gc / a_jg), tF = fA + fB;
-        const w1 = (fA / tF) * 82, w2 = (fB / tF) * 82, wx = 100 - w1 - w2;
+            if (jgA > 0 && jgB > 0) {
+                const medAtaA = gpA / jgA, medDefA = gcA / jgA;
+                const medAtaB = gpB / jgB, medDefB = gcB / jgB;
+                const r3_val = (medAtaA + medDefA) + (medAtaB + medDefB);
+                const mediaPartida = (medAtaA + medDefB + medAtaB + medDefA) / 2;
+                const medHT = mediaPartida * 0.4;
 
-        applyStyle('c1', w1, 'WIN_BTT'); applyStyle('c2', wx, 'WIN_BTT'); applyStyle('c3', w2, 'WIN_BTT');
+                setV('r_placar', r3_val.toFixed(2));
+                setV('m_part', mediaPartida.toFixed(2));
+                setV('m_ht', medHT.toFixed(2));
 
-        const dcs = [{id:'c4', v:w1+wx}, {id:'c5', v:w1+w2}, {id:'c6', v:w2+wx}].sort((a,b) => b.v - a.v);
-        document.getElementById(dcs[0].id).style.color = "#00ff00";
-        document.getElementById(dcs[1].id).style.color = "#ffff00";
-        document.getElementById(dcs[2].id).style.color = "#ff0000";
-        dcs.forEach(d => document.getElementById(d.id).innerText = Math.round(d.v) + "%");
+                const cap = (v) => Math.min(Math.max(Math.round(v), 0), 99);
 
-        const mG = (a_gp / a_jg) + (b_gp / b_jg);
-        applyStyle('c7', Math.min(95, mG * 25), 'WIN_BTT');
-        document.getElementById('c8').innerText = (100 - parseInt(document.getElementById('c7').innerText)) + "%";
+                // --- MERCADOS GOLS (PORCENTAGENS INTEIRAS) ---
+                setV('ov05', cap(mediaPartida * 45) + "%");
+                setV('ov15', cap(mediaPartida * 32) + "%");
+                setV('ov25', cap(mediaPartida * 22) + "%");
+                setV('un35', cap(100 - (mediaPartida * 15)) + "%");
+                setV('un45', cap(100 - (mediaPartida * 10)) + "%");
+                setV('un55', cap(100 - (mediaPartida * 5)) + "%");
+                setV('ht_s', cap(medHT * 60) + "%");
+                setV('ht_n', cap(100 - (medHT * 60)) + "%");
 
-        applyStyle('c9', Math.min(99, mG * 35), 'OV05');
-        applyStyle('c10', Math.min(95, mG * 28), 'OV15');
-        applyStyle('c11', Math.min(88, mG * 22), 'OV25_UN');
-        
-        applyStyle('c12', (100 - parseInt(document.getElementById('c11').innerText)), 'OV25_UN');
-        applyStyle('c13', Math.min(95, 110 - (mG * 15)), 'OV25_UN');
-        applyStyle('c14', Math.min(99, 105 - (mG * 8)), 'OV25_UN');
+                // --- VITÓRIA E DUPLA CHANCE (ARREDONDADOS) ---
+                const p1 = (medAtaA / (medAtaA + medAtaB) * 100);
+                const p2 = (medAtaB / (medAtaA + medAtaB) * 100);
+                setV('v1', Math.round(p1) + "%"); 
+                setV('vx', "28%"); 
+                setV('v2', Math.round(p2) + "%");
+                setV('dc1x', cap(p1 + 20) + "%"); 
+                setV('dc12', "75%"); 
+                setV('dcx2', cap(p2 + 20) + "%");
 
-        const somaT = Math.round((a_gp/a_jg + a_gc/a_jg) + (b_gp/b_jg + b_gc/b_jg));
-        document.getElementById('c15').innerText = somaT;
+                // --- AMBAS MARCAM E MARCA 1º (ARREDONDADOS) ---
+                setV('am_s', mediaPartida > 2.3 ? "82%" : "38%"); 
+                setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
+                setV('mp_c', cap(p1 - 5) + "%"); 
+                setV('mp_f', cap(p2 - 5) + "%");
 
-        const mb = document.getElementById('media-gol-val'), im = document.getElementById('indicacao-media');
-        mb.innerText = mG.toFixed(2);
+                // --- 1ª SUGESTÃO (MERCADO OVER/UNDER ESPECÍFICO) ---
+                let sug1 = "UNDER 3.5 GOLS";
+                if (mediaPartida > 3.2) sug1 = "2.5 OVER GOL";
+                else if (mediaPartida > 2.6) sug1 = "1.5 OVER GOL";
+                else if (mediaPartida > 1.8) sug1 = "0.5 OVER GOL";
+                setV('sug1', sug1);
 
-        let bgCol="", txtCol="white", txtM="";
-        if(mG <= 2.1) { bgCol="red"; txtM="4.5 UNDER GOL"; }
-        else if(mG <= 2.49) { bgCol="yellow"; txtCol="black"; txtM="POSSÍVEL 0.5 OVER"; }
-        else if(mG <= 2.89) { bgCol="#adff2f"; txtCol="black"; txtM="0.5 OVER GOL"; }
-        else if(mG <= 3.29) { bgCol="darkgreen"; txtM="1.5 OVER GOL"; }
-        else { bgCol="darkblue"; txtM="2.5 OVER GOL"; }
-        
-        mb.style.backgroundColor = bgCol; mb.style.color = txtCol;
-        im.style.backgroundColor = bgCol; im.style.color = txtCol;
-        im.innerText = txtM;
+                // --- 2ª SUGESTÃO (VITÓRIA/DUPLA CHANCE ESPECÍFICA) ---
+                let sug2 = "EMPATE OU FORA";
+                if (p1 > 55) sug2 = "VITÓRIA TIME A";
+                else if (p2 > 55) sug2 = "VITÓRIA TIME B";
+                else if (p1 > p2) sug2 = "TIME A OU EMPATE";
+                setV('sug2', sug2);
 
-        let tipS = somaT < 4 ? "4.5 UNDER" : (somaT <= 5 ? "0.5 OVER" : (somaT <= 7 ? "1.5 OVER" : "2.5 OVER"));
-        document.getElementById('indicacao-soma').innerText = "INDICAÇÃO: " + tipS;
+                // --- 3ª SUGESTÃO (AMBAS MARCAM OU OUTROS ESPECÍFICOS) ---
+                let sug3 = "AMBAS NÃO MARCAM";
+                if (mediaPartida > 2.4) sug3 = "AMBAS SIM MARCAM";
+                else if (medHT > 0.8) sug3 = "GOL NO HT SIM";
+                setV('sug3', sug3);
 
-        const lbls = {c1:'CASA',c2:'EMPATE',c3:'FORA',c4:'1X',c5:'12',c6:'2X',c7:'AMBAS',c9:'0.5 OVER',c10:'1.5 OVER',c11:'2.5 OVER'};
-        let tips = Object.keys(lbls).map(k => ({l:lbls[k], v:parseInt(document.getElementById(k).innerText)}));
-        tips.sort((a,b) => b.v - a.v);
-        document.getElementById('t1').innerText = `TIP 1: ${tips[0].l} (${tips[0].v}%)`;
-        document.getElementById('t2').innerText = `TIP 2: ${tips[1].l} (${tips[1].v}%)`;
-        document.getElementById('t3').innerText = `TIP 3: ${tips[2].l} (${tips[2].v}%)`;
-    }
-</script>
+                // BADGES (MANTIDOS)
+                const r3Box = document.getElementById('r3_box');
+                if (r3_val < 4) applyBadge(r3Box, "4.5 UNDER GOL", "red", "white");
+                else if (r3_val < 5) applyBadge(r3Box, "0.5 OVER GOL", "#adff2f", "black");
+                else if (r3_val < 8) applyBadge(r3Box, "1.5 OVER GOL", "green", "white");
+                else applyBadge(r3Box, "2.5 OVER GOL", "#000080", "white");
+
+                const kcomBox = document.getElementById('kcom_box');
+                if (mediaPartida < 2) applyBadge(kcomBox, "4.5 UNDER GOL", "red", "white");
+                else if (mediaPartida < 2.5) applyBadge(kcomBox, "POSSÍVEL 0.5 OVER", "yellow", "black");
+                else if (mediaPartida < 2.8) applyBadge(kcomBox, "0.5 OVER GOL", "#adff2f", "black");
+                else if (mediaPartida < 3) applyBadge(kcomBox, "POSSÍVEL 1.5 OVER", "yellow", "black");
+                else if (mediaPartida < 3.3) applyBadge(kcomBox, "1.5 OVER GOL", "green", "white");
+                else applyBadge(kcomBox, "2.5 OVER GOL", "#000080", "white");
+            }
+        }
+
+        function clearAll() {
+            document.querySelectorAll('.value').forEach(el => el.innerText = "--");
+            ['r3_box', 'kcom_box'].forEach(id => {
+                const el = document.getElementById(id);
+                el.innerText = "--"; el.style.background = "transparent";
+            });
+            currentIndex = 0; currentString = ""; updateDisplay();
+        }
+    </script>
 </body>
 </html>
