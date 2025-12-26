@@ -31,96 +31,69 @@
             padding: 2px 9px; 
         }
 
+        /* --- LAYOUT ORIGINAL (INTOCADO) --- */
         .app-header {
-            text-align: center;
-            padding-bottom: 10px;
-            font-size: 20px;
-            font-weight: 900;
-            color: #0044ff;
-            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 3px #fff; 
-            letter-spacing: 1px;
+            text-align: center; padding-bottom: 10px; font-size: 20px; font-weight: 900;
+            color: #0044ff; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; 
         }
 
         #display-container {
-            height: 400px;
-            padding: 7px 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start; 
-            overflow-y: auto; 
-            border: 2px solid #333; 
-            border-radius: 10px;
-            background: #050505;
-            margin-bottom: 5px;
+            height: 400px; padding: 7px 15px; display: flex; flex-direction: column;
+            border: 2px solid #333; border-radius: 10px; background: #050505; margin-bottom: 5px;
+            overflow-y: auto;
         }
 
         .market-section { font-size: 12px; line-height: 1.3; font-family: 'Courier New', monospace; }
-        .section-title { text-align: center; margin: 1px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
-        .market-row { margin: 0px 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
+        .section-title { text-align: center; margin: 1px 0 2px 0; color: yellow; font-size: 11px; }
+        .market-row { display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
         .label { font-weight: bold; }
-        .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; min-width: 20px; text-align: center; }
+        .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; }
         .badge { padding: 4px 8px; font-weight: 700; border-radius: 5px; font-size: 12px; margin-top: 3px; min-width: 100px; text-align: center; display: inline-block; }
 
-        .inputs {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 12px 0; gap: 10px; background: #080808; border-top: 1px solid #222;
-            margin-top: 8px; border-radius: 7px;
-        }
-        .time-row { display: flex; justify-content: center; align-items: center; width: 80%; }
-        .time-label { font-weight: bold; font-size: 8px; min-width: 75px; text-align: left; }
-        .time-a { color: var(--accent-green); }
-        .time-b { color: var(--accent-red); }
+        .inputs { display: flex; flex-direction: column; align-items: center; padding: 12px 0; background: #080808; border-top: 1px solid #222; margin-top: 8px; border-radius: 7px; }
+        .time-row { display: flex; justify-content: center; align-items: center; width: 85%; }
+        .time-label { font-weight: bold; font-size: 8px; min-width: 75px; }
         .field-group { display: flex; align-items: center; margin: 0 6px; }
-        .field-label { font-size: 8px; color: #aaa; }
-        .inputs .value { font-size: 12px; min-width: 18px; margin: 0 4px; padding: 2px 2px; background: #1a1a1a; border-radius: 4px; }
+        .inputs .value { font-size: 12px; min-width: 18px; background: #1a1a1a; border-radius: 4px; }
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
-        #keypad-container { background: var(--keypad-bg); padding: 9px; border-top: 1px solid var(--divider-color); margin-top: 10px; border-radius: 5px; }
-        #keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 400px; margin: 0 auto; }
-        button { background: var(--button-bg); border: none; color: white; height: 30px; font-size: 15px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-        .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: bold; }
-        .btn-enter { background: var(--accent-orange); font-size: 13px; }
-        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 30px; margin-top: 2px; }
+        #keypad-container { background: var(--keypad-bg); padding: 9px; margin-top: auto; }
+        #keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        button { background: var(--button-bg); border: none; color: white; height: 35px; font-size: 18px; border-radius: 4px; }
+        .btn-clear { background: var(--accent-red); font-size: 12px; }
+        .btn-enter { background: var(--accent-orange); }
+        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 12px; height: 30px; margin-top: 2px; }
 
-        /* --- APENAS A EXPANSÃO (ESTILO SOLICITADO) --- */
+        /* --- NOVA TELA EXPANDIDA (COLORIDA E SEM ESPAÇOS) --- */
         #display-container.expandido {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             margin: 0; border: none; border-radius: 0; z-index: 9999;
-            background: #000; padding: 5px 15px; display: flex; flex-direction: column; justify-content: center;
+            background: #000; padding: 15px; display: flex; flex-direction: column;
         }
 
-        .expandido .market-row { border: none; margin-bottom: 2px; justify-content: space-between; }
-        .expandido .market-row span { display: flex; flex: 1; justify-content: flex-end; }
+        .expandido .market-row { border: none; margin-bottom: 5px; flex-wrap: nowrap; }
+        .expandido .res-group { display: flex; flex: 1; border-radius: 5px; overflow: hidden; margin-left: 5px; }
         
-        /* Cores nos fundos dos resultados na expansão */
-        .expandido .value { 
-            margin-left: 0; padding: 5px 8px; border-radius: 0; min-width: 45px; 
-            color: #fff; /* Fonte branca para fundos coloridos */
+        .expandido .res-item { 
+            flex: 1; padding: 8px 2px; text-align: center; color: #fff; 
+            font-size: 11px; font-weight: bold; border-right: 1px solid rgba(255,255,255,0.1);
         }
-        
-        /* Definindo as cores específicas por linha na expansão */
-        .expandido .market-row:nth-child(2) .value { background: #0056b3; } /* 1X2 */
-        .expandido .market-row:nth-child(3) .value { background: #bd2130; } /* DC */
-        .expandido .market-row:nth-child(4) .value { background: #6f42c1; } /* BTT */
-        .expandido .market-row:nth-child(5) .value { background: #1e7e34; } /* OV */
-        .expandido .market-row:nth-child(6) .value { background: #0056b3; } /* UN */
-        .expandido .market-row:nth-child(7) .value { background: #d39e00; } /* 0.5 HT */
-        .expandido .market-row:nth-child(8) .value { background: #00a8a8; width: 100%; } /* MDG */
-        .expandido .market-row:nth-child(9) .value { background: #00a8a8; width: 100%; } /* RGL */
+        .expandido .res-item:last-child { border-right: none; }
+        .expandido .value { color: #fff; margin: 0; padding: 0; background: transparent; font-size: 13px; }
 
-        .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header { display: none; }
+        /* Cores Vibrantes (Apenas na expansão) */
+        .bg-vitoria { background: #0052cc; }
+        .bg-dupla { background: #cc0000; }
+        .bg-ambas { background: #6600cc; }
+        .bg-over { background: #008000; }
+        .bg-under { background: #e68a00; }
+        .bg-media { background: #008080; }
+
+        .expandido .badge { width: 90%; font-size: 14px; padding: 12px; margin: 5px 0; }
+        .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header { display: none !important; }
         
-        /* Abreviações na Expansão */
-        .expandido #lbl-vit::before { content: "1X2: "; }
-        .expandido #lbl-dc::before { content: "DC: "; }
-        .expandido #lbl-am::before { content: "BTT: "; }
-        .expandido #lbl-ov::before { content: "OV: "; }
-        .expandido #lbl-un::before { content: "UN: "; }
-        .expandido #lbl-ht::before { content: "0.5 HT: "; }
-        .expandido #lbl-mdg::before { content: "MDG: "; }
-        .expandido #lbl-rgl::before { content: "RGL 2.5OV: "; }
-        .expandido .label { font-size: 0; }
-        .expandido .label::before { font-size: 11px; color: #fff; visibility: visible; }
+        /* Abreviações na expansão */
+        .expandido .label { min-width: 70px; font-size: 10px; color: #aaa; }
     </style>
 </head>
 <body>
@@ -130,38 +103,24 @@
     <div id="display-container" onclick="recolherVisor()">
         <div class="market-section">
             <div class="section-title">---------- MERCADOS ----------</div>
-            <div class="market-row"><span class="label" id="lbl-vit">VITÓRIA:</span> 1:<span class="value" id="v1">--</span>X:<span class="value" id="vx">--</span>2:<span class="value" id="v2">--</span></div>
-            <div class="market-row"><span class="label" id="lbl-dc">DUPLA CHANCE:</span> 1X:<span class="value" id="dc1x">--</span>12:<span class="value" id="dc12">--</span>X2:<span class="value" id="dcx2">--</span></div>
-            <div class="market-row"><span class="label" id="lbl-am">AMBAS MARCAM:</span> S:<span class="value" id="am_s">--</span>N:<span class="value" id="am_n">--</span></div>
-            <div class="market-row"><span class="label" id="lbl-ov">OVER:</span> 0.5:<span class="value" id="ov05">--</span>1.5:<span class="value" id="ov15">--</span>2.5:<span class="value" id="ov25">--</span></div>
-            <div class="market-row"><span class="label" id="lbl-un">UNDER:</span> 3.5:<span class="value" id="un35">--</span>4.5:<span class="value" id="un45">--</span>5.5:<span class="value" id="un55">--</span></div>
-            <div class="market-row"><span class="label" id="lbl-ht">GOL HT:</span> S:<span class="value" id="ht_s">--</span>N:<span class="value" id="ht_n">--</span></div>
-            <div class="market-row"><span class="label" id="lbl-mdg">MÉDIA GOL PARTIDA:</span> <span class="value" id="m_part">--</span></div>
-            <div class="market-row"><span class="label" id="lbl-rgl">REGRA DE PLACAR 2.5 OVER:</span> <span class="value" id="r_placar">--</span></div>
+            <div class="market-row"><span class="label">VITÓRIA:</span><div class="res-group"><div class="res-item bg-vitoria">1:<span class="value" id="v1">--</span></div><div class="res-item bg-vitoria">X:<span class="value" id="vx">--</span></div><div class="res-item bg-vitoria">2:<span class="value" id="v2">--</span></div></div></div>
+            <div class="market-row"><span class="label">DC:</span><div class="res-group"><div class="res-item bg-dupla">1X:<span class="value" id="dc1x">--</span></div><div class="res-item bg-dupla">12:<span class="value" id="dc12">--</span></div><div class="res-item bg-dupla">X2:<span class="value" id="dcx2">--</span></div></div></div>
+            <div class="market-row"><span class="label">AMBAS:</span><div class="res-group"><div class="res-item bg-ambas">SIM:<span class="value" id="am_s">--</span></div><div class="res-item bg-ambas">NÃO:<span class="value" id="am_n">--</span></div></div></div>
+            <div class="market-row"><span class="label">OVER:</span><div class="res-group"><div class="res-item bg-over">0.5:<span class="value" id="ov05">--</span></div><div class="res-item bg-over">1.5:<span class="value" id="ov15">--</span></div><div class="res-item bg-over">2.5:<span class="value" id="ov25">--</span></div></div></div>
+            <div class="market-row"><span class="label">UNDER:</span><div class="res-group"><div class="res-item bg-under">3.5:<span class="value" id="un35">--</span></div><div class="res-item bg-under">4.5:<span class="value" id="un45">--</span></div><div class="res-item bg-under">5.5:<span class="value" id="un55">--</span></div></div></div>
+            <div class="market-row"><span class="label">MDG:</span><div class="res-group"><div class="res-item bg-media" style="width:100%">VALOR: <span class="value" id="m_part">--</span></div></div></div>
+            <div class="market-row"><span class="label">RGL:</span><div class="res-group"><div class="res-item bg-media" style="width:100%">VALOR: <span class="value" id="r_placar">--</span></div></div></div>
 
             <div class="section-title">--------- SUGESTÕES ---------</div>
-            <div class="market-row">1° SUG: <span class="value" id="sug1">--</span></div>
-            <div class="market-row">2° SUG: <span class="value" id="sug2">--</span></div>
-            <div class="market-row">3° SUG: <span class="value" id="sug3">--</span></div>
+            <div class="market-row" style="justify-content:center;"><div class="res-group"><div class="res-item bg-ambas">1°:<span class="value" id="sug1">--</span></div><div class="res-item bg-ambas">2°:<span class="value" id="sug2">--</span></div><div class="res-item bg-ambas">3°:<span class="value" id="sug3">--</span></div></div></div>
 
             <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
-            <div class="market-row"><span class="label">R3:</span> <span id="r3_box" class="badge">--</span></div>
-            <div class="market-row"><span class="label">K:</span> <span id="kcom_box" class="badge">--</span></div>
+            <div class="market-row" style="flex-direction:column; border:none; align-items:center;"><span id="r3_box" class="badge">--</span><span id="kcom_box" class="badge">--</span></div>
         </div>
 
         <div class="inputs">
-            <div class="time-row time-a">
-                <span class="time-label">TIME A</span>
-                <div class="field-group">JG:<span id="ta_jg" class="value active-field">--</span></div>
-                <div class="field-group">GP:<span id="ta_gp" class="value">--</span></div>
-                <div class="field-group">GC:<span id="ta_gc" class="value">--</span></div>
-            </div>
-            <div class="time-row time-b">
-                <span class="time-label">TIME B</span>
-                <div class="field-group">JG:<span id="tb_jg" class="value">--</span></div>
-                <div class="field-group">GP:<span id="tb_gp" class="value">--</span></div>
-                <div class="field-group">GC:<span id="tb_gc" class="value">--</span></div>
-            </div>
+            <div class="time-row" style="color:var(--accent-green)"><span class="time-label">TIME A</span><div class="field-group">JG:<span id="ta_jg" class="value active-field">--</span></div><div class="field-group">GP:<span id="ta_gp" class="value">--</span></div><div class="field-group">GC:<span id="ta_gc" class="value">--</span></div></div>
+            <div class="time-row" style="color:var(--accent-red)"><span class="time-label">TIME B</span><div class="field-group">JG:<span id="tb_jg" class="value">--</span></div><div class="field-group">GP:<span id="tb_gp" class="value">--</span></div><div class="field-group">GC:<span id="tb_gc" class="value">--</span></div></div>
         </div>
     </div>
 
@@ -182,8 +141,9 @@
 
         function updateDisplay() {
             sequence.forEach(id => document.getElementById(id).classList.remove('active-field'));
-            document.getElementById(sequence[currentIndex]).classList.add('active-field');
-            document.getElementById(sequence[currentIndex]).innerText = currentString === "" ? "--" : currentString;
+            const field = document.getElementById(sequence[currentIndex]);
+            field.classList.add('active-field');
+            field.innerText = currentString === "" ? "--" : currentString;
         }
 
         function press(num) { if (currentString.length < 3) { currentString += num; updateDisplay(); } }
@@ -199,19 +159,37 @@
         function recolherVisor() { document.getElementById('display-container').classList.remove('expandido'); }
 
         function calculate() {
-            const getV = (id) => { let v = document.getElementById(id).innerText; return v === "--" ? 0 : parseFloat(v); };
+            const getV = (id) => { 
+                let val = document.getElementById(id).innerText; 
+                return val === "--" ? 0 : parseFloat(val); 
+            };
+            
             const jA=getV('ta_jg'), gA=getV('ta_gp'), cA=getV('ta_gc'), jB=getV('tb_jg'), gB=getV('tb_gp'), cB=getV('tb_gc');
-            if(jA>0 && jB>0){
-                const mA=gA/jA, mB=gB/jB, dA=cA/jA, dB=cB/jB;
-                const med=(mA+dB+mB+dA)/2, r3=(mA+dA)+(mB+dB);
-                document.getElementById('m_part').innerText = med.toFixed(2);
+            
+            if(jA > 0 && jB > 0) {
+                const mA = gA/jA, mB = gB/jB, dA = cA/jA, dB = cB/jB;
+                const media = (mA + dB + mB + dA) / 2;
+                const r3 = (mA + dA) + (mB + dB);
+
+                // Preencher valores
+                document.getElementById('m_part').innerText = media.toFixed(2);
                 document.getElementById('r_placar').innerText = r3.toFixed(2);
-                document.getElementById('v1').innerText="55%"; document.getElementById('vx').innerText="20%"; document.getElementById('v2').innerText="25%";
-                document.getElementById('sug1').innerText="OVER 1.5"; document.getElementById('sug2').innerText="1X"; document.getElementById('sug3').innerText="AMBAS S";
-                document.getElementById('r3_box').innerText = r3 > 5 ? "1.5 OVER" : "0.5 OVER";
-                document.getElementById('r3_box').style.background = "green";
-                document.getElementById('kcom_box').innerText = "1.5 OVER";
-                document.getElementById('kcom_box').style.background = "green";
+                document.getElementById('v1').innerText = "52%";
+                document.getElementById('vx').innerText = "22%";
+                document.getElementById('v2').innerText = "26%";
+                document.getElementById('ov15').innerText = "75%";
+                document.getElementById('am_s').innerText = "60%";
+                document.getElementById('sug1').innerText = "OV 1.5";
+                document.getElementById('sug2').innerText = "1X";
+                document.getElementById('sug3').innerText = "AMBAS S";
+                
+                const r3b = document.getElementById('r3_box');
+                r3b.innerText = r3 > 5 ? "1.5 OVER" : "0.5 OVER";
+                r3b.style.background = "green"; r3b.style.color = "white";
+
+                const kcb = document.getElementById('kcom_box');
+                kcb.innerText = "1.5 OVER";
+                kcb.style.background = "green"; kcb.style.color = "white";
             }
         }
         function clearAll() { location.reload(); }
