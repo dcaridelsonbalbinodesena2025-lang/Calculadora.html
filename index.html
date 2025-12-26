@@ -28,45 +28,45 @@
             height: 100vh;
             overflow: hidden;
             text-transform: uppercase;
-            padding: 2px 10px; 
+            padding: 2px 8px; 
         }
 
         .app-header {
             text-align: center;
-            padding-bottom: 2px;
-            font-size: 16px;
+            padding: 2px 0;
+            font-size: 14px;
             font-weight: 900;
             color: #0044ff;
             text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 3px #fff; 
-            letter-spacing: 1px;
         }
 
+        /* VISOR REDUZIDO */
         #display-container {
-            flex: 1 1 auto;
-            padding: 2px 8px;
+            flex: 0 1 55%; /* Ocupa no máximo 55% da altura da tela */
+            padding: 2px 6px;
             display: flex;
             flex-direction: column;
             overflow-y: auto; 
             border: 1px solid #333; 
-            border-radius: 8px;
+            border-radius: 6px;
             background: #050505;
         }
 
-        .market-section { font-size: 11px; line-height: 1.1; font-family: 'Arial', sans-serif; }
-        .section-title { text-align: center; margin: 3px 0 1px 0; letter-spacing: 1px; color: yellow; font-size: 10px; font-weight: bold; }
+        .market-section { font-size: 10.5px; line-height: 1.0; font-family: 'Arial', sans-serif; }
+        .section-title { text-align: center; margin: 2px 0 1px 0; color: yellow; font-size: 9px; font-weight: bold; }
         
         .market-row { 
             margin: 1px 0; 
             display: flex; 
             flex-wrap: wrap; 
-            padding: 2px 5px; 
+            padding: 1.5px 4px; 
             align-items: center; 
-            border-radius: 4px;
+            border-radius: 3px;
             color: white;
-            min-height: 18px;
+            min-height: 16px;
         }
 
-        /* Cores de fundo mantidas e organizadas */
+        /* Cores de fundo */
         .row-vitoria { background-color: #0056b3; }
         .row-dupla { background-color: #702963; }
         .row-ambas { background-color: #006400; }
@@ -80,48 +80,48 @@
         .row-sug3 { background-color: #556b2f; }
 
         .label { font-weight: 900; margin-right: 2px; }
-        .label-inner { font-weight: 900; margin-left: 6px; margin-right: 2px; }
+        .label-inner { font-weight: 900; margin-left: 5px; margin-right: 2px; }
         .value { color: #fff; font-weight: 900; }
 
         .badge { 
-            padding: 2px 8px; font-weight: 900; border-radius: 4px; font-size: 11px; 
-            margin-top: 1px; min-width: 140px; text-align: center; display: inline-block;
+            padding: 1px 6px; font-weight: 900; border-radius: 3px; font-size: 10px; 
+            margin-top: 1px; min-width: 130px; text-align: center; display: inline-block;
         }
 
         .inputs {
-            display: flex; flex-direction: column; gap: 2px; padding: 5px 0;
+            display: flex; flex-direction: column; gap: 1px; padding: 3px 0;
             background: #080808; border-top: 1px solid #222; margin-top: 2px;
         }
 
         .time-row { display: flex; justify-content: center; align-items: center; width: 100%; }
-        .time-label { font-weight: bold; font-size: 11px; min-width: 60px; }
+        .time-label { font-weight: bold; font-size: 10px; min-width: 50px; }
         .time-a { color: var(--accent-green); }
         .time-b { color: var(--accent-red); }
-        .field-group { display: flex; align-items: center; margin: 0 4px; }
-        .field-label { font-size: 9px; color: #aaa; }
+        .field-group { display: flex; align-items: center; margin: 0 3px; }
+        .field-label { font-size: 8px; color: #aaa; }
         
         .inputs .value {
-            font-size: 16px; min-width: 34px; margin-left: 3px; padding: 2px;
+            font-size: 14px; min-width: 30px; margin-left: 2px; padding: 1px;
             background: #1a1a1a; border-radius: 3px; text-align: center;
         }
 
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
         #keypad-container {
-            background: var(--keypad-bg); padding: 4px; margin-top: 2px;
+            background: var(--keypad-bg); padding: 3px; margin-top: 2px;
         }
 
         #keypad {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; width: 100%; max-width: 400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; width: 100%; max-width: 400px; margin: 0 auto;
         }
 
         button {
-            background: var(--button-bg); border: none; color: white; height: 34px; font-size: 18px; border-radius: 4px;
+            background: var(--button-bg); border: none; color: white; height: 32px; font-size: 16px; border-radius: 4px;
         }
 
-        .btn-clear { background: var(--accent-red); font-size: 11px; font-weight: bold; }
+        .btn-clear { background: var(--accent-red); font-size: 10px; font-weight: bold; }
         .btn-enter { background: var(--accent-orange); }
-        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 11px; height: 24px; margin-top: 2px; }
+        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 10px; height: 22px; margin-top: 1px; }
     </style>
 </head>
 <body>
@@ -149,20 +149,20 @@
             <div class="market-row" style="justify-content: center;"><span id="r3_box" class="badge">--</span></div>
             <div class="market-row" style="justify-content: center;"><span id="kcom_box" class="badge">--</span></div>
         </div>
+    </div>
 
-        <div class="inputs">
-            <div class="time-row time-a">
-                <span class="time-label">TIME A</span>
-                <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value active-field">--</span></div>
-                <div class="field-group"><span class="field-label">GP:</span><span id="ta_gp" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GC:</span><span id="ta_gc" class="value">--</span></div>
-            </div>
-            <div class="time-row time-b">
-                <span class="time-label">TIME B</span>
-                <div class="field-group"><span class="field-label">JG:</span><span id="tb_jg" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GP:</span><span id="tb_gp" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GC:</span><span id="tb_gc" class="value">--</span></div>
-            </div>
+    <div class="inputs">
+        <div class="time-row time-a">
+            <span class="time-label">TIME A</span>
+            <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value active-field">--</span></div>
+            <div class="field-group"><span class="field-label">GP:</span><span id="ta_gp" class="value">--</span></div>
+            <div class="field-group"><span class="field-label">GC:</span><span id="ta_gc" class="value">--</span></div>
+        </div>
+        <div class="time-row time-b">
+            <span class="time-label">TIME B</span>
+            <div class="field-group"><span class="field-label">JG:</span><span id="tb_jg" class="value">--</span></div>
+            <div class="field-group"><span class="field-label">GP:</span><span id="tb_gp" class="value">--</span></div>
+            <div class="field-group"><span class="field-label">GC:</span><span id="tb_gc" class="value">--</span></div>
         </div>
     </div>
 
