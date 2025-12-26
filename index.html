@@ -43,7 +43,7 @@
 
         #display-container {
             flex: 0 1 auto;
-            padding: 1px 15px;
+            padding: 5px 15px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start; 
@@ -54,7 +54,7 @@
             margin-bottom: 2px;
         }
 
-        .market-section { font-size: 11px; line-height: 1.2; font-family: 'Courier New', monospace; }
+        .market-section { font-size: 13px; line-height: 1.2; font-family: 'Courier New', monospace; }
         .section-title { text-align: center; margin: 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
         .market-row { margin: 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 1px; align-items: center; }
         
@@ -80,16 +80,16 @@
         }
 
         .time-row { display: flex; justify-content: center; align-items: center; width: 100%; }
-        .time-label { font-weight: bold; font-size: 9px; min-width: 30px; text-align: left; }
+        .time-label { font-weight: bold; font-size: 12px; min-width: 70px; text-align: left; }
         .time-a { color: var(--accent-green); }
         .time-b { color: var(--accent-red); }
         .field-group { display: flex; align-items: center; margin: 0 5px; }
-        .field-label { font-size: 6px; color: #aaa; }
+        .field-label { font-size: 10px; color: #aaa; }
         
         /* Estilo para os valores de digitação (Time A/B) */
         .inputs .value {
-            font-size: 10px; min-width: 38px; margin: 0 3px; padding: 1px 2px;
-            background: #1a1a1a; border-radius: 2px; margin-left: 2px;
+            font-size: 18px; min-width: 38px; margin: 0 3px; padding: 3px 2px;
+            background: #1a1a1a; border-radius: 4px; margin-left: 4px;
         }
 
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
@@ -107,13 +107,13 @@
         }
 
         button {
-            background: var(--button-bg); border: none; color: white; height: 35px; font-size: 15px; border-radius: 10px;
+            background: var(--button-bg); border: none; color: white; height: 38px; font-size: 20px; border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
         }
 
         button:active { background: #444; }
-        .btn-clear { background: var(--accent-red); font-size: 10px; font-weight: bold; }
-        .btn-enter { background: var(--accent-orange); font-size: 10px; }
+        .btn-clear { background: var(--accent-red); font-size: 12px; font-weight: bold; }
+        .btn-enter { background: var(--accent-orange); font-size: 18px; }
         .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 12px; font-weight: bold; height: 28px; margin-top: 2px; }
     </style>
 </head>
@@ -130,8 +130,8 @@
             <div class="market-row"><span class="label">OVER:</span>0.5:<span class="value" id="ov05">--</span> <span class="label-inner">1.5:</span><span class="value" id="ov15">--</span> <span class="label-inner">2.5:</span><span class="value" id="ov25">--</span></div>
             <div class="market-row"><span class="label">UNDER:</span>3.5:<span class="value" id="un35">--</span> <span class="label-inner">4.5:</span><span class="value" id="un45">--</span> <span class="label-inner">5.5:</span><span class="value" id="un55">--</span></div>
             <div class="market-row"><span class="label">GOL HT:</span>SIM:<span class="value" id="ht_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="ht_n">--</span></div>
-        
-                 
+            <div class="market-row"><span class="label">MÉDIA GOL HT:</span><span class="value" id="m_ht">--</span></div>
+            <div class="market-row"><span class="label">MARCA 1°:</span>C:<span class="value" id="mp_c">--</span> <span class="label-inner">F:</span><span class="value" id="mp_f">--</span></div>
             <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span><span class="value" id="m_part">--</span></div>
             <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span><span class="value" id="r_placar">--</span></div>
 
