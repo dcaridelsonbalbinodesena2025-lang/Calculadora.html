@@ -65,8 +65,13 @@
         .label-main { font-weight: bold; margin-right: 6px; color: #ffffff; min-width: 65px; }
 
         .res-box {
-            padding: 2px 6px; border-radius: 4px; margin-right: 5px;
-            display: inline-flex; align-items: center; font-weight: 900; color: #ffffff !important;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 5px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 900;
+            color: #ffffff !important;
         }
 
         .bg-c { background-color: var(--bg-casa); }
@@ -76,14 +81,14 @@
 
         .value { color: #ffffff !important; margin-left: 0px; }
 
-        /* Estilo das Badges REGRA 3 e K.COM conforme imagem */
+        /* Alteração: Altura reduzida dos botões Regra 3 e K.Com */
         .badge { 
-            padding: 2px 10px; font-weight: 900; border-radius: 5px; font-size: 11px; 
+            padding: 2px 10px; font-weight: 900; border-radius: 5px; font-size: 12px; 
             margin-top: 2px; min-width: 180px; text-align: center; display: inline-block;
-            height: 22px; line-height: 18px; /* Altura diminuída */
+            height: 22px; line-height: 18px; 
         }
 
-        /* Área de Inputs conforme a imagem solicitada */
+        /* Área de Inputs */
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 6px 0; gap: 2px; background: #080808; border-top: 1px solid #222;
@@ -92,25 +97,21 @@
 
         .time-row { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 2px; }
         
-        /* Fontes de Time A e B diminuídas */
+        /* Alteração: Fontes de Time A/B e Rótulos JG, GP, GC diminuídas */
         .time-label { font-weight: bold; font-size: 10px; min-width: 60px; text-align: left; }
         .time-a { color: var(--accent-green); }
         .time-b { color: var(--accent-red); }
-        
         .field-group { display: flex; align-items: center; margin: 0 3px; }
-        
-        /* Fontes de JG, GP, GC diminuídas */
         .field-label { font-size: 9px; color: #aaa; margin-right: 2px; }
         
         .inputs .value-input {
-            font-size: 16px; min-width: 32px; height: 28px; margin: 0 2px; padding: 0 2px;
+            font-size: 16px; min-width: 32px; height: 28px; margin: 0 2px;
             background: #1a1a1a; border-radius: 4px; color: #fff; text-align: center;
             display: flex; align-items: center; justify-content: center;
         }
 
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
-        /* Teclado */
         #keypad-container {
             background: var(--keypad-bg); padding: 6px; border-top: 1px solid var(--divider-color);
             margin-top: 2px; border-radius: 5px;
@@ -169,6 +170,11 @@
                 <span class="res-box bg-x">4.5:<span class="value" id="un45">--</span></span>
                 <span class="res-box bg-x">5.5:<span class="value" id="un55">--</span></span>
             </div>
+            <div class="market-row"><span class="label-main">GOL HT:</span><span class="res-box bg-c">SIM:<span class="value" id="ht_s">--</span></span><span class="res-box bg-f">NÃO:<span class="value" id="ht_n">--</span></span></div>
+            <div class="market-row"><span class="label-main">MÉDIA HT:</span><span class="res-box bg-g"><span class="value" id="m_ht">--</span></span></div>
+            <div class="market-row"><span class="label-main">MARCA 1°:</span><span class="res-box bg-c">C:<span class="value" id="mp_c">--</span></span><span class="res-box bg-f">F:<span class="value" id="mp_f">--</span></span></div>
+            <div class="market-row"><span class="label-main">MÉDIA JOGO:</span><span class="res-box bg-g"><span class="value" id="m_part">--</span></span></div>
+            <div class="market-row"><span class="label-main">REGRA 2.5:</span><span class="res-box bg-g"><span class="value" id="r_placar">--</span></span></div>
 
             <div class="section-title">SUGESTÕES E REGRAS</div>
             <div class="market-row">1° SUG:<span class="value" id="sug1" style="margin-left:5px">--</span></div>
@@ -246,22 +252,34 @@
                 const medHT = mediaPartida * 0.4;
                 const cap = (v) => Math.min(Math.max(Math.round(v), 0), 99);
 
+                setV('r_placar', r3_val.toFixed(2));
+                setV('m_part', mediaPartida.toFixed(2));
+                setV('m_ht', medHT.toFixed(2));
                 setV('vC', Math.round((medAtaA/(medAtaA+medAtaB))*100) + "%");
                 setV('vX', "28%");
                 setV('vF', Math.round((medAtaB/(medAtaA+medAtaB))*100) + "%");
                 setV('ov05', cap(mediaPartida * 45) + "%");
                 setV('ov15', cap(mediaPartida * 32) + "%");
                 setV('ov25', cap(mediaPartida * 22) + "%");
+                setV('un35', cap(100 - (mediaPartida * 15)) + "%");
+                setV('un45', cap(100 - (mediaPartida * 10)) + "%");
+                setV('un55', cap(100 - (mediaPartida * 5)) + "%");
+                setV('dcCE', cap((medAtaA/(medAtaA+medAtaB))*100 + 20) + "%"); 
+                setV('dcLTD', "75%"); 
+                setV('dcFE', cap((medAtaB/(medAtaA+medAtaB))*100 + 20) + "%"); 
                 setV('am_s', mediaPartida > 2.3 ? "82%" : "38%");
                 setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
+                setV('ht_s', cap(medHT * 60) + "%");
+                setV('ht_n', cap(100 - (medHT * 60)) + "%");
+                setV('mp_c', cap((medAtaA/(medAtaA+medAtaB))*100 - 5) + "%"); 
+                setV('mp_f', cap((medAtaB/(medAtaA+medAtaB))*100 - 5) + "%");
 
-                // Atualização dos Badges com os nomes restaurados
                 const r3Box = document.getElementById('r3_box');
                 let r3Txt = "";
-                if (r3_val < 4) { r3Txt = "4.5 UNDER GOL"; r3Box.style.background = "red"; }
+                if (r3_val < 4) { r3Txt = "4.5 UNDER GOL"; r3Box.style.background = "red"; r3Box.style.color="white";}
                 else if (r3_val < 5) { r3Txt = "0.5 OVER GOL"; r3Box.style.background = "#adff2f"; r3Box.style.color="black";}
-                else if (r3_val < 8) { r3Txt = "1.5 OVER GOL"; r3Box.style.background = "green"; }
-                else { r3Txt = "2.5 OVER GOL"; r3Box.style.background = "#000080"; }
+                else if (r3_val < 8) { r3Txt = "1.5 OVER GOL"; r3Box.style.background = "green"; r3Box.style.color="white";}
+                else { r3Txt = "2.5 OVER GOL"; r3Box.style.background = "#000080"; r3Box.style.color="white";}
                 r3Box.innerText = "REGRA 3: " + r3Txt;
 
                 const kcomBox = document.getElementById('kcom_box');
