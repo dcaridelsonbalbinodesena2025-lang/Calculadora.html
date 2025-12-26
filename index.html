@@ -42,7 +42,7 @@
         }
 
         #display-container {
-            height: 400px; /* CORRIGIDO: Escrita e ponto e vírgula */
+            height: 400px;
             padding: 7px 15px;
             display: flex;
             flex-direction: column;
@@ -52,8 +52,70 @@
             border-radius: 10px;
             background: #050505;
             margin-bottom: 5px;
+            transition: all 0.4s ease-in-out;
         }
 
+        /* --- ESTILO DE EXPANSÃO MELHORADO --- */
+        #display-container.expandido {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            z-index: 9999;
+            background: #000000;
+            padding: 30px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza verticalmente */
+            align-items: center;    /* Centraliza horizontalmente */
+        }
+
+        /* Título reaparecendo na expansão */
+        #display-container.expandido::before {
+            content: "CALCULADORA K.C⚽️M";
+            display: block;
+            text-align: center;
+            font-size: 22px;
+            color: #0044ff;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        .expandido .market-section { 
+            font-size: 14px; /* Diminuído para não quebrar */
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .expandido .section-title { 
+            font-size: 14px; 
+            margin: 12px 0; 
+            color: #00ffff;
+        }
+
+        .expandido .market-row { 
+            padding: 6px 0;
+            justify-content: center;
+        }
+
+        .expandido .value { font-size: 16px; color: #adff2f; }
+        
+        .expandido .badge { 
+            font-size: 16px; 
+            padding: 10px; 
+            width: 100%; 
+            margin-top: 5px;
+        }
+
+        .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header {
+            display: none !important;
+        }
+
+        /* Resto do layout original */
         .market-section { font-size: 12px; line-height: 1.3; font-family: 'Courier New', monospace; }
         .section-title { text-align: center; margin: 1px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
         .market-row { margin: 0px 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
@@ -68,8 +130,7 @@
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 12px 0; gap: 10px; background: #080808; border-top: 1px solid #222;
-            margin-top: 8px;
-            border-radius: 7px;
+            margin-top: 8px; border-radius: 7px;
         }
 
         .time-row { display: flex; justify-content: center; align-items: center; width: 80%; }
@@ -87,11 +148,9 @@
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
         #keypad-container {
-            background: var(--keypad-bg); 
-            padding: 9px; 
+            background: var(--keypad-bg); padding: 9px; 
             border-top: 1px solid var(--divider-color);
-            margin-top: 10px;
-            border-radius: 5px;
+            margin-top: 10px; border-radius: 5px;
         }
 
         #keypad {
@@ -113,7 +172,7 @@
 
     <div class="app-header">CALCULADORA K.C⚽️M</div>
 
-    <div id="display-container">
+    <div id="display-container" onclick="recolherVisor()">
         <div class="market-section">
             <div class="section-title">---------- MERCADOS ----------</div>
             <div class="market-row"><span class="label">VITÓRIA:</span> 1:<span class="value" id="v1">--</span>|X:<span class="value" id="vx">--</span>|2:<span class="value" id="v2">--</span></div>
@@ -166,6 +225,7 @@
         const sequence = ['ta_jg', 'ta_gp', 'ta_gc', 'tb_jg', 'tb_gp', 'tb_gc'];
         let currentIndex = 0;
         let currentString = "";
+        const displayContainer = document.getElementById('display-container');
 
         function updateDisplay() {
             sequence.forEach(id => document.getElementById(id).classList.remove('active-field'));
@@ -182,14 +242,12 @@
             } 
         }
 
-        function fixField() { 
-            currentString = ""; 
-            updateDisplay(); 
-        }
+        function fixField() { currentString = ""; updateDisplay(); }
 
         function nextField() {
             if (currentIndex === sequence.length - 1) {
                 calculateAll();
+                setTimeout(() => { displayContainer.classList.add('expandido'); }, 150);
             } else {
                 currentIndex++;
                 currentString = "";
@@ -197,10 +255,10 @@
             }
         }
 
+        function recolherVisor() { displayContainer.classList.remove('expandido'); }
+
         function applyBadge(el, text, bg, color) {
-            el.innerText = text; 
-            el.style.backgroundColor = bg; 
-            el.style.color = color;
+            el.innerText = text; el.style.backgroundColor = bg; el.style.color = color;
         }
 
         function calculateAll() {
@@ -213,20 +271,15 @@
             const jgA = getV('ta_jg'), gpA = getV('ta_gp'), gcA = getV('ta_gc');
             const jgB = getV('tb_jg'), gpB = getV('tb_gp'), gcB = getV('tb_gc');
 
-            // Verifica se tem jogos informados para não dividir por zero
             if (jgA > 0 && jgB > 0) {
                 const medAtaA = gpA / jgA, medDefA = gcA / jgA;
                 const medAtaB = gpB / jgB, medDefB = gcB / jgB;
-                
                 const r3_val = (medAtaA + medDefA) + (medAtaB + medDefB);
                 const mediaPartida = (medAtaA + medDefB + medAtaB + medDefA) / 2;
                 const medHT = mediaPartida * 0.4;
-
                 setV('r_placar', r3_val.toFixed(2));
                 setV('m_part', mediaPartida.toFixed(2));
-
                 const cap = (v) => Math.min(Math.max(Math.round(v), 0), 99);
-
                 setV('ov05', cap(mediaPartida * 45) + "%");
                 setV('ov15', cap(mediaPartida * 32) + "%");
                 setV('ov25', cap(mediaPartida * 22) + "%");
@@ -235,37 +288,16 @@
                 setV('un55', cap(100 - (mediaPartida * 5)) + "%");
                 setV('ht_s', cap(medHT * 60) + "%");
                 setV('ht_n', cap(100 - (medHT * 60)) + "%");
-
                 const totalAtaque = (medAtaA + medAtaB) || 1;
                 const p1 = (medAtaA / totalAtaque * 100);
                 const p2 = (medAtaB / totalAtaque * 100);
-                
-                setV('v1', Math.round(p1) + "%"); 
-                setV('vx', "28%"); 
-                setV('v2', Math.round(p2) + "%");
-                setV('dc1x', cap(p1 + 20) + "%"); 
-                setV('dc12', "75%"); 
-                setV('dcx2', cap(p2 + 20) + "%");
+                setV('v1', Math.round(p1) + "%"); setV('vx', "28%"); setV('v2', Math.round(p2) + "%");
+                setV('dc1x', cap(p1 + 20) + "%"); setV('dc12', "75%"); setV('dcx2', cap(p2 + 20) + "%");
+                setV('am_s', mediaPartida > 2.3 ? "82%" : "38%"); setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
 
-                setV('am_s', mediaPartida > 2.3 ? "82%" : "38%"); 
-                setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
-
-                let sug1 = "UNDER 3.5 GOLS";
-                if (mediaPartida > 3.2) sug1 = "2.5 OVER GOL";
-                else if (mediaPartida > 2.6) sug1 = "1.5 OVER GOL";
-                else if (mediaPartida > 1.8) sug1 = "0.5 OVER GOL";
-                setV('sug1', sug1);
-
-                let sug2 = "EMPATE OU FORA";
-                if (p1 > 55) sug2 = "VITÓRIA TIME A";
-                else if (p2 > 55) sug2 = "VITÓRIA TIME B";
-                else if (p1 > p2) sug2 = "TIME A OU EMPATE";
-                setV('sug2', sug2);
-
-                let sug3 = "AMBAS NÃO MARCAM";
-                if (mediaPartida > 2.4) sug3 = "AMBAS SIM MARCAM";
-                else if (medHT > 0.8) sug3 = "GOL NO HT SIM";
-                setV('sug3', sug3);
+                let s1 = "UNDER 3.5"; if(mediaPartida>3.2) s1="2.5 OVER"; else if(mediaPartida>2.6) s1="1.5 OVER"; setV('sug1', s1);
+                let s2 = "X OU 2"; if(p1>55) s2="VITÓRIA A"; else if(p2>55) s2="VITÓRIA B"; setV('sug2', s2);
+                let s3 = "AMBAS NÃO"; if(mediaPartida>2.4) s3="AMBAS SIM"; setV('sug3', s3);
 
                 const r3Box = document.getElementById('r3_box');
                 if (r3_val < 4) applyBadge(r3Box, "4.5 UNDER GOL", "red", "white");
@@ -274,11 +306,7 @@
                 else applyBadge(r3Box, "2.5 OVER GOL", "#000080", "white");
 
                 const kcomBox = document.getElementById('kcom_box');
-                if (mediaPartida < 2) applyBadge(kcomBox, "4.5 UNDER GOL", "red", "white");
-                else if (mediaPartida < 2.5) applyBadge(kcomBox, "POSSÍVEL 0.5 OVER", "yellow", "black");
-                else if (mediaPartida < 2.8) applyBadge(kcomBox, "0.5 OVER GOL", "#adff2f", "black");
-                else if (mediaPartida < 3) applyBadge(kcomBox, "POSSÍVEL 1.5 OVER", "yellow", "black");
-                else if (mediaPartida < 3.3) applyBadge(kcomBox, "1.5 OVER GOL", "green", "white");
+                if (mediaPartida < 3.3) applyBadge(kcomBox, "1.5 OVER GOL", "green", "white");
                 else applyBadge(kcomBox, "2.5 OVER GOL", "#000080", "white");
             }
         }
@@ -287,13 +315,9 @@
             document.querySelectorAll('.value').forEach(el => el.innerText = "--");
             ['r3_box', 'kcom_box'].forEach(id => {
                 const el = document.getElementById(id);
-                el.innerText = "--"; 
-                el.style.background = "transparent";
-                el.style.color = "white";
+                el.innerText = "--"; el.style.background = "transparent"; el.style.color = "white";
             });
-            currentIndex = 0; 
-            currentString = ""; 
-            updateDisplay();
+            currentIndex = 0; currentString = ""; recolherVisor(); updateDisplay();
         }
     </script>
 </body>
