@@ -43,7 +43,7 @@
 
         #display-container {
             flex: 0 1 auto;
-            padding: 5px 15px;
+            padding: 5px 10px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start; 
@@ -54,18 +54,39 @@
             margin-bottom: 2px;
         }
 
-        .market-section { font-size: 13px; line-height: 1.2; font-family: 'Courier New', monospace; }
-        .section-title { text-align: center; margin: 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
-        .market-row { margin: 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 1px; align-items: center; }
+        .market-section { font-size: 12px; line-height: 1.4; font-family: 'Arial', sans-serif; }
+        .section-title { text-align: center; margin: 5px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; font-weight: bold; }
         
-        /* Rótulo principal (ex: VITÓRIA:) */
-        .label { font-weight: bold; }
+        /* Estilização das linhas com cores de fundo diferentes */
+        .market-row { 
+            margin: 3px 0; 
+            display: flex; 
+            flex-wrap: wrap; 
+            padding: 5px; 
+            align-items: center; 
+            border-radius: 5px;
+            color: white; /* Texto sempre branco nos fundos coloridos */
+        }
 
-        /* Rótulos internos (ex: X:, F:, SIM:) com margem à esquerda para separar do resultado anterior */
-        .label-inner { font-weight: bold; margin-left: 8px; }
+        /* Cores específicas para cada linha */
+        .row-vitoria { background-color: #0056b3; }       /* Azul */
+        .row-dupla { background-color: #702963; }         /* Bizâncio (Roxo) */
+        .row-ambas { background-color: #006400; }         /* Verde Escuro */
+        .row-over { background-color: #b22222; }          /* Vermelho Tijolo */
+        .row-under { background-color: #4b0082; }         /* Indigo */
+        .row-gol-ht { background-color: #8b4513; }        /* Marrom Sela */
+        .row-media-ht { background-color: #2f4f4f; }      /* Cinza Ardósia Escuro (Mas esverdeado) */
+        .row-marca-1 { background-color: #c71585; }       /* Rosa Médio */
+        .row-media-part { background-color: #191970; }    /* Azul Meia-noite */
+        .row-regra-placar { background-color: #ff4500; }  /* Laranja Avermelhado */
         
-        /* Valor colado no rótulo */
-        .value { color: var(--text-color); font-weight: bold; padding: 0; min-width: 5px; text-align: center; }
+        .row-sug1 { background-color: #008080; }          /* Turquesa */
+        .row-sug2 { background-color: #483d8b; }          /* Azul Ardósia */
+        .row-sug3 { background-color: #556b2f; }          /* Verde Oliva */
+
+        .label { font-weight: 900; }
+        .label-inner { font-weight: 900; margin-left: 8px; }
+        .value { color: #fff; font-weight: 900; padding: 0 2px; }
 
         .badge { 
             padding: 4px 10px; font-weight: 900; border-radius: 5px; font-size: 13px; 
@@ -75,8 +96,7 @@
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 8px 0; gap: 4px; background: #080808; border-top: 1px solid #222;
-            margin-top: 2px;
-            border-radius: 7px;
+            margin-top: 2px; border-radius: 7px;
         }
 
         .time-row { display: flex; justify-content: center; align-items: center; width: 100%; }
@@ -86,7 +106,6 @@
         .field-group { display: flex; align-items: center; margin: 0 5px; }
         .field-label { font-size: 10px; color: #aaa; }
         
-        /* Estilo para os valores de digitação (Time A/B) */
         .inputs .value {
             font-size: 18px; min-width: 38px; margin: 0 3px; padding: 3px 2px;
             background: #1a1a1a; border-radius: 4px; margin-left: 4px;
@@ -124,21 +143,21 @@
     <div id="display-container">
         <div class="market-section">
             <div class="section-title">---------- MERCADOS ----------</div>
-            <div class="market-row"><span class="label">VITÓRIA:</span>C:<span class="value" id="vC">--</span> <span class="label-inner">X:</span><span class="value" id="vX">--</span> <span class="label-inner">F:</span><span class="value" id="vF">--</span></div>
-            <div class="market-row"><span class="label">DUPLA CHANCE:</span>CE:<span class="value" id="dcCE">--</span> <span class="label-inner">LTD:</span><span class="value" id="dcLTD">--</span> <span class="label-inner">FE:</span><span class="value" id="dcFE">--</span></div>
-            <div class="market-row"><span class="label">AMBAS MARCAM:</span>SIM:<span class="value" id="am_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="am_n">--</span></div>
-            <div class="market-row"><span class="label">OVER:</span>0.5:<span class="value" id="ov05">--</span> <span class="label-inner">1.5:</span><span class="value" id="ov15">--</span> <span class="label-inner">2.5:</span><span class="value" id="ov25">--</span></div>
-            <div class="market-row"><span class="label">UNDER:</span>3.5:<span class="value" id="un35">--</span> <span class="label-inner">4.5:</span><span class="value" id="un45">--</span> <span class="label-inner">5.5:</span><span class="value" id="un55">--</span></div>
-            <div class="market-row"><span class="label">GOL HT:</span>SIM:<span class="value" id="ht_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="ht_n">--</span></div>
-            <div class="market-row"><span class="label">MÉDIA GOL HT:</span><span class="value" id="m_ht">--</span></div>
-            <div class="market-row"><span class="label">MARCA 1°:</span>C:<span class="value" id="mp_c">--</span> <span class="label-inner">F:</span><span class="value" id="mp_f">--</span></div>
-            <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span><span class="value" id="m_part">--</span></div>
-            <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span><span class="value" id="r_placar">--</span></div>
+            <div class="market-row row-vitoria"><span class="label">VITÓRIA:</span>C:<span class="value" id="vC">--</span> <span class="label-inner">X:</span><span class="value" id="vX">--</span> <span class="label-inner">F:</span><span class="value" id="vF">--</span></div>
+            <div class="market-row row-dupla"><span class="label">DUPLA CHANCE:</span>CE:<span class="value" id="dcCE">--</span> <span class="label-inner">LTD:</span><span class="value" id="dcLTD">--</span> <span class="label-inner">FE:</span><span class="value" id="dcFE">--</span></div>
+            <div class="market-row row-ambas"><span class="label">AMBAS MARCAM:</span>SIM:<span class="value" id="am_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="am_n">--</span></div>
+            <div class="market-row row-over"><span class="label">OVER:</span>0.5:<span class="value" id="ov05">--</span> <span class="label-inner">1.5:</span><span class="value" id="ov15">--</span> <span class="label-inner">2.5:</span><span class="value" id="ov25">--</span></div>
+            <div class="market-row row-under"><span class="label">UNDER:</span>3.5:<span class="value" id="un35">--</span> <span class="label-inner">4.5:</span><span class="value" id="un45">--</span> <span class="label-inner">5.5:</span><span class="value" id="un55">--</span></div>
+            <div class="market-row row-gol-ht"><span class="label">GOL HT:</span>SIM:<span class="value" id="ht_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="ht_n">--</span></div>
+            <div class="market-row row-media-ht"><span class="label">MÉDIA GOL HT:</span> <span class="value" id="m_ht">--</span></div>
+            <div class="market-row row-marca-1"><span class="label">MARCA 1°:</span>C:<span class="value" id="mp_c">--</span> <span class="label-inner">F:</span><span class="value" id="mp_f">--</span></div>
+            <div class="market-row row-media-part"><span class="label">MÉDIA GOL PARTIDA:</span> <span class="value" id="m_part">--</span></div>
+            <div class="market-row row-regra-placar"><span class="label">REGRA DE PLACAR 2.5 OVER:</span> <span class="value" id="r_placar">--</span></div>
 
             <div class="section-title">--------- SUGESTÕES ---------</div>
-            <div class="market-row">1° SUG:<span class="value" id="sug1">--</span></div>
-            <div class="market-row">2° SUG:<span class="value" id="sug2">--</span></div>
-            <div class="market-row">3° SUG:<span class="value" id="sug3">--</span></div>
+            <div class="market-row row-sug1">1° SUG: <span class="value" id="sug1">--</span></div>
+            <div class="market-row row-sug2">2° SUG: <span class="value" id="sug2">--</span></div>
+            <div class="market-row row-sug3">3° SUG: <span class="value" id="sug3">--</span></div>
 
             <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
             <div class="market-row"><span class="label">REGRA 3:</span> <span id="r3_box" class="badge">--</span></div>
