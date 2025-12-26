@@ -68,6 +68,15 @@
         .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; min-width: 20px; text-align: center; }
         .badge { padding: 4px 8px; font-weight: 700; border-radius: 5px; font-size: 12px; margin-top: 3px; min-width: 100px; text-align: center; display: inline-block; }
 
+        /* SUGESTÕES ocultas na calculadora, visíveis na expandida */
+        .suggestions-section {
+            display: none;
+        }
+
+        #display-container.expanded .suggestions-section {
+            display: block;
+        }
+
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 12px 0; gap: 10px; background: #080808; border-top: 1px solid #222;
@@ -179,10 +188,10 @@
             <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span> <span class="value" id="m_part">--</span></div>
             <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span> <span class="value" id="r_placar">--</span></div>
 
-            <div class="section-title">--------- SUGESTÕES ---------</div>
-            <div class="market-row">1° SUG: <span class="value" id="sug1">--</span></div>
-            <div class="market-row">2° SUG: <span class="value" id="sug2">--</span></div>
-            <div class="market-row">3° SUG: <span class="value" id="sug3">--</span></div>
+            <div class="section-title suggestions-section">--------- SUGESTÕES ---------</div>
+            <div class="market-row suggestions-section">1° SUG: <span class="value" id="sug1">--</span></div>
+            <div class="market-row suggestions-section">2° SUG: <span class="value" id="sug2">--</span></div>
+            <div class="market-row suggestions-section">3° SUG: <span class="value" id="sug3">--</span></div>
 
             <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
             <div class="market-row"><span class="label">REGRA 3:</span> <span id="r3_box" class="badge">--</span></div>
@@ -273,6 +282,7 @@
             teamInputs.style.display = 'none';
 
             // Expande a tela e mostra botão voltar
+            // Sugestões já aparecem automaticamente via CSS
             display.classList.add('expanded');
             keypad.classList.add('hidden');
             backContainer.classList.add('show');
