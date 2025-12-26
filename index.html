@@ -40,30 +40,35 @@
             text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 3px #fff; 
         }
 
-        /* VISOR REDUZIDO */
         #display-container {
-            flex: 0 1 55%; /* Ocupa no máximo 55% da altura da tela */
+            flex: 0 1 auto; /* Ajusta-se ao conteúdo sem sobrar espaço */
             padding: 2px 6px;
             display: flex;
             flex-direction: column;
-            overflow-y: auto; 
             border: 1px solid #333; 
             border-radius: 6px;
             background: #050505;
+            overflow-y: auto;
         }
 
-        .market-section { font-size: 10.5px; line-height: 1.0; font-family: 'Arial', sans-serif; }
-        .section-title { text-align: center; margin: 2px 0 1px 0; color: yellow; font-size: 9px; font-weight: bold; }
+        .market-section { font-family: 'Arial', sans-serif; }
+        
+        .section-title { 
+            text-align: center; 
+            margin: 1px 0; 
+            color: yellow; 
+            font-size: 10px; 
+            font-weight: bold; 
+        }
         
         .market-row { 
             margin: 1px 0; 
             display: flex; 
             flex-wrap: wrap; 
-            padding: 1.5px 4px; 
+            padding: 3px 5px; 
             align-items: center; 
             border-radius: 3px;
             color: white;
-            min-height: 16px;
         }
 
         /* Cores de fundo */
@@ -79,49 +84,50 @@
         .row-sug2 { background-color: #483d8b; }
         .row-sug3 { background-color: #556b2f; }
 
-        .label { font-weight: 900; margin-right: 2px; }
-        .label-inner { font-weight: 900; margin-left: 5px; margin-right: 2px; }
-        .value { color: #fff; font-weight: 900; }
+        /* FONTES DOS RESULTADOS AUMENTADAS */
+        .label { font-size: 13px; font-weight: 900; margin-right: 3px; }
+        .label-inner { font-size: 13px; font-weight: 900; margin-left: 8px; margin-right: 3px; }
+        .value { font-size: 14px; color: #fff; font-weight: 900; }
 
         .badge { 
-            padding: 1px 6px; font-weight: 900; border-radius: 3px; font-size: 10px; 
-            margin-top: 1px; min-width: 130px; text-align: center; display: inline-block;
+            padding: 3px 10px; font-weight: 900; border-radius: 3px; font-size: 12px; 
+            margin-top: 1px; min-width: 160px; text-align: center; display: inline-block;
         }
 
         .inputs {
-            display: flex; flex-direction: column; gap: 1px; padding: 3px 0;
-            background: #080808; border-top: 1px solid #222; margin-top: 2px;
+            display: flex; flex-direction: column; gap: 2px; padding: 4px 0;
+            background: #080808; border-top: 1px solid #222; margin-top: auto; /* Empurra para baixo */
         }
 
         .time-row { display: flex; justify-content: center; align-items: center; width: 100%; }
-        .time-label { font-weight: bold; font-size: 10px; min-width: 50px; }
+        .time-label { font-weight: bold; font-size: 11px; min-width: 60px; }
         .time-a { color: var(--accent-green); }
         .time-b { color: var(--accent-red); }
-        .field-group { display: flex; align-items: center; margin: 0 3px; }
-        .field-label { font-size: 8px; color: #aaa; }
+        .field-group { display: flex; align-items: center; margin: 0 4px; }
+        .field-label { font-size: 9px; color: #aaa; }
         
         .inputs .value {
-            font-size: 14px; min-width: 30px; margin-left: 2px; padding: 1px;
-            background: #1a1a1a; border-radius: 3px; text-align: center;
+            font-size: 16px; min-width: 35px; margin-left: 2px; padding: 2px;
+            background: #1a1a1a; border-radius: 3px; text-align: center; color: white;
         }
 
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
         #keypad-container {
-            background: var(--keypad-bg); padding: 3px; margin-top: 2px;
+            background: var(--keypad-bg); padding: 4px; margin-top: 2px;
         }
 
         #keypad {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; width: 100%; max-width: 400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; width: 100%; max-width: 400px; margin: 0 auto;
         }
 
         button {
-            background: var(--button-bg); border: none; color: white; height: 32px; font-size: 16px; border-radius: 4px;
+            background: var(--button-bg); border: none; color: white; height: 36px; font-size: 18px; border-radius: 4px;
         }
 
-        .btn-clear { background: var(--accent-red); font-size: 10px; font-weight: bold; }
+        .btn-clear { background: var(--accent-red); font-size: 11px; font-weight: bold; }
         .btn-enter { background: var(--accent-orange); }
-        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 10px; height: 22px; margin-top: 1px; }
+        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 11px; height: 26px; margin-top: 1px; }
     </style>
 </head>
 <body>
@@ -141,13 +147,13 @@
             <div class="market-row row-regra-placar"><span class="label">REGRA 2.5:</span> <span class="value" id="r_placar">--</span></div>
 
             <div class="section-title">--- SUGESTÕES ---</div>
-            <div class="market-row row-sug1">1°:<span class="value" id="sug1">--</span></div>
-            <div class="market-row row-sug2">2°:<span class="value" id="sug2">--</span></div>
-            <div class="market-row row-sug3">3°:<span class="value" id="sug3">--</span></div>
+            <div class="market-row row-sug1"><span class="label">1°:</span><span class="value" id="sug1">--</span></div>
+            <div class="market-row row-sug2"><span class="label">2°:</span><span class="value" id="sug2">--</span></div>
+            <div class="market-row row-sug3"><span class="label">3°:</span><span class="value" id="sug3">--</span></div>
 
             <div class="section-title">--- REGRA 3 VS KMCOM ---</div>
-            <div class="market-row" style="justify-content: center;"><span id="r3_box" class="badge">--</span></div>
-            <div class="market-row" style="justify-content: center;"><span id="kcom_box" class="badge">--</span></div>
+            <div class="market-row" style="justify-content: center; padding: 1px;"><span id="r3_box" class="badge">--</span></div>
+            <div class="market-row" style="justify-content: center; padding: 1px;"><span id="kcom_box" class="badge">--</span></div>
         </div>
     </div>
 
