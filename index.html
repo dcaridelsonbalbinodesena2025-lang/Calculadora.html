@@ -31,7 +31,7 @@
             padding: 2px 9px; 
         }
 
-        /* --- RESTAURAÇÃO DA CALCULADORA ORIGINAL --- */
+        /* --- CALCULADORA ORIGINAL --- */
         .app-header {
             text-align: center;
             padding-bottom: 10px;
@@ -57,8 +57,8 @@
         }
 
         .market-section { font-size: 12px; line-height: 1.3; font-family: 'Courier New', monospace; }
-        .section-title { text-align: center; margin: 1px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
-        .market-row { display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
+        .section-title { text-align: center; margin: 5px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
+        .market-row { display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding: 4px 0; align-items: center; }
         .label { font-weight: bold; }
         .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; min-width: 20px; text-align: center; }
         .badge { padding: 4px 8px; font-weight: 700; border-radius: 5px; font-size: 12px; margin-top: 3px; min-width: 100px; text-align: center; display: inline-block; }
@@ -75,20 +75,20 @@
         .inputs .value { font-size: 12px; min-width: 18px; background: #1a1a1a; border-radius: 4px; }
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
-        #keypad-container { background: var(--keypad-bg); padding: 9px; border-top: 1px solid var(--divider-color); margin-top: 10px; }
+        #keypad-container { background: var(--keypad-bg); padding: 9px; border-top: 1px solid var(--divider-color); margin-top: auto; }
         #keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        button { background: var(--button-bg); border: none; color: white; height: 32px; font-size: 16px; border-radius: 4px; }
+        button { background: var(--button-bg); border: none; color: white; height: 35px; font-size: 18px; border-radius: 4px; }
         .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: bold; }
         .btn-enter { background: var(--accent-orange); }
         .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 30px; margin-top: 2px; }
 
-        /* --- TELA DE EXPANSÃO AJUSTADA (SEM ROLAGEM + ABREVIAÇÕES) --- */
+        /* --- TELA DE EXPANSÃO PROFISSIONAL (BLOCOS COLORIDOS) --- */
         #display-container.expandido {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             margin: 0; border: none; border-radius: 0; z-index: 9999;
             background: radial-gradient(circle at center, #111 0%, #000 100%);
-            padding: 10px 20px; /* Reduzi o padding superior para subir o título */
+            padding: 10px 15px;
             overflow: hidden;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
@@ -98,19 +98,12 @@
             display: block; text-align: center;
             font-size: 22px; color: #0044ff;
             text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
-            margin-top: -15px; /* Sobe o título na tela */
-            margin-bottom: 15px;
+            margin-top: -10px; margin-bottom: 10px;
         }
 
-        .expandido .market-section {
-            width: 100%; max-width: 380px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px; border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            font-family: 'Arial', sans-serif;
-        }
+        .expandido .market-section { width: 100%; max-width: 390px; font-family: 'Arial', sans-serif; }
 
-        /* Aplicando as Abreviações via CSS para os labels na expansão */
+        /* Estilo das Abreviações */
         .expandido #lbl-vit::before { content: "1X2: "; }
         .expandido #lbl-dc::before { content: "DC: "; }
         .expandido #lbl-am::before { content: "BTT: "; }
@@ -120,13 +113,36 @@
         .expandido #lbl-mdg::before { content: "MDG: "; }
         .expandido #lbl-rgl::before { content: "RGL 2.5OV: "; }
 
-        /* Esconde o texto original quando expandido */
-        .expandido .label { font-size: 0; }
-        .expandido .label::before { font-size: 12px; color: #ccc; font-weight: bold; visibility: visible; }
+        .expandido .label { font-size: 0; min-width: 70px; }
+        .expandido .label::before { font-size: 11px; color: #aaa; font-weight: bold; visibility: visible; }
 
-        .expandido .market-row { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); justify-content: space-between; display: flex; }
-        .expandido .value { font-size: 14px; color: #adff2f; }
-        .expandido .badge { font-size: 12px; padding: 8px; min-width: 170px; border-radius: 50px; margin-top: 6px; }
+        /* Estilo dos Blocos de Resultado */
+        .expandido .market-row { 
+            border: none; margin-bottom: 4px; padding: 0; 
+            display: flex; justify-content: space-between; gap: 4px;
+        }
+        
+        .expandido .market-row > span:last-child {
+            display: flex; flex: 1; gap: 4px;
+        }
+
+        /* Estilização individual dos fundos dos resultados */
+        .expandido .res-box {
+            background: rgba(255,255,255,0.07);
+            padding: 4px 6px;
+            border-radius: 6px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        .expandido .value { font-size: 13px; color: #adff2f; margin-left: 5px; }
+
+        .expandido .section-title { margin: 10px 0 5px 0; font-size: 10px; color: #00ffff; border-bottom: 1px solid rgba(0,255,255,0.2); padding-bottom: 2px;}
+        .expandido .badge { font-size: 12px; padding: 10px; min-width: 180px; border-radius: 12px; margin-top: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
         .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header { display: none !important; }
     </style>
@@ -138,19 +154,21 @@
     <div id="display-container" onclick="recolherVisor()">
         <div class="market-section">
             <div class="section-title">---------- MERCADOS ----------</div>
-            <div class="market-row"><span class="label" id="lbl-vit">VITÓRIA:</span> <span>1:<span class="value" id="v1">--</span>|X:<span class="value" id="vx">--</span>|2:<span class="value" id="v2">--</span></span></div>
-            <div class="market-row"><span class="label" id="lbl-dc">DUPLA CHANCE:</span> <span>1X:<span class="value" id="dc1x">--</span>|12:<span class="value" id="dc12">--</span>|X2:<span class="value" id="dcx2">--</span></span></div>
-            <div class="market-row"><span class="label" id="lbl-am">AMBAS MARCAM:</span> <span>SIM:<span class="value" id="am_s">--</span>|NÃO:<span class="value" id="am_n">--</span></span></div>
-            <div class="market-row"><span class="label" id="lbl-ov">OVER:</span> <span>0.5:<span class="value" id="ov05">--</span>|1.5:<span class="value" id="ov15">--</span>|2.5:<span class="value" id="ov25">--</span></span></div>
-            <div class="market-row"><span class="label" id="lbl-un">UNDER:</span> <span>3.5:<span class="value" id="un35">--</span>|4.5:<span class="value" id="un45">--</span>|5.5:<span class="value" id="un55">--</span></span></div>
-            <div class="market-row"><span class="label" id="lbl-ht">GOL HT:</span> <span>SIM:<span class="value" id="ht_s">--</span>|NÃO:<span class="value" id="ht_n">--</span></span></div>
-            <div class="market-row"><span class="label" id="lbl-mdg">MÉDIA GOL PARTIDA:</span> <span class="value" id="m_part">--</span></div>
-            <div class="market-row"><span class="label" id="lbl-rgl">REGRA DE PLACAR 2.5 OVER:</span> <span class="value" id="r_placar">--</span></div>
+            <div class="market-row"><span class="label" id="lbl-vit">VITÓRIA:</span> <span><div class="res-box">1:<span class="value" id="v1">--</span></div><div class="res-box">X:<span class="value" id="vx">--</span></div><div class="res-box">2:<span class="value" id="v2">--</span></div></span></div>
+            <div class="market-row"><span class="label" id="lbl-dc">DUPLA CHANCE:</span> <span><div class="res-box">1X:<span class="value" id="dc1x">--</span></div><div class="res-box">12:<span class="value" id="dc12">--</span></div><div class="res-box">X2:<span class="value" id="dcx2">--</span></div></span></div>
+            <div class="market-row"><span class="label" id="lbl-am">AMBAS MARCAM:</span> <span><div class="res-box">SIM:<span class="value" id="am_s">--</span></div><div class="res-box">NÃO:<span class="value" id="am_n">--</span></div></span></div>
+            <div class="market-row"><span class="label" id="lbl-ov">OVER:</span> <span><div class="res-box">0.5:<span class="value" id="ov05">--</span></div><div class="res-box">1.5:<span class="value" id="ov15">--</span></div><div class="res-box">2.5:<span class="value" id="ov25">--</span></div></span></div>
+            <div class="market-row"><span class="label" id="lbl-un">UNDER:</span> <span><div class="res-box">3.5:<span class="value" id="un35">--</span></div><div class="res-box">4.5:<span class="value" id="un45">--</span></div><div class="res-box">5.5:<span class="value" id="un55">--</span></div></span></div>
+            <div class="market-row"><span class="label" id="lbl-ht">GOL HT:</span> <span><div class="res-box">SIM:<span class="value" id="ht_s">--</span></div><div class="res-box">NÃO:<span class="value" id="ht_n">--</span></div></span></div>
+            <div class="market-row"><span class="label" id="lbl-mdg">MÉDIA GOL PARTIDA:</span> <span><div class="res-box" style="background:rgba(0,255,255,0.05)"><span class="value" id="m_part">--</span></div></span></div>
+            <div class="market-row"><span class="label" id="lbl-rgl">REGRA DE PLACAR 2.5 OVER:</span> <span><div class="res-box" style="background:rgba(173,255,47,0.05)"><span class="value" id="r_placar">--</span></div></span></div>
 
             <div class="section-title">--------- SUGESTÕES ---------</div>
-            <div class="market-row"><span class="label">1° SUG:</span> <span class="value" id="sug1">--</span></div>
-            <div class="market-row"><span class="label">2° SUG:</span> <span class="value" id="sug2">--</span></div>
-            <div class="market-row"><span class="label">3° SUG:</span> <span class="value" id="sug3">--</span></div>
+            <div class="market-row" style="justify-content:center; gap:8px;">
+                <div class="res-box" style="flex:none; width:30%;">1° SUG: <span class="value" id="sug1">--</span></div>
+                <div class="res-box" style="flex:none; width:30%;">2° SUG: <span class="value" id="sug2">--</span></div>
+                <div class="res-box" style="flex:none; width:30%;">3° SUG: <span class="value" id="sug3">--</span></div>
+            </div>
 
             <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
             <div class="market-row" style="flex-direction: column; border: none; align-items: center;">
@@ -180,7 +198,7 @@
             <button onclick="press(7)">7</button><button onclick="press(8)">8</button><button onclick="press(9)">9</button>
             <button onclick="press(4)">4</button><button onclick="press(5)">5</button><button onclick="press(6)">6</button>
             <button onclick="press(1)">1</button><button onclick="press(2)">2</button><button onclick="press(3)">3</button>
-            <button class="btn-clear" onclick="clearAll()">LIMPAR</button><button onclick="press(0)">0</button>
+            <button class="btn-clear" onclick="clearAll()">C</button><button onclick="press(0)">0</button>
             <button class="btn-enter" onclick="nextField()">➔</button>
             <button class="btn-fix" onclick="fixField()">CORRIGIR</button>
         </div>
@@ -237,7 +255,7 @@
                 setV('ov05', "92%"); setV('ov15', "66%"); setV('ov25', "45%");
                 setV('un35', "72%"); setV('un45', "82%"); setV('un55', "92%");
                 setV('ht_s', "50%"); setV('ht_n', "50%");
-                setV('sug1', "UNDER 3.5"); setV('sug2', "X OU 2"); setV('sug3', "AMBAS NÃO");
+                setV('sug1', "UN 3.5"); setV('sug2', "X2"); setV('sug3', "BTT-N");
 
                 const r3 = document.getElementById('r3_box');
                 r3.innerText = "0.5 OVER GOL"; r3.style.background = "#adff2f"; r3.style.color = "#000";
