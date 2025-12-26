@@ -3,67 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Calculadora K.C⚽️M Pro</title>
+    <title>Calculadora K.C⚽️M</title>
     <style>
         :root {
             --bg-color: #000000;
-            --card-bg: #0a0a0a;
-            --text-primary: #ffffff;
-            --text-secondary: #00ffff;
-            --accent-value: #adff2f;
-            --divider: rgba(255, 255, 255, 0.08);
+            --text-color: #ffffff;
+            --keypad-bg: #111111;
+            --button-bg: #2a2a2a;
+            --accent-green: #00ff00;
+            --accent-red: #ff3b30;
+            --accent-orange: #ff9500;
+            --accent-blue: #007aff;
+            --divider-color: #333;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            height: 100vh;
+            color: var(--text-color);
+            font-family: 'Arial Black', Gadget, sans-serif;
             display: flex;
             flex-direction: column;
+            height: 100vh;
             overflow: hidden;
             text-transform: uppercase;
+            padding: 2px 9px; 
         }
 
-        /* Título Principal Estilo Glossy */
+        /* --- TÍTULO ORIGINAL --- */
         .app-header {
             text-align: center;
-            padding: 15px 0;
+            padding-bottom: 10px;
             font-size: 20px;
             font-weight: 900;
             color: #0044ff;
-            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 3px #fff; 
             letter-spacing: 1px;
         }
 
+        /* --- VISOR ORIGINAL --- */
         #display-container {
-            flex: 1;
-            margin: 0 10px 10px 10px;
-            padding: 15px;
+            height: 400px;
+            padding: 7px 15px;
             display: flex;
             flex-direction: column;
-            border: 1px solid #333;
-            border-radius: 15px;
-            background: var(--card-bg);
-            overflow-y: auto;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            justify-content: flex-start; 
+            overflow-y: auto; 
+            border: 2px solid #333; 
+            border-radius: 10px;
+            background: #050505;
+            margin-bottom: 5px;
+            transition: all 0.4s ease-in-out;
         }
 
-        /* --- MODO EXPANDIDO PROFISSIONAL --- */
+        /* --- ESTILO DE EXPANSÃO PROFISSIONAL (PRESERVADO) --- */
         #display-container.expandido {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             margin: 0; border: none; border-radius: 0;
             z-index: 9999;
             background: radial-gradient(circle at center, #111 0%, #000 100%);
-            padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom) 20px;
-            justify-content: center; /* Centraliza verticalmente o bloco */
+            padding: 40px 20px;
+            justify-content: center;
             align-items: center;
         }
 
-        /* Título dentro da Expansão */
         #display-container.expandido::before {
             content: "CALCULADORA K.C⚽️M";
             position: absolute;
@@ -76,79 +81,53 @@
             text-align: center;
         }
 
-        /* Cartão de Dados na Expansão */
-        .expandido .market-section {
-            width: 100%;
-            max-width: 360px;
-            background: rgba(255,255,255,0.03);
-            padding: 20px;
-            border-radius: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
+        /* Ajustes de fonte na expansão */
+        .expandido .market-section { font-size: 13px; width: 100%; max-width: 360px; font-family: 'Courier New', monospace; }
+        .expandido .market-row { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); justify-content: center; }
+        .expandido .value { font-size: 15px; color: #adff2f; }
+        .expandido .badge { font-size: 14px; padding: 8px; min-width: 180px; border-radius: 10px; margin-top: 5px; }
 
-        .section-title {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 11px;
-            letter-spacing: 2px;
-            margin: 15px 0 10px 0;
-            opacity: 0.7;
-        }
-
-        .market-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--divider);
-            font-size: 12px;
-            letter-spacing: 0.5px;
-        }
-
-        .label { font-weight: 600; color: #ccc; }
-        .value { color: var(--accent-value); font-weight: 800; font-family: monospace; font-size: 14px; }
-
-        /* Badges de Resultado */
-        .badge {
-            display: inline-block;
-            width: 100%;
-            padding: 10px;
-            margin-top: 8px;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 14px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        /* Ocultar elementos desnecessários na Expansão */
+        /* Esconde elementos na expansão */
         .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header {
             display: none !important;
         }
 
-        /* Layout dos Inputs (Teclado e Campos) */
-        .inputs {
-            background: #080808; padding: 15px; border-radius: 12px; margin-top: 10px;
-            border: 1px solid #222;
-        }
-        .time-row { display: flex; align-items: center; justify-content: space-around; margin-bottom: 10px; }
-        .time-label { font-size: 10px; font-weight: 900; width: 50px; }
-        .field-group { display: flex; align-items: center; gap: 5px; }
-        .field-label { font-size: 9px; color: #666; }
-        .inputs .value { background: #1a1a1a; padding: 4px 8px; border-radius: 4px; min-width: 30px; }
-        .active-field { border: 1px solid var(--text-secondary); background: #222 !important; color: #fff !important; }
+        /* --- LAYOUT ORIGINAL DOS MERCADOS --- */
+        .market-section { font-size: 12px; line-height: 1.3; font-family: 'Courier New', monospace; }
+        .section-title { text-align: center; margin: 1px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
+        .market-row { margin: 0px 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
+        .label { font-weight: bold; }
+        .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; min-width: 20px; text-align: center; }
 
-        #keypad-container { background: #111; padding: 15px; border-radius: 20px 20px 0 0; }
-        #keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        button {
-            background: #2a2a2a; border: none; color: #fff; height: 45px;
-            border-radius: 10px; font-size: 18px; font-weight: bold;
+        .badge { 
+            padding: 4px 8px; font-weight: 700; border-radius: 5px; font-size: 12px; 
+            margin-top: 3px; min-width: 100px; text-align: center; display: inline-block;
         }
-        button:active { background: #444; transform: scale(0.95); }
-        .btn-clear { background: #ff3b30; }
-        .btn-enter { background: #ff9500; }
-        .btn-fix { grid-column: span 3; background: #007aff; height: 40px; font-size: 14px; margin-top: 5px;}
+
+        /* --- INPUTS ORIGINAIS --- */
+        .inputs {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 12px 0; gap: 10px; background: #080808; border-top: 1px solid #222;
+            margin-top: 8px; border-radius: 7px;
+        }
+        .time-row { display: flex; justify-content: center; align-items: center; width: 80%; }
+        .time-label { font-weight: bold; font-size: 8px; min-width: 75px; text-align: left; }
+        .time-a { color: var(--accent-green); }
+        .time-b { color: var(--accent-red); }
+        .field-group { display: flex; align-items: center; margin: 0 6px; }
+        .field-label { font-size: 8px; color: #aaa; }
+        .inputs .value { font-size: 12px; min-width: 18px; margin: 0 4px; padding: 2px 2px; background: #1a1a1a; border-radius: 4px; }
+
+        .active-field { background-color: #ffffff !important; color: #000000 !important; }
+
+        /* --- TECLADO ORIGINAL --- */
+        #keypad-container { background: var(--keypad-bg); padding: 9px; border-top: 1px solid var(--divider-color); margin-top: 10px; border-radius: 5px; }
+        #keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 400px; margin: 0 auto; }
+        button { background: var(--button-bg); border: none; color: white; height: 30px; font-size: 15px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        button:active { background: #444; }
+        .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: bold; }
+        .btn-enter { background: var(--accent-orange); font-size: 13px; }
+        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 30px; margin-top: 2px; }
     </style>
 </head>
 <body>
@@ -157,38 +136,38 @@
 
     <div id="display-container" onclick="recolherVisor()">
         <div class="market-section">
-            <div class="section-title">MERCADOS</div>
-            <div class="market-row"><span class="label">VITÓRIA:</span> <span>1:<span class="value" id="v1">50%</span> | X:<span class="value" id="vx">28%</span> | 2:<span class="value" id="v2">50%</span></span></div>
-            <div class="market-row"><span class="label">DUPLA CHANCE:</span> <span>1X:<span class="value" id="dc1x">70%</span> | 12:<span class="value" id="dc12">75%</span> | X2:<span class="value" id="dcx2">70%</span></span></div>
-            <div class="market-row"><span class="label">AMBAS MARCAM:</span> <span>SIM:<span class="value" id="am_s">38%</span> | NÃO:<span class="value" id="am_n">62%</span></span></div>
-            <div class="market-row"><span class="label">OVER:</span> <span>0.5:<span class="value" id="ov05">90%</span> | 1.5:<span class="value" id="ov15">64%</span> | 2.5:<span class="value" id="ov25">44%</span></span></div>
-            <div class="market-row"><span class="label">UNDER:</span> <span>3.5:<span class="value" id="un35">70%</span> | 4.5:<span class="value" id="un45">80%</span> | 5.5:<span class="value" id="un55">90%</span></span></div>
-            <div class="market-row"><span class="label">GOL HT:</span> <span>SIM:<span class="value" id="ht_s">48%</span> | NÃO:<span class="value" id="ht_n">52%</span></span></div>
-            <div class="market-row"><span class="label">MÉDIA GOL:</span> <span class="value" id="m_part">2.00</span></div>
-            <div class="market-row"><span class="label">PLACAR 2.5:</span> <span class="value" id="r_placar">4.00</span></div>
+            <div class="section-title">---------- MERCADOS ----------</div>
+            <div class="market-row"><span class="label">VITÓRIA:</span> 1:<span class="value" id="v1">--</span>|X:<span class="value" id="vx">--</span>|2:<span class="value" id="v2">--</span></div>
+            <div class="market-row"><span class="label">DUPLA CHANCE:</span> 1X:<span class="value" id="dc1x">--</span>|12:<span class="value" id="dc12">--</span>|X2:<span class="value" id="dcx2">--</span></div>
+            <div class="market-row"><span class="label">AMBAS MARCAM:</span> SIM:<span class="value" id="am_s">--</span>|NÃO:<span class="value" id="am_n">--</span></div>
+            <div class="market-row"><span class="label">OVER:</span> 0.5:<span class="value" id="ov05">--</span>|1.5:<span class="value" id="ov15">--</span>|2.5:<span class="value" id="ov25">--</span></div>
+            <div class="market-row"><span class="label">UNDER:</span> 3.5:<span class="value" id="un35">--</span>|4.5:<span class="value" id="un45">--</span>|5.5:<span class="value" id="un55">--</span></div>
+            <div class="market-row"><span class="label">GOL HT:</span> SIM:<span class="value" id="ht_s">--</span>|NÃO:<span class="value" id="ht_n">--</span></div>
+            <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span> <span class="value" id="m_part">--</span></div>
+            <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span> <span class="value" id="r_placar">--</span></div>
 
-            <div class="section-title">SUGESTÕES</div>
-            <div class="market-row"><span class="label">1° SUG:</span> <span class="value">UNDER 3.5</span></div>
-            <div class="market-row"><span class="label">2° SUG:</span> <span class="value">X OU 2</span></div>
-            <div class="market-row"><span class="label">3° SUG:</span> <span class="value">AMBAS NÃO</span></div>
+            <div class="section-title">--------- SUGESTÕES ---------</div>
+            <div class="market-row">1° SUG: <span class="value" id="sug1">--</span></div>
+            <div class="market-row">2° SUG: <span class="value" id="sug2">--</span></div>
+            <div class="market-row">3° SUG: <span class="value" id="sug3">--</span></div>
 
-            <div class="section-title">REGRA 3 VS KMCOM</div>
-            <div class="market-row"><span class="label">REGRA 3:</span> <span id="r3_box" class="badge" style="background:#adff2f; color:#000">0.5 OVER GOL</span></div>
-            <div class="market-row"><span class="label">K.COM:</span> <span id="kcom_box" class="badge" style="background:green; color:#fff">1.5 OVER GOL</span></div>
+            <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
+            <div class="market-row"><span class="label">REGRA 3:</span> <span id="r3_box" class="badge">--</span></div>
+            <div class="market-row"><span class="label">K.COM:</span> <span id="kcom_box" class="badge">--</span></div>
         </div>
 
         <div class="inputs">
-            <div class="time-row" style="color:#00ff00">
+            <div class="time-row time-a">
                 <span class="time-label">TIME A</span>
-                <div class="field-group"><span class="field-label">JG</span><span id="ta_jg" class="value active-field">--</span></div>
-                <div class="field-group"><span class="field-label">GP</span><span id="ta_gp" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GC</span><span id="ta_gc" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value active-field">--</span></div>
+                <div class="field-group"><span class="field-label">GP:</span><span id="ta_gp" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GC:</span><span id="ta_gc" class="value">--</span></div>
             </div>
-            <div class="time-row" style="color:#ff3b30">
+            <div class="time-row time-b">
                 <span class="time-label">TIME B</span>
-                <div class="field-group"><span class="field-label">JG</span><span id="tb_jg" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GP</span><span id="tb_gp" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GC</span><span id="tb_gc" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">JG:</span><span id="tb_jg" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GP:</span><span id="tb_gp" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">GC:</span><span id="tb_gc" class="value">--</span></div>
             </div>
         </div>
     </div>
@@ -198,9 +177,9 @@
             <button onclick="press(7)">7</button><button onclick="press(8)">8</button><button onclick="press(9)">9</button>
             <button onclick="press(4)">4</button><button onclick="press(5)">5</button><button onclick="press(6)">6</button>
             <button onclick="press(1)">1</button><button onclick="press(2)">2</button><button onclick="press(3)">3</button>
-            <button class="btn-clear" onclick="clearAll()">C</button><button onclick="press(0)">0</button>
+            <button class="btn-clear" onclick="clearAll()">LIMPAR</button><button onclick="press(0)">0</button>
             <button class="btn-enter" onclick="nextField()">➔</button>
-            <button class="btn-fix" onclick="fixField()">CORRIGIR CAMPO</button>
+            <button class="btn-fix" onclick="fixField()">CORRIGIR CAMPO ATUAL</button>
         </div>
     </div>
 
@@ -219,10 +198,12 @@
         }
 
         function press(num) { if (currentString.length < 3) { currentString += num; updateDisplay(); } }
-        
+        function fixField() { currentString = ""; updateDisplay(); }
+
         function nextField() {
             if (currentIndex === sequence.length - 1) {
-                displayContainer.classList.add('expandido');
+                calculateResults(); // Simulação de cálculo antes de expandir
+                setTimeout(() => { displayContainer.classList.add('expandido'); }, 150);
             } else {
                 currentIndex++;
                 currentString = "";
@@ -231,8 +212,28 @@
         }
 
         function recolherVisor() { displayContainer.classList.remove('expandido'); }
-        function fixField() { currentString = ""; updateDisplay(); }
-        function clearAll() { location.reload(); }
+
+        function calculateResults() {
+            // Aqui entraria sua lógica de cálculo real. 
+            // Exemplo visual:
+            document.getElementById('v1').innerText = "50%";
+            document.getElementById('vx').innerText = "28%";
+            document.getElementById('v2').innerText = "50%";
+            // ... aplicar nos outros campos ...
+            const r3 = document.getElementById('r3_box');
+            r3.innerText = "0.5 OVER GOL";
+            r3.style.backgroundColor = "#adff2f";
+            r3.style.color = "#000";
+        }
+
+        function clearAll() {
+            document.querySelectorAll('.value').forEach(v => v.innerText = "--");
+            document.querySelectorAll('.badge').forEach(b => { b.innerText = "--"; b.style.background = "transparent"; });
+            currentIndex = 0;
+            currentString = "";
+            recolherVisor();
+            updateDisplay();
+        }
     </script>
 </body>
 </html>
