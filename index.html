@@ -146,48 +146,75 @@
         }
 
         function calculate() {
-            const getV = (id) => { let v = document.getElementById(id).innerText; return v === "--" ? 0 : parseFloat(v); };
-            const jA=getV('ta_jg'), gA=getV('ta_gp'), cA=getV('ta_gc'), jB=getV('tb_jg'), gB=getV('tb_gp'), cB=getV('tb_gc');
+            const getV = (id) => { 
+                let v = document.getElementById(id).innerText; 
+                return (v === "--" || v === "") ? 0 : parseFloat(v); 
+            };
+
+            const jA=getV('ta_jg'), gA=getV('ta_gp'), cA=getV('ta_gc');
+            const jB=getV('tb_jg'), gB=getV('tb_gp'), cB=getV('tb_gc');
 
             if(jA > 0 && jB > 0) {
+                // Médias Base
                 const mA = gA / jA; const dA = cA / jA;
                 const mB = gB / jB; const dB = cB / jB;
                 const medP = (mA + dB + mB + dA) / 2;
-                const r3 = (mA + dA) + (mB + dB);
+                const r3_val = (mA + dA) + (mB + dB);
 
-                // Atribuição de Resultados
+                // Exibir Médias e Regras
                 document.getElementById('m_part').innerText = medP.toFixed(2);
-                document.getElementById('r_placar').innerText = r3.toFixed(2);
+                document.getElementById('r_placar').innerText = r3_val.toFixed(2);
 
-                // Cálculo de Probabilidades Simples
-                const p1 = (mA + dB) / (mA + dB + mB + dA);
-                const p2 = (mB + dA) / (mA + dB + mB + dA);
-                document.getElementById('v1').innerText = (p1 * 100).toFixed(0) + "%";
-                document.getElementById('v2').innerText = (p2 * 100).toFixed(0) + "%";
-                document.getElementById('vx').innerText = (100 - (p1*100 + p2*100)).toFixed(0) + "%";
+                // Probabilidades Vitória (Poisson simplificada)
+                const forcaA = (mA + dB) / 2;
+                const forcaB = (mB + dA) / 2;
+                const totalForca = forcaA + forcaB + 0.5; // 0.5 fator empate
+                
+                const p1 = Math.min((forcaA / totalForca) * 100, 95).toFixed(0);
+                const p2 = Math.min((forcaB / totalForca) * 100, 95).toFixed(0);
+                const px = (100 - p1 - p2).toFixed(0);
+
+                document.getElementById('v1').innerText = p1 + "%";
+                document.getElementById('vx').innerText = px + "%";
+                document.getElementById('v2').innerText = p2 + "%";
 
                 // Dupla Chance
-                document.getElementById('dc1x').innerText = ( (p1 + 0.25) * 100).toFixed(0) + "%";
-                document.getElementById('dcx2').innerText = ( (p2 + 0.25) * 100).toFixed(0) + "%";
-                document.getElementById('dc12').innerText = ( (p1 + p2) * 100).toFixed(0) + "%";
+                document.getElementById('dc1x').innerText = (parseInt(p1) + parseInt(px)) + "%";
+                document.getElementById('dc12').innerText = (parseInt(p1) + parseInt(p2)) + "%";
+                document.getElementById('dcx2').innerText = (parseInt(p2) + parseInt(px)) + "%";
 
-                // Gols
-                document.getElementById('ov15').innerText = (medP * 35).toFixed(0) + "%";
-                document.getElementById('ov25').innerText = (medP * 25).toFixed(0) + "%";
-                document.getElementById('am_s').innerText = ( (mA + mB) / 4 * 100 ).toFixed(0) + "%";
+                // Ambas Marcam
+                const probAM = Math.min(((mA + mB) / 3) * 100, 99).toFixed(0);
+                document.getElementById('am_s').innerText = probAM + "%";
+                document.getElementById('am_n').innerText = (100 - probAM) + "%";
 
-                // Sugestões
-                document.getElementById('sug1').innerText = medP > 2.5 ? "OVER 1.5" : "UNDER 3.5";
-                document.getElementById('sug2').innerText = p1 > p2 ? "1X" : "X2";
-                document.getElementById('sug3').innerText = mA > 1 && mB > 1 ? "AMBAS S" : "AMBAS N";
+                // Over / Under
+                document.getElementById('ov05').innerText = Math.min(medP * 40, 99).toFixed(0) + "%";
+                document.getElementById('ov15').innerText = Math.min(medP * 30, 95).toFixed(0) + "%";
+                document.getElementById('ov25').innerText = Math.min(medP * 20, 85).toFixed(0) + "%";
+                
+                document.getElementById('un35').innerText = (100 - (medP * 12)).toFixed(0) + "%";
+                document.getElementById('un45').innerText = (100 - (medP * 8)).toFixed(0) + "%";
+                document.getElementById('un55').innerText = (100 - (medP * 4)).toFixed(0) + "%";
 
+                // Gol HT
+                const probHT = Math.min(medP * 25, 90).toFixed(0);
+                document.getElementById('ht_s').innerText = probHT + "%";
+                document.getElementById('ht_n').innerText = (100 - probHT) + "%";
+
+                // Sugestões Lógicas
+                document.getElementById('sug1').innerText = medP > 2.2 ? "OVER 1.5" : "UNDER 3.5";
+                document.getElementById('sug2').innerText = parseInt(p1) > parseInt(p2) ? "1X" : "X2";
+                document.getElementById('sug3').innerText = probAM > 55 ? "BTT SIM" : "BTT NÃO";
+
+                // Badges Finais
                 const r3b = document.getElementById('r3_box');
-                r3b.innerText = r3 > 5 ? "1.5 OVER GOL" : "0.5 OVER GOL";
-                r3b.style.background = "green"; r3b.style.color = "white";
+                r3b.innerText = r3_val > 5.2 ? "1.5 OVER GOL" : "0.5 OVER GOL";
+                r3b.style.background = "#00ff00"; r3b.style.color = "#000";
 
                 const kcb = document.getElementById('kcom_box');
-                kcb.innerText = "1.5 OVER GOL";
-                kcb.style.background = "green"; kcb.style.color = "white";
+                kcb.innerText = medP > 2.5 ? "2.5 OVER" : "1.5 OVER";
+                kcb.style.background = "#00ff00"; kcb.style.color = "#000";
             }
         }
 
