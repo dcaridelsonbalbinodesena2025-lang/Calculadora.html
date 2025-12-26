@@ -74,33 +74,33 @@
         .bg-g { background-color: var(--bg-geral); }
         .value { color: #ffffff !important; }
 
-        /* --- ÁREA DEMARCADA: BADGES --- */
+        /* --- ÁREA AJUSTADA: BADGES (Reduzido) --- */
         .badge { 
-            padding: 4px 10px; font-weight: 900; border-radius: 5px; 
-            font-size: 14px; /* Aumentado */
-            margin-top: 4px; min-width: 220px; text-align: center; display: inline-block;
-            height: 28px; line-height: 20px;
+            padding: 2px 10px; font-weight: 900; border-radius: 5px; 
+            font-size: 12px; 
+            margin-top: 3px; min-width: 200px; text-align: center; display: inline-block;
+            height: 24px; line-height: 20px;
         }
 
-        /* --- ÁREA DEMARCADA: INPUTS --- */
+        /* --- ÁREA AJUSTADA: INPUTS (Reduzido) --- */
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 10px 0; gap: 6px; background: #080808; border: 1px solid #222;
-            margin-top: 5px; border-radius: 7px;
+            padding: 6px 0; gap: 4px; background: #080808; border: 1px solid #222;
+            margin-top: 4px; border-radius: 7px;
         }
 
         .time-row { display: flex; justify-content: center; align-items: center; width: 100%; }
         
-        .time-label { font-weight: bold; font-size: 13px; min-width: 65px; text-align: left; }
+        .time-label { font-weight: bold; font-size: 11px; min-width: 60px; text-align: left; }
         .time-a { color: var(--accent-green); }
         .time-b { color: var(--accent-red); }
         
-        .field-group { display: flex; align-items: center; margin: 0 4px; }
-        .field-label { font-size: 11px; color: #aaa; margin-right: 2px; }
+        .field-group { display: flex; align-items: center; margin: 0 3px; }
+        .field-label { font-size: 10px; color: #aaa; margin-right: 2px; }
         
         .inputs .value-input {
-            font-size: 18px; /* Aumentado */
-            min-width: 40px; height: 32px; margin: 0 2px;
+            font-size: 16px; 
+            min-width: 36px; height: 28px; margin: 0 2px;
             background: #1a1a1a; border-radius: 4px; color: #fff; text-align: center;
             display: flex; align-items: center; justify-content: center;
             font-weight: bold;
@@ -119,14 +119,14 @@
         }
 
         button {
-            background: var(--button-bg); border: none; color: white; height: 40px; font-size: 20px; border-radius: 4px;
+            background: var(--button-bg); border: none; color: white; height: 38px; font-size: 20px; border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
         }
 
         button:active { background: #444; }
         .btn-clear { background: var(--accent-red); font-size: 12px; font-weight: bold; }
         .btn-enter { background: var(--accent-orange); font-size: 18px; }
-        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 12px; font-weight: bold; height: 30px; margin-top: 2px; }
+        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 12px; font-weight: bold; height: 28px; margin-top: 2px; }
     </style>
 </head>
 <body>
@@ -261,15 +261,8 @@
                 setV('un35', cap(100 - (mediaPartida * 15)) + "%");
                 setV('un45', cap(100 - (mediaPartida * 10)) + "%");
                 setV('un55', cap(100 - (mediaPartida * 5)) + "%");
-                setV('dcCE', cap((medAtaA/(medAtaA+medAtaB))*100 + 20) + "%"); 
-                setV('dcLTD', "75%"); 
-                setV('dcFE', cap((medAtaB/(medAtaA+medAtaB))*100 + 20) + "%"); 
                 setV('am_s', mediaPartida > 2.3 ? "82%" : "38%");
                 setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
-                setV('ht_s', cap(medHT * 60) + "%");
-                setV('ht_n', cap(100 - (medHT * 60)) + "%");
-                setV('mp_c', cap((medAtaA/(medAtaA+medAtaB))*100 - 5) + "%"); 
-                setV('mp_f', cap((medAtaB/(medAtaA+medAtaB))*100 - 5) + "%");
 
                 const r3Box = document.getElementById('r3_box');
                 let r3Txt = "";
