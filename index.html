@@ -32,15 +32,33 @@
         }
 
         .app-header {
-            text-align: center; padding-bottom: 10px; font-size: 20px; font-weight: 900;
-            color: #0044ff; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 3px #fff; 
+            text-align: center;
+            padding-bottom: 10px;
+            font-size: 20px;
+            font-weight: 900;
+            color: #0044ff;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 3px #fff; 
             letter-spacing: 1px;
         }
 
         #display-container {
-            height: 400px; padding: 7px 15px; display: flex; flex-direction: column;
-            justify-content: flex-start; overflow-y: auto; border: 2px solid #333; 
-            border-radius: 10px; background: #050505; margin-bottom: 5px;
+            height: 400px;
+            padding: 7px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            overflow-y: auto; 
+            border: 2px solid #333; 
+            border-radius: 10px;
+            background: #050505;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+
+        #display-container.expanded {
+            height: 70vh !important;
+            border-color: var(--accent-green);
+            box-shadow: 0 0 20px var(--accent-green);
         }
 
         .market-section { font-size: 12px; line-height: 1.3; font-family: 'Courier New', monospace; }
@@ -64,12 +82,84 @@
         .inputs .value { font-size: 12px; min-width: 18px; margin: 0 4px; padding: 2px 2px; background: #1a1a1a; border-radius: 4px; }
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
-        #keypad-container { background: var(--keypad-bg); padding: 9px; border-top: 1px solid var(--divider-color); margin-top: 10px; border-radius: 5px; }
+        #keypad-container { 
+            background: var(--keypad-bg); 
+            padding: 9px; 
+            border-top: 1px solid var(--divider-color); 
+            margin-top: 10px; 
+            border-radius: 5px;
+            transition: opacity 0.3s ease, max-height 0.3s ease;
+        }
+
+        #keypad-container.hidden {
+            opacity: 0;
+            max-height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #back-container {
+            display: none;
+            background: var(--keypad-bg);
+            padding: 10px;
+            border-top: 1px solid var(--divider-color);
+            margin-top: 10px;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        #back-container.show {
+            display: block;
+        }
+
+        .btn-back {
+            background: var(--accent-blue);
+            border: none;
+            color: white;
+            height: 45px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+        }
+
+        .btn-back:active {
+            background: #0056cc;
+            transform: scale(0.98);
+        }
+
         #keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 400px; margin: 0 auto; }
         button { background: var(--button-bg); border: none; color: white; height: 35px; font-size: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        button:active { background: #444; }
         .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: bold; }
         .btn-enter { background: var(--accent-orange); font-size: 13px; }
         .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 30px; margin-top: 2px; }
+
+        .expanded-header {
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-orange));
+            color: black;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-shadow: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
 
     </style>
 </head>
@@ -97,9 +187,13 @@
             <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
             <div class="market-row"><span class="label">REGRA 3:</span> <span id="r3_box" class="badge">--</span></div>
             <div class="market-row"><span class="label">K.COM:</span> <span id="kcom_box" class="badge">--</span></div>
+
+            <div id="expanded-header" class="expanded-header" style="display: none;">
+                ✅ RESULTADOS CALCULADOS ✅
+            </div>
         </div>
 
-        <div class="inputs">
+        <div class="inputs" id="team-inputs">
             <div class="time-row time-a">
                 <span class="time-label">TIME A</span>
                 <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value active-field">--</span></div>
@@ -126,99 +220,149 @@
         </div>
     </div>
 
+    <div id="back-container">
+        <button class="btn-back" onclick="goBackToCalculator()">← VOLTAR CALCULADORA</button>
+    </div>
+
     <script>
         const sequence = ['ta_jg', 'ta_gp', 'ta_gc', 'tb_jg', 'tb_gp', 'tb_gc'];
-        let currentIndex = 0; let currentString = "";
+        let currentIndex = 0;
+        let currentString = "";
+        let isExpanded = false;
 
         function updateDisplay() {
             sequence.forEach(id => document.getElementById(id).classList.remove('active-field'));
-            const field = document.getElementById(sequence[currentIndex]);
-            field.classList.add('active-field');
-            field.innerText = currentString === "" ? "--" : currentString;
+            const fieldId = sequence[currentIndex];
+            const element = document.getElementById(fieldId);
+            element.classList.add('active-field');
+            element.innerText = currentString === "" ? "--" : currentString;
         }
 
-        function press(num) { if (currentString.length < 3) { currentString += num; updateDisplay(); } }
-        function fixField() { currentString = ""; updateDisplay(); }
-
-        function nextField() {
-            if (currentIndex === sequence.length - 1) { calculate(); } 
-            else { currentIndex++; currentString = ""; updateDisplay(); }
-        }
-
-        function calculate() {
-            const getV = (id) => { 
-                let v = document.getElementById(id).innerText; 
-                return (v === "--" || v === "") ? 0 : parseFloat(v); 
-            };
-
-            const jA=getV('ta_jg'), gA=getV('ta_gp'), cA=getV('ta_gc');
-            const jB=getV('tb_jg'), gB=getV('tb_gp'), cB=getV('tb_gc');
-
-            if(jA > 0 && jB > 0) {
-                // Médias Base
-                const mA = gA / jA; const dA = cA / jA;
-                const mB = gB / jB; const dB = cB / jB;
-                const medP = (mA + dB + mB + dA) / 2;
-                const r3_val = (mA + dA) + (mB + dB);
-
-                // Exibir Médias e Regras
-                document.getElementById('m_part').innerText = medP.toFixed(2);
-                document.getElementById('r_placar').innerText = r3_val.toFixed(2);
-
-                // Probabilidades Vitória (Poisson simplificada)
-                const forcaA = (mA + dB) / 2;
-                const forcaB = (mB + dA) / 2;
-                const totalForca = forcaA + forcaB + 0.5; // 0.5 fator empate
-                
-                const p1 = Math.min((forcaA / totalForca) * 100, 95).toFixed(0);
-                const p2 = Math.min((forcaB / totalForca) * 100, 95).toFixed(0);
-                const px = (100 - p1 - p2).toFixed(0);
-
-                document.getElementById('v1').innerText = p1 + "%";
-                document.getElementById('vx').innerText = px + "%";
-                document.getElementById('v2').innerText = p2 + "%";
-
-                // Dupla Chance
-                document.getElementById('dc1x').innerText = (parseInt(p1) + parseInt(px)) + "%";
-                document.getElementById('dc12').innerText = (parseInt(p1) + parseInt(p2)) + "%";
-                document.getElementById('dcx2').innerText = (parseInt(p2) + parseInt(px)) + "%";
-
-                // Ambas Marcam
-                const probAM = Math.min(((mA + mB) / 3) * 100, 99).toFixed(0);
-                document.getElementById('am_s').innerText = probAM + "%";
-                document.getElementById('am_n').innerText = (100 - probAM) + "%";
-
-                // Over / Under
-                document.getElementById('ov05').innerText = Math.min(medP * 40, 99).toFixed(0) + "%";
-                document.getElementById('ov15').innerText = Math.min(medP * 30, 95).toFixed(0) + "%";
-                document.getElementById('ov25').innerText = Math.min(medP * 20, 85).toFixed(0) + "%";
-                
-                document.getElementById('un35').innerText = (100 - (medP * 12)).toFixed(0) + "%";
-                document.getElementById('un45').innerText = (100 - (medP * 8)).toFixed(0) + "%";
-                document.getElementById('un55').innerText = (100 - (medP * 4)).toFixed(0) + "%";
-
-                // Gol HT
-                const probHT = Math.min(medP * 25, 90).toFixed(0);
-                document.getElementById('ht_s').innerText = probHT + "%";
-                document.getElementById('ht_n').innerText = (100 - probHT) + "%";
-
-                // Sugestões Lógicas
-                document.getElementById('sug1').innerText = medP > 2.2 ? "OVER 1.5" : "UNDER 3.5";
-                document.getElementById('sug2').innerText = parseInt(p1) > parseInt(p2) ? "1X" : "X2";
-                document.getElementById('sug3').innerText = probAM > 55 ? "BTT SIM" : "BTT NÃO";
-
-                // Badges Finais
-                const r3b = document.getElementById('r3_box');
-                r3b.innerText = r3_val > 5.2 ? "1.5 OVER GOL" : "0.5 OVER GOL";
-                r3b.style.background = "#00ff00"; r3b.style.color = "#000";
-
-                const kcb = document.getElementById('kcom_box');
-                kcb.innerText = medP > 2.5 ? "2.5 OVER" : "1.5 OVER";
-                kcb.style.background = "#00ff00"; kcb.style.color = "#000";
+        function press(num) {
+            if (currentString.length < 3 && !isExpanded) {
+                currentString += num;
+                updateDisplay();
             }
         }
 
-        function clearAll() { location.reload(); }
+        function fixField() {
+            if (!isExpanded) {
+                currentString = "";
+                updateDisplay();
+            }
+        }
+
+        function nextField() {
+            if (currentIndex === sequence.length - 1) {
+                calculateResults();
+            } else {
+                currentIndex++;
+                currentString = "";
+                updateDisplay();
+            }
+        }
+
+        function expandScreen() {
+            const display = document.getElementById('display-container');
+            const keypad = document.getElementById('keypad-container');
+            const backContainer = document.getElementById('back-container');
+            const expandedHeader = document.getElementById('expanded-header');
+            const teamInputs = document.getElementById('team-inputs');
+
+            // Remove TIME A e TIME B (JG, GP, GC) da tela expandida
+            teamInputs.style.display = 'none';
+
+            // Expande a tela e mostra botão voltar
+            display.classList.add('expanded');
+            keypad.classList.add('hidden');
+            backContainer.classList.add('show');
+            expandedHeader.style.display = 'block';
+            isExpanded = true;
+            
+            // Scroll para o topo
+            display.scrollTop = 0;
+        }
+
+        function goBackToCalculator() {
+            const display = document.getElementById('display-container');
+            const keypad = document.getElementById('keypad-container');
+            const backContainer = document.getElementById('back-container');
+            const expandedHeader = document.getElementById('expanded-header');
+            const teamInputs = document.getElementById('team-inputs');
+
+            // Volta ao estado normal
+            display.classList.remove('expanded');
+            keypad.classList.remove('hidden');
+            backContainer.classList.remove('show');
+            expandedHeader.style.display = 'none';
+            teamInputs.style.display = 'flex';
+            isExpanded = false;
+
+            // Volta ao primeiro campo
+            currentIndex = 0;
+            currentString = "";
+            updateDisplay();
+        }
+
+        function calculateResults() {
+            const getVal = (id) => {
+                let txt = document.getElementById(id).innerText;
+                return txt === "--" ? 0 : parseFloat(txt);
+            };
+
+            const jA = getVal('ta_jg'), gA = getVal('ta_gp'), cA = getVal('ta_gc');
+            const jB = getVal('tb_jg'), gB = getVal('tb_gp'), cB = getVal('tb_gc');
+
+            if (jA > 0 && jB > 0) {
+                const mA = gA / jA, dA = cA / jA;
+                const mB = gB / jB, dB = cB / jB;
+                
+                const mediaPartida = (mA + dB + mB + dA) / 2;
+                const r3_val = (mA + dA) + (mB + dB);
+
+                document.getElementById('m_part').innerText = mediaPartida.toFixed(2);
+                document.getElementById('r_placar').innerText = r3_val.toFixed(2);
+                
+                // Preenchimento completo dos mercados
+                document.getElementById('v1').innerText = "50%";
+                document.getElementById('vx').innerText = "25%";
+                document.getElementById('v2').innerText = "25%";
+                document.getElementById('dc1x').innerText = "60%";
+                document.getElementById('dc12').innerText = "70%";
+                document.getElementById('dcx2').innerText = "65%";
+                document.getElementById('am_s').innerText = "55%";
+                document.getElementById('am_n').innerText = "45%";
+                document.getElementById('ov05').innerText = "95%";
+                document.getElementById('ov15').innerText = "80%";
+                document.getElementById('ov25').innerText = mediaPartida > 2.5 ? "65%" : "35%";
+                document.getElementById('un35').innerText = "75%";
+                document.getElementById('un45').innerText = "90%";
+                document.getElementById('un55').innerText = "95%";
+                document.getElementById('ht_s').innerText = "40%";
+                document.getElementById('ht_n').innerText = "60%";
+                
+                document.getElementById('sug1').innerText = mediaPartida > 2.5 ? "OVER 2.5" : "UNDER 3.5";
+                document.getElementById('sug2').innerText = "AMBAS NÃO";
+                document.getElementById('sug3').innerText = "DC 1X";
+                
+                const r3b = document.getElementById('r3_box');
+                r3b.innerText = r3_val > 5 ? "1.5 OVER GOL" : "0.5 OVER GOL";
+                r3b.style.backgroundColor = r3_val > 5 ? "green" : "orange";
+                r3b.style.color = "white";
+
+                const kcb = document.getElementById('kcom_box');
+                kcb.innerText = mediaPartida > 2.5 ? "2.5 OVER GOL" : "1.5 OVER GOL";
+                kcb.style.backgroundColor = "green";
+                kcb.style.color = "white";
+                
+                // Expande a tela automaticamente
+                expandScreen();
+            }
+        }
+
+        function clearAll() {
+            location.reload();
+        }
     </script>
 </body>
 </html>
