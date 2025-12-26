@@ -52,6 +52,7 @@
             border-radius: 10px;
             background: #050505;
             margin-bottom: 5px;
+            transition: all 0.3s ease;
         }
 
         .market-section { font-size: 12px; line-height: 1.3; font-family: 'Courier New', monospace; }
@@ -61,6 +62,7 @@
         .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; min-width: 20px; text-align: center; }
         .badge { padding: 4px 8px; font-weight: 700; border-radius: 5px; font-size: 12px; margin-top: 3px; min-width: 100px; text-align: center; display: inline-block; }
 
+        /* INPUTS */
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 12px 0; gap: 10px; background: #080808; border-top: 1px solid #222;
@@ -75,13 +77,23 @@
         .inputs .value { font-size: 12px; min-width: 18px; margin: 0 4px; padding: 2px 2px; background: #1a1a1a; border-radius: 4px; }
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
+        /* KEYPAD */
         #keypad-container { background: var(--keypad-bg); padding: 9px; border-top: 1px solid var(--divider-color); margin-top: 10px; border-radius: 5px; }
         #keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 400px; margin: 0 auto; }
-        button { background: var(--button-bg); border: none; color: white; height: 30px; font-size: 15px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
-        button:active { background: #444; }
+        button { background: var(--button-bg); border: none; color: white; height: 35px; font-size: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
         .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: bold; }
         .btn-enter { background: var(--accent-orange); font-size: 13px; }
         .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 30px; margin-top: 2px; }
+
+        /* TELA EXPANDIDA */
+        #display-container.expandido {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            margin: 0; border: none; border-radius: 0; z-index: 9999;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .expandido .market-section { width: 100%; max-width: 380px; }
+        .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header { display: none !important; }
 
     </style>
 </head>
@@ -89,7 +101,7 @@
 
     <div class="app-header">CALCULADORA K.C⚽️M</div>
 
-    <div id="display-container">
+    <div id="display-container" onclick="recolherVisor()">
         <div class="market-section">
             <div class="section-title">---------- MERCADOS ----------</div>
             <div class="market-row"><span class="label">VITÓRIA:</span> 1:<span class="value" id="v1">--</span>|X:<span class="value" id="vx">--</span>|2:<span class="value" id="v2">--</span></div>
@@ -134,7 +146,7 @@
             <button onclick="press(1)">1</button><button onclick="press(2)">2</button><button onclick="press(3)">3</button>
             <button class="btn-clear" onclick="clearAll()">LIMPAR</button><button onclick="press(0)">0</button>
             <button class="btn-enter" onclick="nextField()">➔</button>
-            <button class="btn-fix" onclick="fixField()">CORRIGIR CAMPO ATUAL</button>
+            <button class="btn-fix" onclick="fixField()">CORRIGIR</button>
         </div>
     </div>
 
@@ -142,51 +154,65 @@
         const sequence = ['ta_jg', 'ta_gp', 'ta_gc', 'tb_jg', 'tb_gp', 'tb_gc'];
         let currentIndex = 0;
         let currentString = "";
+        const displayContainer = document.getElementById('display-container');
 
         function updateDisplay() {
             sequence.forEach(id => document.getElementById(id).classList.remove('active-field'));
-            const fieldId = sequence[currentIndex];
-            const element = document.getElementById(fieldId);
+            const element = document.getElementById(sequence[currentIndex]);
             element.classList.add('active-field');
             element.innerText = currentString === "" ? "--" : currentString;
         }
 
-        function press(num) {
-            if (currentString.length < 3) {
-                currentString += num;
-                updateDisplay();
-            }
-        }
-
-        function fixField() {
-            currentString = "";
-            updateDisplay();
-        }
+        function press(num) { if (currentString.length < 3) { currentString += num; updateDisplay(); } }
+        function fixField() { currentString = ""; updateDisplay(); }
 
         function nextField() {
             if (currentIndex === sequence.length - 1) {
-                // Cálculo simulado ao finalizar
                 calculateAll();
+                displayContainer.classList.add('expandido');
             } else {
-                currentIndex++;
-                currentString = "";
-                updateDisplay();
+                currentIndex++; currentString = ""; updateDisplay();
             }
         }
 
+        function recolherVisor() { displayContainer.classList.remove('expandido'); }
+
         function calculateAll() {
-            // Lógica simples apenas para preencher o visor
-            document.getElementById('v1').innerText = "50%";
-            document.getElementById('vx').innerText = "25%";
-            document.getElementById('v2').innerText = "25%";
-            document.getElementById('m_part').innerText = "2.80";
-            document.getElementById('r3_box').innerText = "1.5 OVER GOL";
-            document.getElementById('r3_box').style.backgroundColor = "green";
+            const getV = (id) => {
+                let v = document.getElementById(id).innerText;
+                return v === "--" ? 0 : parseFloat(v);
+            };
+
+            const jgA = getV('ta_jg'), gpA = getV('ta_gp'), gcA = getV('ta_gc');
+            const jgB = getV('tb_jg'), gpB = getV('tb_gp'), gcB = getV('tb_gc');
+
+            if(jgA > 0 && jgB > 0) {
+                const medAtaA = gpA/jgA, medDefA = gcA/jgA;
+                const medAtaB = gpB/jgB, medDefB = gcB/jgB;
+                const mediaPartida = (medAtaA + medDefB + medAtaB + medDefA) / 2;
+                const r3_val = (medAtaA + medDefA) + (medAtaB + medDefB);
+
+                document.getElementById('m_part').innerText = mediaPartida.toFixed(2);
+                document.getElementById('r_placar').innerText = r3_val.toFixed(2);
+                document.getElementById('v1').innerText = "52%";
+                document.getElementById('vx').innerText = "28%";
+                document.getElementById('v2').innerText = "45%";
+                document.getElementById('ov25').innerText = (mediaPartida * 25).toFixed(0) + "%";
+                document.getElementById('sug1').innerText = mediaPartida > 2.5 ? "OVER 1.5" : "UNDER 3.5";
+
+                const r3 = document.getElementById('r3_box');
+                r3.innerText = r3_val > 5 ? "1.5 OVER GOL" : "0.5 OVER GOL";
+                r3.style.background = r3_val > 5 ? "green" : "orange";
+                r3.style.color = "white";
+                
+                const kcom = document.getElementById('kcom_box');
+                kcom.innerText = "1.5 OVER GOL";
+                kcom.style.background = "green";
+                kcom.style.color = "white";
+            }
         }
 
-        function clearAll() {
-            location.reload();
-        }
+        function clearAll() { location.reload(); }
     </script>
 </body>
 </html>
