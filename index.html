@@ -8,7 +8,7 @@
         :root {
             --bg-color: #000000;
             --text-color: #ffffff;
-            --keypad-bg: #111111;4
+            --keypad-bg: #111111;
             --button-bg: #2a2a2a;
             --accent-green: #00ff00;
             --accent-red: #ff3b30;
@@ -28,13 +28,12 @@
             height: 100vh;
             overflow: hidden;
             text-transform: uppercase;
-            /* AUMENTO GENEROSO DO PADDING NAS BORDAS DO CELULAR */
-            padding:2px 9px; 
+            padding: 5px 12px; 
         }
 
         .app-header {
             text-align: center;
-            padding-bottom: 10px;
+            padding-bottom: 8px;
             font-size: 20px;
             font-weight: 900;
             color: #0044ff;
@@ -43,21 +42,21 @@
         }
 
         #display-container {
-    flex: 0 1 auto;      /* Mudar de 1 para 0 1 auto (não estica mais) */
-    padding: 7px 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; 
-    overflow-y: auto; 
-    border: 2px solid #333; 
-    border-radius: 10px;
-    background: #050505;
-    margin-bottom: 5px;  /* Espaço pequeno antes dos campos de Time A/B */
-}
+            flex: 0 1 auto;
+            padding: 7px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            overflow-y: auto; 
+            border: 2px solid #333; 
+            border-radius: 10px;
+            background: #050505;
+            margin-bottom: 5px;
+        }
 
         .market-section { font-size: 13px; line-height: 1.3; font-family: 'Courier New', monospace; }
-        .section-title { text-align: center; margin: 1px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
-        .market-row { margin: 0px 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
+        .section-title { text-align: center; margin: 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
+        .market-row { margin: 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
         .label { font-weight: bold; }
         .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; min-width: 20px; text-align: center; }
 
@@ -68,8 +67,8 @@
 
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 15px 0; gap: 10px; background: #080808; border-top: 1px solid #222;
-            margin-top: 8px;
+            padding: 12px 0; gap: 8px; background: #080808; border-top: 1px solid #222;
+            margin-top: 5px;
             border-radius: 7px;
         }
 
@@ -89,25 +88,25 @@
 
         #keypad-container {
             background: var(--keypad-bg); 
-            padding: 9px; 
+            padding: 8px; 
             border-top: 1px solid var(--divider-color);
-            margin-top: 10px;
+            margin-top: auto;
             border-radius: 5px;
         }
 
         #keypad {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 400px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; width: 100%; max-width: 400px; margin: 0 auto;
         }
 
         button {
-            background: var(--button-bg); border: none; color: white; height: 25px; font-size: 19px; border-radius: 4px;
+            background: var(--button-bg); border: none; color: white; height: 35px; font-size: 19px; border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
         }
 
         button:active { background: #444; }
-        .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: 1px bold; }
-        .btn-enter { background: var(--accent-orange); font-size: 13px; }
-        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 25px; margin-top: 2px; }
+        .btn-clear { background: var(--accent-red); font-size: 12px; font-weight: bold; }
+        .btn-enter { background: var(--accent-orange); font-size: 18px; }
+        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 12px; font-weight: bold; height: 30px; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -118,8 +117,8 @@
         <div class="market-section">
             <div class="section-title">---------- MERCADOS ----------</div>
             <div class="market-row"><span class="label">VITÓRIA:</span> C:<span class="value" id="vC">--</span> X:<span class="value" id="vX">--</span> F:<span class="value" id="vF">--</span></div>
-            <div class="market-row"><span class="label">DUPLA CHANCE:</span> CE:<span class="value" id="dcCE">--</span> LTD:<span class="value" id="dcLTD">--</span>FE:<span class="value" id="dcFE">--</span></div>
-            <div class="market-row"><span class="label">AMBAS MARCAM:</span> SIM:<span class="value" id="am_s">--</span>NÃO:<span class="value" id="am_n">--</span></div>
+            <div class="market-row"><span class="label">DUPLA CHANCE:</span> CE:<span class="value" id="dcCE">--</span> LTD:<span class="value" id="dcLTD">--</span> FE:<span class="value" id="dcFE">--</span></div>
+            <div class="market-row"><span class="label">AMBAS MARCAM:</span> SIM:<span class="value" id="am_s">--</span> NÃO:<span class="value" id="am_n">--</span></div>
             <div class="market-row"><span class="label">OVER:</span> 0.5:<span class="value" id="ov05">--</span> 1.5:<span class="value" id="ov15">--</span> 2.5:<span class="value" id="ov25">--</span></div>
             <div class="market-row"><span class="label">UNDER:</span> 3.5:<span class="value" id="un35">--</span> 4.5:<span class="value" id="un45">--</span> 5.5:<span class="value" id="un55">--</span></div>
             <div class="market-row"><span class="label">GOL HT:</span> SIM:<span class="value" id="ht_s">--</span> NÃO:<span class="value" id="ht_n">--</span></div>
@@ -166,7 +165,6 @@
     </div>
 
     <script>
-        // ... O código JavaScript permanece idêntico ao original ...
         const sequence = ['ta_jg', 'ta_gp', 'ta_gc', 'tb_jg', 'tb_gp', 'tb_gc'];
         let currentIndex = 0;
         let currentString = "";
@@ -220,14 +218,23 @@
                 setV('ht_s', cap(medHT * 60) + "%");
                 setV('ht_n', cap(100 - (medHT * 60)) + "%");
 
-                const p1 = (medAtaA / (medAtaA + medAtaB) * 100);
-                const p2 = (medAtaB / (medAtaA + medAtaB) * 100);
+                // Cálculo de Probabilidade de Vitória
+                const probA = (medAtaA + medDefB) / 2;
+                const probB = (medAtaB + medDefA) / 2;
+                const total = probA + probB + 0.8; // Fator de empate
+                
+                const p1 = (probA / total) * 100;
+                const p2 = (probB / total) * 100;
+                const px = 100 - p1 - p2;
+
                 setV('vC', Math.round(p1) + "%"); 
-                setV('vX', "28%"); 
+                setV('vX', Math.round(px) + "%"); 
                 setV('vF', Math.round(p2) + "%");
-                setV('dcCE', cap(p1 + 20) + "%"); 
-                setV('dcLTD', "75%"); 
-                setV('dcCE', cap(p2 + 20) + "%");
+
+                // CORREÇÃO AQUI: Dupla Chance
+                setV('dcCE', cap(p1 + px) + "%"); 
+                setV('dcLTD', cap(p1 + p2) + "%"); 
+                setV('dcFE', cap(p2 + px) + "%"); // Agora referenciando dcFE corretamente
 
                 setV('am_s', mediaPartida > 2.3 ? "82%" : "38%"); 
                 setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
@@ -241,8 +248,8 @@
                 setV('sug1', sug1);
 
                 let sug2 = "EMPATE OU FORA";
-                if (p1 > 55) sug2 = "VITÓRIA TIME A";
-                else if (p2 > 55) sug2 = "VITÓRIA TIME B";
+                if (p1 > 52) sug2 = "VITÓRIA TIME A";
+                else if (p2 > 52) sug2 = "VITÓRIA TIME B";
                 else if (p1 > p2) sug2 = "TIME A OU EMPATE";
                 setV('sug2', sug2);
 
