@@ -31,7 +31,7 @@
             padding: 2px 9px; 
         }
 
-        /* --- TÍTULO ORIGINAL --- */
+        /* --- LAYOUT ORIGINAL DA CALCULADORA --- */
         .app-header {
             text-align: center;
             padding-bottom: 10px;
@@ -42,7 +42,6 @@
             letter-spacing: 1px;
         }
 
-        /* --- VISOR ORIGINAL --- */
         #display-container {
             height: 400px;
             padding: 7px 15px;
@@ -54,57 +53,16 @@
             border-radius: 10px;
             background: #050505;
             margin-bottom: 5px;
-            transition: all 0.4s ease-in-out;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- ESTILO DE EXPANSÃO PROFISSIONAL (PRESERVADO) --- */
-        #display-container.expandido {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            margin: 0; border: none; border-radius: 0;
-            z-index: 9999;
-            background: radial-gradient(circle at center, #111 0%, #000 100%);
-            padding: 40px 20px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #display-container.expandido::before {
-            content: "CALCULADORA K.C⚽️M";
-            position: absolute;
-            top: 40px;
-            font-size: 24px;
-            font-weight: 900;
-            color: #0044ff;
-            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
-            width: 100%;
-            text-align: center;
-        }
-
-        /* Ajustes de fonte na expansão */
-        .expandido .market-section { font-size: 13px; width: 100%; max-width: 360px; font-family: 'Courier New', monospace; }
-        .expandido .market-row { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); justify-content: center; }
-        .expandido .value { font-size: 15px; color: #adff2f; }
-        .expandido .badge { font-size: 14px; padding: 8px; min-width: 180px; border-radius: 10px; margin-top: 5px; }
-
-        /* Esconde elementos na expansão */
-        .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header {
-            display: none !important;
-        }
-
-        /* --- LAYOUT ORIGINAL DOS MERCADOS --- */
         .market-section { font-size: 12px; line-height: 1.3; font-family: 'Courier New', monospace; }
         .section-title { text-align: center; margin: 1px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
         .market-row { margin: 0px 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 2px; align-items: center; }
         .label { font-weight: bold; }
         .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; min-width: 20px; text-align: center; }
+        .badge { padding: 4px 8px; font-weight: 700; border-radius: 5px; font-size: 12px; margin-top: 3px; min-width: 100px; text-align: center; display: inline-block; }
 
-        .badge { 
-            padding: 4px 8px; font-weight: 700; border-radius: 5px; font-size: 12px; 
-            margin-top: 3px; min-width: 100px; text-align: center; display: inline-block;
-        }
-
-        /* --- INPUTS ORIGINAIS --- */
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 12px 0; gap: 10px; background: #080808; border-top: 1px solid #222;
@@ -117,10 +75,8 @@
         .field-group { display: flex; align-items: center; margin: 0 6px; }
         .field-label { font-size: 8px; color: #aaa; }
         .inputs .value { font-size: 12px; min-width: 18px; margin: 0 4px; padding: 2px 2px; background: #1a1a1a; border-radius: 4px; }
-
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
-        /* --- TECLADO ORIGINAL --- */
         #keypad-container { background: var(--keypad-bg); padding: 9px; border-top: 1px solid var(--divider-color); margin-top: 10px; border-radius: 5px; }
         #keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 400px; margin: 0 auto; }
         button { background: var(--button-bg); border: none; color: white; height: 30px; font-size: 15px; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
@@ -128,6 +84,68 @@
         .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: bold; }
         .btn-enter { background: var(--accent-orange); font-size: 13px; }
         .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 30px; margin-top: 2px; }
+
+        /* --- RESTAURAÇÃO DO LAYOUT DE EXPANSÃO PROFISSIONAL --- */
+        #display-container.expandido {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            margin: 0; border: none; border-radius: 0;
+            z-index: 9999;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza verticalmente */
+            align-items: center;
+        }
+
+        /* Título grande no topo da expansão */
+        #display-container.expandido::before {
+            content: "CALCULADORA K.C⚽️M";
+            display: block;
+            text-align: center;
+            font-size: 26px;
+            color: #0044ff;
+            text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 10px rgba(255,255,255,0.4);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        /* Cartão Central (Glassmorphism) */
+        .expandido .market-section {
+            width: 100%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            font-size: 13px;
+        }
+
+        .expandido .market-row { 
+            padding: 7px 0; 
+            justify-content: center; 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+        }
+
+        .expandido .section-title { font-size: 12px; margin: 15px 0 8px 0; color: #00ffff; }
+        .expandido .value { font-size: 15px; color: #adff2f; text-shadow: 0 0 5px rgba(173, 255, 47, 0.3); }
+
+        /* Badges de Resultado Estilo Pílula */
+        .expandido .badge { 
+            font-size: 13px; 
+            padding: 8px 15px; 
+            min-width: 180px; 
+            margin-top: 8px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        /* Oculta o que não deve aparecer na expansão */
+        .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -202,7 +220,12 @@
 
         function nextField() {
             if (currentIndex === sequence.length - 1) {
-                calculateResults(); // Simulação de cálculo antes de expandir
+                // Simulação de preenchimento para teste visual
+                document.getElementById('v1').innerText = "50%";
+                document.getElementById('r3_box').innerText = "0.5 OVER GOL";
+                document.getElementById('r3_box').style.background = "#adff2f";
+                document.getElementById('r3_box').style.color = "#000";
+                
                 setTimeout(() => { displayContainer.classList.add('expandido'); }, 150);
             } else {
                 currentIndex++;
@@ -212,28 +235,7 @@
         }
 
         function recolherVisor() { displayContainer.classList.remove('expandido'); }
-
-        function calculateResults() {
-            // Aqui entraria sua lógica de cálculo real. 
-            // Exemplo visual:
-            document.getElementById('v1').innerText = "50%";
-            document.getElementById('vx').innerText = "28%";
-            document.getElementById('v2').innerText = "50%";
-            // ... aplicar nos outros campos ...
-            const r3 = document.getElementById('r3_box');
-            r3.innerText = "0.5 OVER GOL";
-            r3.style.backgroundColor = "#adff2f";
-            r3.style.color = "#000";
-        }
-
-        function clearAll() {
-            document.querySelectorAll('.value').forEach(v => v.innerText = "--");
-            document.querySelectorAll('.badge').forEach(b => { b.innerText = "--"; b.style.background = "transparent"; });
-            currentIndex = 0;
-            currentString = "";
-            recolherVisor();
-            updateDisplay();
-        }
+        function clearAll() { location.reload(); }
     </script>
 </body>
 </html>
