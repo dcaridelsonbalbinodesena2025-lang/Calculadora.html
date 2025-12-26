@@ -85,7 +85,7 @@
         .btn-enter { background: var(--accent-orange); font-size: 13px; }
         .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 30px; margin-top: 2px; }
 
-        /* --- RESTAURAÇÃO DO LAYOUT DE EXPANSÃO PROFISSIONAL --- */
+        /* --- LAYOUT DE EXPANSÃO PROFISSIONAL --- */
         #display-container.expandido {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -95,11 +95,10 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Centraliza verticalmente */
+            justify-content: center;
             align-items: center;
         }
 
-        /* Título grande no topo da expansão */
         #display-container.expandido::before {
             content: "CALCULADORA K.C⚽️M";
             display: block;
@@ -111,7 +110,6 @@
             width: 100%;
         }
 
-        /* Cartão Central (Glassmorphism) */
         .expandido .market-section {
             width: 100%;
             max-width: 380px;
@@ -123,26 +121,15 @@
             font-size: 13px;
         }
 
-        .expandido .market-row { 
-            padding: 7px 0; 
-            justify-content: center; 
-            border-bottom: 1px solid rgba(255,255,255,0.05); 
-        }
-
+        .expandido .market-row { padding: 7px 0; justify-content: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .expandido .section-title { font-size: 12px; margin: 15px 0 8px 0; color: #00ffff; }
         .expandido .value { font-size: 15px; color: #adff2f; text-shadow: 0 0 5px rgba(173, 255, 47, 0.3); }
 
-        /* Badges de Resultado Estilo Pílula */
         .expandido .badge { 
-            font-size: 13px; 
-            padding: 8px 15px; 
-            min-width: 180px; 
-            margin-top: 8px;
-            border-radius: 50px;
+            font-size: 13px; padding: 8px 15px; min-width: 180px; margin-top: 8px; border-radius: 50px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
-        /* Oculta o que não deve aparecer na expansão */
         .expandido .inputs, .expandido ~ #keypad-container, .expandido ~ .app-header {
             display: none !important;
         }
@@ -220,12 +207,7 @@
 
         function nextField() {
             if (currentIndex === sequence.length - 1) {
-                // Simulação de preenchimento para teste visual
-                document.getElementById('v1').innerText = "50%";
-                document.getElementById('r3_box').innerText = "0.5 OVER GOL";
-                document.getElementById('r3_box').style.background = "#adff2f";
-                document.getElementById('r3_box').style.color = "#000";
-                
+                calculateAll();
                 setTimeout(() => { displayContainer.classList.add('expandido'); }, 150);
             } else {
                 currentIndex++;
@@ -235,6 +217,70 @@
         }
 
         function recolherVisor() { displayContainer.classList.remove('expandido'); }
+
+        function applyBadge(el, text, bg, color) {
+            el.innerText = text; el.style.backgroundColor = bg; el.style.color = color;
+        }
+
+        function calculateAll() {
+            const getV = (id) => {
+                let val = document.getElementById(id).innerText;
+                return val === "--" ? 0 : parseFloat(val);
+            };
+            const setV = (id, val) => document.getElementById(id).innerText = val;
+
+            const jgA = getV('ta_jg'), gpA = getV('ta_gp'), gcA = getV('ta_gc');
+            const jgB = getV('tb_jg'), gpB = getV('tb_gp'), gcB = getV('tb_gc');
+
+            if (jgA > 0 && jgB > 0) {
+                const medAtaA = gpA / jgA, medDefA = gcA / jgA;
+                const medAtaB = gpB / jgB, medDefB = gcB / jgB;
+                
+                const r3_val = (medAtaA + medDefA) + (medAtaB + medDefB);
+                const mediaPartida = (medAtaA + medDefB + medAtaB + medDefA) / 2;
+                const medHT = mediaPartida * 0.42;
+
+                setV('r_placar', r3_val.toFixed(2));
+                setV('m_part', mediaPartida.toFixed(2));
+
+                const cap = (v) => Math.min(Math.max(Math.round(v), 0), 99);
+                
+                // Cálculo de Probabilidades
+                const totalAtaque = (medAtaA + medAtaB) || 1;
+                const p1 = (medAtaA / totalAtaque * 100);
+                const p2 = (medAtaB / totalAtaque * 100);
+
+                setV('v1', Math.round(p1) + "%"); setV('vx', "28%"); setV('v2', Math.round(p2) + "%");
+                setV('dc1x', cap(p1 + 20) + "%"); setV('dc12', "75%"); setV('dcx2', cap(p2 + 20) + "%");
+                setV('am_s', mediaPartida > 2.3 ? "82%" : "38%"); setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
+                
+                setV('ov05', cap(mediaPartida * 45) + "%");
+                setV('ov15', cap(mediaPartida * 32) + "%");
+                setV('ov25', cap(mediaPartida * 22) + "%");
+                setV('un35', cap(100 - (mediaPartida * 15)) + "%");
+                setV('un45', cap(100 - (mediaPartida * 10)) + "%");
+                setV('un55', cap(100 - (mediaPartida * 5)) + "%");
+                setV('ht_s', cap(medHT * 60) + "%");
+                setV('ht_n', cap(100 - (medHT * 60)) + "%");
+
+                // Sugestões
+                let s1 = "UNDER 3.5"; if(mediaPartida>3.2) s1="2.5 OVER"; else if(mediaPartida>2.6) s1="1.5 OVER"; setV('sug1', s1);
+                let s2 = "X OU 2"; if(p1>55) s2="VITÓRIA A"; else if(p2>55) s2="VITÓRIA B"; setV('sug2', s2);
+                let s3 = "AMBAS NÃO"; if(mediaPartida>2.4) s3="AMBAS SIM"; setV('sug3', s3);
+
+                // Badges Finais
+                const r3Box = document.getElementById('r3_box');
+                if (r3_val < 4) applyBadge(r3Box, "4.5 UNDER GOL", "red", "white");
+                else if (r3_val < 5) applyBadge(r3Box, "0.5 OVER GOL", "#adff2f", "black");
+                else if (r3_val < 8) applyBadge(r3Box, "1.5 OVER GOL", "green", "white");
+                else applyBadge(r3Box, "2.5 OVER GOL", "#000080", "white");
+
+                const kcomBox = document.getElementById('kcom_box');
+                if (mediaPartida < 3.3) applyBadge(kcomBox, "1.5 OVER GOL", "green", "white");
+                else applyBadge(kcomBox, "2.5 OVER GOL", "#000080", "white");
+            }
+        }
+
         function clearAll() { location.reload(); }
     </script>
 </body>
