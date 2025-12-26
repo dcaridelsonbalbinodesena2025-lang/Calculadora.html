@@ -8,7 +8,7 @@
         :root {
             --bg-color: #000000;
             --text-color: #ffffff;
-            --keypad-bg: #111111;4
+            --keypad-bg: #111111;
             --button-bg: #2a2a2a;
             --accent-green: #00ff00;
             --accent-red: #ff3b30;
@@ -28,8 +28,7 @@
             height: 100vh;
             overflow: hidden;
             text-transform: uppercase;
-            /* AUMENTO GENEROSO DO PADDING NAS BORDAS DO CELULAR */
-            padding:2px 9px; 
+            padding: 2px 9px; 
         }
 
         .app-header {
@@ -43,17 +42,17 @@
         }
 
         #display-container {
-    heigth:400px       /* Mudar de 1 para 0 1 auto (não estica mais) */
-    padding: 7px 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; 
-    overflow-y: auto; 
-    border: 2px solid #333; 
-    border-radius: 10px;
-    background: #050505;
-    margin-bottom: 5px;  /* Espaço pequeno antes dos campos de Time A/B */
-}
+            height: 400px; /* CORRIGIDO: Escrita e ponto e vírgula */
+            padding: 7px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            overflow-y: auto; 
+            border: 2px solid #333; 
+            border-radius: 10px;
+            background: #050505;
+            margin-bottom: 5px;
+        }
 
         .market-section { font-size: 12px; line-height: 1.3; font-family: 'Courier New', monospace; }
         .section-title { text-align: center; margin: 1px 0 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
@@ -100,14 +99,14 @@
         }
 
         button {
-            background: var(--button-bg); border: none; color: white; height: 20px; font-size: 15px; border-radius: 4px;
+            background: var(--button-bg); border: none; color: white; height: 35px; font-size: 15px; border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
         }
 
         button:active { background: #444; }
-        .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: 1px bold; }
+        .btn-clear { background: var(--accent-red); font-size: 13px; font-weight: bold; }
         .btn-enter { background: var(--accent-orange); font-size: 13px; }
-        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 25px; margin-top: 2px; }
+        .btn-fix { grid-column: span 3; background: var(--accent-blue); font-size: 13px; font-weight: bold; height: 30px; margin-top: 2px; }
     </style>
 </head>
 <body>
@@ -164,7 +163,6 @@
     </div>
 
     <script>
-        // ... O código JavaScript permanece idêntico ao original ...
         const sequence = ['ta_jg', 'ta_gp', 'ta_gc', 'tb_jg', 'tb_gp', 'tb_gc'];
         let currentIndex = 0;
         let currentString = "";
@@ -177,35 +175,55 @@
             element.innerText = currentString === "" ? "--" : currentString;
         }
 
-        function press(num) { if (currentString.length < 3) { currentString += num; updateDisplay(); } }
-        function fixField() { currentString = ""; updateDisplay(); }
+        function press(num) { 
+            if (currentString.length < 3) { 
+                currentString += num; 
+                updateDisplay(); 
+            } 
+        }
+
+        function fixField() { 
+            currentString = ""; 
+            updateDisplay(); 
+        }
 
         function nextField() {
-            if (currentIndex === sequence.length - 1) calculateAll();
-            else { currentIndex++; currentString = ""; updateDisplay(); }
+            if (currentIndex === sequence.length - 1) {
+                calculateAll();
+            } else {
+                currentIndex++;
+                currentString = "";
+                updateDisplay();
+            }
         }
 
         function applyBadge(el, text, bg, color) {
-            el.innerText = text; el.style.backgroundColor = bg; el.style.color = color;
+            el.innerText = text; 
+            el.style.backgroundColor = bg; 
+            el.style.color = color;
         }
 
         function calculateAll() {
-            const getV = (id) => parseFloat(document.getElementById(id).innerText) || 0;
+            const getV = (id) => {
+                let val = document.getElementById(id).innerText;
+                return val === "--" ? 0 : parseFloat(val);
+            };
             const setV = (id, val) => document.getElementById(id).innerText = val;
 
             const jgA = getV('ta_jg'), gpA = getV('ta_gp'), gcA = getV('ta_gc');
             const jgB = getV('tb_jg'), gpB = getV('tb_gp'), gcB = getV('tb_gc');
 
+            // Verifica se tem jogos informados para não dividir por zero
             if (jgA > 0 && jgB > 0) {
                 const medAtaA = gpA / jgA, medDefA = gcA / jgA;
                 const medAtaB = gpB / jgB, medDefB = gcB / jgB;
+                
                 const r3_val = (medAtaA + medDefA) + (medAtaB + medDefB);
                 const mediaPartida = (medAtaA + medDefB + medAtaB + medDefA) / 2;
                 const medHT = mediaPartida * 0.4;
 
                 setV('r_placar', r3_val.toFixed(2));
                 setV('m_part', mediaPartida.toFixed(2));
-                setV('m_ht', medHT.toFixed(2));
 
                 const cap = (v) => Math.min(Math.max(Math.round(v), 0), 99);
 
@@ -218,8 +236,10 @@
                 setV('ht_s', cap(medHT * 60) + "%");
                 setV('ht_n', cap(100 - (medHT * 60)) + "%");
 
-                const p1 = (medAtaA / (medAtaA + medAtaB) * 100);
-                const p2 = (medAtaB / (medAtaA + medAtaB) * 100);
+                const totalAtaque = (medAtaA + medAtaB) || 1;
+                const p1 = (medAtaA / totalAtaque * 100);
+                const p2 = (medAtaB / totalAtaque * 100);
+                
                 setV('v1', Math.round(p1) + "%"); 
                 setV('vx', "28%"); 
                 setV('v2', Math.round(p2) + "%");
@@ -229,8 +249,6 @@
 
                 setV('am_s', mediaPartida > 2.3 ? "82%" : "38%"); 
                 setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
-                setV('mp_c', cap(p1 - 5) + "%"); 
-                setV('mp_f', cap(p2 - 5) + "%");
 
                 let sug1 = "UNDER 3.5 GOLS";
                 if (mediaPartida > 3.2) sug1 = "2.5 OVER GOL";
@@ -269,9 +287,13 @@
             document.querySelectorAll('.value').forEach(el => el.innerText = "--");
             ['r3_box', 'kcom_box'].forEach(id => {
                 const el = document.getElementById(id);
-                el.innerText = "--"; el.style.background = "transparent";
+                el.innerText = "--"; 
+                el.style.background = "transparent";
+                el.style.color = "white";
             });
-            currentIndex = 0; currentString = ""; updateDisplay();
+            currentIndex = 0; 
+            currentString = ""; 
+            updateDisplay();
         }
     </script>
 </body>
