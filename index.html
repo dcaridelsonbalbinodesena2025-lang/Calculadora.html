@@ -57,10 +57,15 @@
         .market-section { font-size: 13px; line-height: 1.2; font-family: 'Courier New', monospace; }
         .section-title { text-align: center; margin: 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
         .market-row { margin: 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 1px; align-items: center; }
-        .label { font-weight: bold; }
         
-        /* ALTERAÇÃO: Removido margin-left para colar o valor no rótulo */
-        .value { color: var(--text-color); margin-left: 0px; font-weight: bold; padding: 0 2px; min-width: 10px; text-align: center; }
+        /* Rótulo principal (ex: VITÓRIA:) */
+        .label { font-weight: bold; }
+
+        /* Rótulos internos (ex: X:, F:, SIM:) com margem à esquerda para separar do resultado anterior */
+        .label-inner { font-weight: bold; margin-left: 8px; }
+        
+        /* Valor colado no rótulo */
+        .value { color: var(--text-color); font-weight: bold; padding: 0; min-width: 5px; text-align: center; }
 
         .badge { 
             padding: 4px 10px; font-weight: 900; border-radius: 5px; font-size: 13px; 
@@ -81,7 +86,7 @@
         .field-group { display: flex; align-items: center; margin: 0 5px; }
         .field-label { font-size: 10px; color: #aaa; }
         
-        /* Mantido espaço apenas para os inputs de digitação para não confundir */
+        /* Estilo para os valores de digitação (Time A/B) */
         .inputs .value {
             font-size: 18px; min-width: 38px; margin: 0 3px; padding: 3px 2px;
             background: #1a1a1a; border-radius: 4px; margin-left: 4px;
@@ -119,14 +124,14 @@
     <div id="display-container">
         <div class="market-section">
             <div class="section-title">---------- MERCADOS ----------</div>
-            <div class="market-row"><span class="label">VITÓRIA:</span>C:<span class="value" id="vC">--</span> X:<span class="value" id="vX">--</span> F:<span class="value" id="vF">--</span></div>
-            <div class="market-row"><span class="label">DUPLA CHANCE:</span>CE:<span class="value" id="dcCE">--</span> LTD:<span class="value" id="dcLTD">--</span> FE:<span class="value" id="dcFE">--</span></div>
-            <div class="market-row"><span class="label">AMBAS MARCAM:</span>SIM:<span class="value" id="am_s">--</span> NÃO:<span class="value" id="am_n">--</span></div>
-            <div class="market-row"><span class="label">OVER:</span>0.5:<span class="value" id="ov05">--</span> 1.5:<span class="value" id="ov15">--</span> 2.5:<span class="value" id="ov25">--</span></div>
-            <div class="market-row"><span class="label">UNDER:</span>3.5:<span class="value" id="un35">--</span> 4.5:<span class="value" id="un45">--</span> 5.5:<span class="value" id="un55">--</span></div>
-            <div class="market-row"><span class="label">GOL HT:</span>SIM:<span class="value" id="ht_s">--</span> NÃO:<span class="value" id="ht_n">--</span></div>
+            <div class="market-row"><span class="label">VITÓRIA:</span>C:<span class="value" id="vC">--</span> <span class="label-inner">X:</span><span class="value" id="vX">--</span> <span class="label-inner">F:</span><span class="value" id="vF">--</span></div>
+            <div class="market-row"><span class="label">DUPLA CHANCE:</span>CE:<span class="value" id="dcCE">--</span> <span class="label-inner">LTD:</span><span class="value" id="dcLTD">--</span> <span class="label-inner">FE:</span><span class="value" id="dcFE">--</span></div>
+            <div class="market-row"><span class="label">AMBAS MARCAM:</span>SIM:<span class="value" id="am_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="am_n">--</span></div>
+            <div class="market-row"><span class="label">OVER:</span>0.5:<span class="value" id="ov05">--</span> <span class="label-inner">1.5:</span><span class="value" id="ov15">--</span> <span class="label-inner">2.5:</span><span class="value" id="ov25">--</span></div>
+            <div class="market-row"><span class="label">UNDER:</span>3.5:<span class="value" id="un35">--</span> <span class="label-inner">4.5:</span><span class="value" id="un45">--</span> <span class="label-inner">5.5:</span><span class="value" id="un55">--</span></div>
+            <div class="market-row"><span class="label">GOL HT:</span>SIM:<span class="value" id="ht_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="ht_n">--</span></div>
             <div class="market-row"><span class="label">MÉDIA GOL HT:</span><span class="value" id="m_ht">--</span></div>
-            <div class="market-row"><span class="label">MARCA 1°:</span>C:<span class="value" id="mp_c">--</span> F:<span class="value" id="mp_f">--</span></div>
+            <div class="market-row"><span class="label">MARCA 1°:</span>C:<span class="value" id="mp_c">--</span> <span class="label-inner">F:</span><span class="value" id="mp_f">--</span></div>
             <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span><span class="value" id="m_part">--</span></div>
             <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span><span class="value" id="r_placar">--</span></div>
 
