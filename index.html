@@ -15,6 +15,11 @@
             --accent-orange: #ff9500;
             --accent-blue: #007aff;
             --divider-color: #333;
+            /* Cores de Fundo dos Resultados */
+            --bg-casa: #0044aa;   /* Azul mais vivo */
+            --bg-empate: #444444; /* Cinza médio */
+            --bg-fora: #aa0000;   /* Vermelho mais vivo */
+            --bg-geral: #222222;  /* Fundo neutro */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -43,7 +48,7 @@
 
         #display-container {
             flex: 0 1 auto;
-            padding: 5px 15px;
+            padding: 8px 12px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start; 
@@ -54,29 +59,46 @@
             margin-bottom: 2px;
         }
 
-        .market-section { font-size: 13px; line-height: 1.2; font-family: 'Courier New', monospace; }
-        .section-title { text-align: center; margin: 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
-        .market-row { margin: 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 1px; align-items: center; }
+        .market-section { font-size: 11px; line-height: 1.5; font-family: 'Courier New', monospace; }
+        .section-title { text-align: center; margin: 5px 0 3px 0; letter-spacing: 1px; color: yellow; font-size: 10px; border-bottom: 1px dashed #444; }
         
-        /* Rótulo principal (ex: VITÓRIA:) */
-        .label { font-weight: bold; }
+        .market-row { 
+            margin-bottom: 4px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            align-items: center; 
+        }
+        
+        .label-main { font-weight: bold; margin-right: 6px; color: #ffffff; min-width: 65px; }
 
-        /* Rótulos internos (ex: X:, F:, SIM:) com margem à esquerda para separar do resultado anterior */
-        .label-inner { font-weight: bold; margin-left: 8px; }
-        
-        /* Valor colado no rótulo */
-        .value { color: var(--text-color); font-weight: bold; padding: 0; min-width: 5px; text-align: center; }
+        /* Estilo para os blocos coloridos com fonte branca */
+        .res-box {
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 5px;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 900;
+            color: #ffffff !important; /* Força a fonte branca */
+        }
+
+        .bg-c { background-color: var(--bg-casa); }
+        .bg-x { background-color: var(--bg-empate); }
+        .bg-f { background-color: var(--bg-fora); }
+        .bg-g { background-color: var(--bg-geral); }
+
+        .value { color: #ffffff !important; margin-left: 0px; }
 
         .badge { 
             padding: 4px 10px; font-weight: 900; border-radius: 5px; font-size: 13px; 
             margin-top: 2px; min-width: 150px; text-align: center; display: inline-block;
         }
 
+        /* Área de Inputs */
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 8px 0; gap: 4px; background: #080808; border-top: 1px solid #222;
-            margin-top: 2px;
-            border-radius: 7px;
+            margin-top: 2px; border-radius: 7px;
         }
 
         .time-row { display: flex; justify-content: center; align-items: center; width: 100%; }
@@ -86,20 +108,18 @@
         .field-group { display: flex; align-items: center; margin: 0 5px; }
         .field-label { font-size: 10px; color: #aaa; }
         
-        /* Estilo para os valores de digitação (Time A/B) */
-        .inputs .value {
+        /* Estilo dos campos onde digita */
+        .inputs .value-input {
             font-size: 18px; min-width: 38px; margin: 0 3px; padding: 3px 2px;
-            background: #1a1a1a; border-radius: 4px; margin-left: 4px;
+            background: #1a1a1a; border-radius: 4px; color: #fff; text-align: center;
         }
 
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
 
+        /* Teclado */
         #keypad-container {
-            background: var(--keypad-bg); 
-            padding: 6px; 
-            border-top: 1px solid var(--divider-color);
-            margin-top: 2px;
-            border-radius: 5px;
+            background: var(--keypad-bg); padding: 6px; border-top: 1px solid var(--divider-color);
+            margin-top: 2px; border-radius: 5px;
         }
 
         #keypad {
@@ -123,40 +143,92 @@
 
     <div id="display-container">
         <div class="market-section">
-            <div class="section-title">---------- MERCADOS ----------</div>
-            <div class="market-row"><span class="label">VITÓRIA:</span>C:<span class="value" id="vC">--</span> <span class="label-inner">X:</span><span class="value" id="vX">--</span> <span class="label-inner">F:</span><span class="value" id="vF">--</span></div>
-            <div class="market-row"><span class="label">DUPLA CHANCE:</span>CE:<span class="value" id="dcCE">--</span> <span class="label-inner">LTD:</span><span class="value" id="dcLTD">--</span> <span class="label-inner">FE:</span><span class="value" id="dcFE">--</span></div>
-            <div class="market-row"><span class="label">AMBAS MARCAM:</span>SIM:<span class="value" id="am_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="am_n">--</span></div>
-            <div class="market-row"><span class="label">OVER:</span>0.5:<span class="value" id="ov05">--</span> <span class="label-inner">1.5:</span><span class="value" id="ov15">--</span> <span class="label-inner">2.5:</span><span class="value" id="ov25">--</span></div>
-            <div class="market-row"><span class="label">UNDER:</span>3.5:<span class="value" id="un35">--</span> <span class="label-inner">4.5:</span><span class="value" id="un45">--</span> <span class="label-inner">5.5:</span><span class="value" id="un55">--</span></div>
-            <div class="market-row"><span class="label">GOL HT:</span>SIM:<span class="value" id="ht_s">--</span> <span class="label-inner">NÃO:</span><span class="value" id="ht_n">--</span></div>
-            <div class="market-row"><span class="label">MÉDIA GOL HT:</span><span class="value" id="m_ht">--</span></div>
-            <div class="market-row"><span class="label">MARCA 1°:</span>C:<span class="value" id="mp_c">--</span> <span class="label-inner">F:</span><span class="value" id="mp_f">--</span></div>
-            <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span><span class="value" id="m_part">--</span></div>
-            <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span><span class="value" id="r_placar">--</span></div>
+            <div class="section-title">MERCADOS PRINCIPAIS</div>
+            
+            <div class="market-row">
+                <span class="label-main">VITÓRIA:</span>
+                <span class="res-box bg-c">C:<span class="value" id="vC">--</span></span>
+                <span class="res-box bg-x">X:<span class="value" id="vX">--</span></span>
+                <span class="res-box bg-f">F:<span class="value" id="vF">--</span></span>
+            </div>
 
-            <div class="section-title">--------- SUGESTÕES ---------</div>
-            <div class="market-row">1° SUG:<span class="value" id="sug1">--</span></div>
-            <div class="market-row">2° SUG:<span class="value" id="sug2">--</span></div>
-            <div class="market-row">3° SUG:<span class="value" id="sug3">--</span></div>
+            <div class="market-row">
+                <span class="label-main">DUPLA:</span>
+                <span class="res-box bg-c">CE:<span class="value" id="dcCE">--</span></span>
+                <span class="res-box bg-x">LTD:<span class="value" id="dcLTD">--</span></span>
+                <span class="res-box bg-f">FE:<span class="value" id="dcFE">--</span></span>
+            </div>
 
-            <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
-            <div class="market-row"><span class="label">REGRA 3:</span> <span id="r3_box" class="badge">--</span></div>
-            <div class="market-row"><span class="label">K.COM:</span> <span id="kcom_box" class="badge">--</span></div>
+            <div class="market-row">
+                <span class="label-main">AMBAS:</span>
+                <span class="res-box bg-c">SIM:<span class="value" id="am_s">--</span></span>
+                <span class="res-box bg-f">NÃO:<span class="value" id="am_n">--</span></span>
+            </div>
+
+            <div class="section-title">GOLS E TENDÊNCIAS</div>
+
+            <div class="market-row">
+                <span class="label-main">OVER:</span>
+                <span class="res-box bg-g">0.5:<span class="value" id="ov05">--</span></span>
+                <span class="res-box bg-g">1.5:<span class="value" id="ov15">--</span></span>
+                <span class="res-box bg-g">2.5:<span class="value" id="ov25">--</span></span>
+            </div>
+
+            <div class="market-row">
+                <span class="label-main">UNDER:</span>
+                <span class="res-box bg-x">3.5:<span class="value" id="un35">--</span></span>
+                <span class="res-box bg-x">4.5:<span class="value" id="un45">--</span></span>
+                <span class="res-box bg-x">5.5:<span class="value" id="un55">--</span></span>
+            </div>
+
+            <div class="market-row">
+                <span class="label-main">GOL HT:</span>
+                <span class="res-box bg-c">SIM:<span class="value" id="ht_s">--</span></span>
+                <span class="res-box bg-f">NÃO:<span class="value" id="ht_n">--</span></span>
+            </div>
+
+            <div class="market-row">
+                <span class="label-main">MARCA 1°:</span>
+                <span class="res-box bg-c">C:<span class="value" id="mp_c">--</span></span>
+                <span class="res-box bg-f">F:<span class="value" id="mp_f">--</span></span>
+            </div>
+
+            <div class="market-row">
+                <span class="label-main">MÉDIAS:</span>
+                <span class="res-box bg-g">HT:<span class="value" id="m_ht">--</span></span>
+                <span class="res-box bg-g">JOGO:<span class="value" id="m_part">--</span></span>
+            </div>
+
+            <div class="market-row">
+                <span class="label-main">REGRA 2.5:</span>
+                <span class="res-box bg-g"><span class="value" id="r_placar">--</span></span>
+            </div>
+
+            <div class="section-title">SUGESTÕES E REGRAS</div>
+            <div class="market-row">1° SUG:<span class="value" id="sug1" style="margin-left:5px">--</span></div>
+            <div class="market-row">2° SUG:<span class="value" id="sug2" style="margin-left:5px">--</span></div>
+            <div class="market-row">3° SUG:<span class="value" id="sug3" style="margin-left:5px">--</span></div>
+
+            <div class="market-row" style="justify-content:center; margin-top:5px">
+                <span id="r3_box" class="badge">--</span>
+            </div>
+            <div class="market-row" style="justify-content:center">
+                <span id="kcom_box" class="badge">--</span>
+            </div>
         </div>
 
         <div class="inputs">
             <div class="time-row time-a">
                 <span class="time-label">TIME A</span>
-                <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value active-field">--</span></div>
-                <div class="field-group"><span class="field-label">GP:</span><span id="ta_gp" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GC:</span><span id="ta_gc" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">JG:</span><span id="ta_jg" class="value-input active-field">--</span></div>
+                <div class="field-group"><span class="field-label">GP:</span><span id="ta_gp" class="value-input">--</span></div>
+                <div class="field-group"><span class="field-label">GC:</span><span id="ta_gc" class="value-input">--</span></div>
             </div>
             <div class="time-row time-b">
                 <span class="time-label">TIME B</span>
-                <div class="field-group"><span class="field-label">JG:</span><span id="tb_jg" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GP:</span><span id="tb_gp" class="value">--</span></div>
-                <div class="field-group"><span class="field-label">GC:</span><span id="tb_gc" class="value">--</span></div>
+                <div class="field-group"><span class="field-label">JG:</span><span id="tb_jg" class="value-input">--</span></div>
+                <div class="field-group"><span class="field-label">GP:</span><span id="tb_gp" class="value-input">--</span></div>
+                <div class="field-group"><span class="field-label">GC:</span><span id="tb_gc" class="value-input">--</span></div>
             </div>
         </div>
     </div>
@@ -168,7 +240,7 @@
             <button onclick="press(1)">1</button><button onclick="press(2)">2</button><button onclick="press(3)">3</button>
             <button class="btn-clear" onclick="clearAll()">LIMPAR</button><button onclick="press(0)">0</button>
             <button class="btn-enter" onclick="nextField()">➔</button>
-            <button class="btn-fix" onclick="fixField()">CORRIGIR CAMPO ATUAL</button>
+            <button class="btn-fix" onclick="fixField()">CORRIGIR</button>
         </div>
     </div>
 
@@ -226,22 +298,22 @@
                 setV('ht_s', cap(medHT * 60) + "%");
                 setV('ht_n', cap(100 - (medHT * 60)) + "%");
 
-                const p1 = (medAtaA / (medAtaA + medAtaB) * 100);
-                const p2 = (medAtaB / (medAtaA + medAtaB) * 100);
-                const px = 28;
+                const pCasa = (medAtaA / (medAtaA + medAtaB) * 100);
+                const pFora = (medAtaB / (medAtaA + medAtaB) * 100);
+                const pEmpate = 28;
 
-                setV('vC', Math.round(p1) + "%"); 
-                setV('vX', px + "%"); 
-                setV('vF', Math.round(p2) + "%");
+                setV('vC', Math.round(pCasa) + "%"); 
+                setV('vX', pEmpate + "%"); 
+                setV('vF', Math.round(pFora) + "%");
 
-                setV('dcCE', cap(p1 + 20) + "%"); 
+                setV('dcCE', cap(pCasa + 20) + "%"); 
                 setV('dcLTD', "75%"); 
-                setV('dcFE', cap(p2 + 20) + "%"); 
+                setV('dcFE', cap(pFora + 20) + "%"); 
 
                 setV('am_s', mediaPartida > 2.3 ? "82%" : "38%"); 
                 setV('am_n', mediaPartida > 2.3 ? "18%" : "62%");
-                setV('mp_c', cap(p1 - 5) + "%"); 
-                setV('mp_f', cap(p2 - 5) + "%");
+                setV('mp_c', cap(pCasa - 5) + "%"); 
+                setV('mp_f', cap(pFora - 5) + "%");
 
                 let sug1 = "UNDER 3.5 GOLS";
                 if (mediaPartida > 3.2) sug1 = "2.5 OVER GOL";
@@ -250,9 +322,9 @@
                 setV('sug1', sug1);
 
                 let sug2 = "EMPATE OU FORA";
-                if (p1 > 52) sug2 = "VITÓRIA TIME A";
-                else if (p2 > 52) sug2 = "VITÓRIA TIME B";
-                else if (p1 > p2) sug2 = "TIME A OU EMPATE";
+                if (pCasa > 52) sug2 = "VITÓRIA TIME A";
+                else if (pFora > 52) sug2 = "VITÓRIA TIME B";
+                else if (pCasa > pFora) sug2 = "TIME A OU EMPATE";
                 setV('sug2', sug2);
 
                 let sug3 = "AMBAS NÃO MARCAM";
@@ -277,7 +349,7 @@
         }
 
         function clearAll() {
-            document.querySelectorAll('.value').forEach(el => el.innerText = "--");
+            document.querySelectorAll('.value-input, .value').forEach(el => el.innerText = "--");
             ['r3_box', 'kcom_box'].forEach(id => {
                 const el = document.getElementById(id);
                 el.innerText = "--"; el.style.background = "transparent";
