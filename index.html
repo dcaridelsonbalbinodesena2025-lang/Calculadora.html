@@ -28,14 +28,13 @@
             height: 100vh;
             overflow: hidden;
             text-transform: uppercase;
-            /* Padding reduzido no topo para subir tudo */
             padding: 5px 12px 2px 12px; 
         }
 
         .app-header {
             text-align: center;
             padding-bottom: 5px;
-            font-size: 18px; /* Fonte levemente menor para ganhar espaço */
+            font-size: 18px;
             font-weight: 900;
             color: #0044ff;
             text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0px 0px 3px #fff; 
@@ -43,7 +42,7 @@
         }
 
         #display-container {
-            flex: 0 1 auto; /* Visor não estica mais sozinho */
+            flex: 0 1 auto;
             padding: 5px 15px;
             display: flex;
             flex-direction: column;
@@ -52,14 +51,16 @@
             border: 2px solid #333; 
             border-radius: 10px;
             background: #050505;
-            margin-bottom: 2px; /* Encosta mais nos inputs */
+            margin-bottom: 2px;
         }
 
         .market-section { font-size: 13px; line-height: 1.2; font-family: 'Courier New', monospace; }
         .section-title { text-align: center; margin: 2px 0; letter-spacing: 1px; color: yellow; font-size: 11px; }
         .market-row { margin: 0; display: flex; flex-wrap: wrap; border-bottom: 1px solid #111; padding-bottom: 1px; align-items: center; }
         .label { font-weight: bold; }
-        .value { color: var(--text-color); margin-left: 4px; font-weight: bold; padding: 0 4px; min-width: 20px; text-align: center; }
+        
+        /* ALTERAÇÃO: Removido margin-left para colar o valor no rótulo */
+        .value { color: var(--text-color); margin-left: 0px; font-weight: bold; padding: 0 2px; min-width: 10px; text-align: center; }
 
         .badge { 
             padding: 4px 10px; font-weight: 900; border-radius: 5px; font-size: 13px; 
@@ -69,7 +70,7 @@
         .inputs {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 8px 0; gap: 4px; background: #080808; border-top: 1px solid #222;
-            margin-top: 2px; /* Sobe os campos de Time A/B */
+            margin-top: 2px;
             border-radius: 7px;
         }
 
@@ -80,9 +81,10 @@
         .field-group { display: flex; align-items: center; margin: 0 5px; }
         .field-label { font-size: 10px; color: #aaa; }
         
+        /* Mantido espaço apenas para os inputs de digitação para não confundir */
         .inputs .value {
             font-size: 18px; min-width: 38px; margin: 0 3px; padding: 3px 2px;
-            background: #1a1a1a; border-radius: 4px;
+            background: #1a1a1a; border-radius: 4px; margin-left: 4px;
         }
 
         .active-field { background-color: #ffffff !important; color: #000000 !important; }
@@ -91,7 +93,7 @@
             background: var(--keypad-bg); 
             padding: 6px; 
             border-top: 1px solid var(--divider-color);
-            margin-top: 2px; /* Cola o teclado nos inputs */
+            margin-top: 2px;
             border-radius: 5px;
         }
 
@@ -117,21 +119,21 @@
     <div id="display-container">
         <div class="market-section">
             <div class="section-title">---------- MERCADOS ----------</div>
-            <div class="market-row"><span class="label">VITÓRIA:</span> C:<span class="value" id="vC">--</span> X:<span class="value" id="vX">--</span> F:<span class="value" id="vF">--</span></div>
-            <div class="market-row"><span class="label">DUPLA CHANCE:</span> CE:<span class="value" id="dcCE">--</span> LTD:<span class="value" id="dcLTD">--</span> FE:<span class="value" id="dcFE">--</span></div>
-            <div class="market-row"><span class="label">AMBAS MARCAM:</span> SIM:<span class="value" id="am_s">--</span> NÃO:<span class="value" id="am_n">--</span></div>
-            <div class="market-row"><span class="label">OVER:</span> 0.5:<span class="value" id="ov05">--</span> 1.5:<span class="value" id="ov15">--</span> 2.5:<span class="value" id="ov25">--</span></div>
-            <div class="market-row"><span class="label">UNDER:</span> 3.5:<span class="value" id="un35">--</span> 4.5:<span class="value" id="un45">--</span> 5.5:<span class="value" id="un55">--</span></div>
-            <div class="market-row"><span class="label">GOL HT:</span> SIM:<span class="value" id="ht_s">--</span> NÃO:<span class="value" id="ht_n">--</span></div>
-            <div class="market-row"><span class="label">MÉDIA GOL HT:</span> <span class="value" id="m_ht">--</span></div>
-            <div class="market-row"><span class="label">MARCA 1°:</span> C:<span class="value" id="mp_c">--</span>  F:<span class="value" id="mp_f">--</span></div>
-            <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span> <span class="value" id="m_part">--</span></div>
-            <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span> <span class="value" id="r_placar">--</span></div>
+            <div class="market-row"><span class="label">VITÓRIA:</span>C:<span class="value" id="vC">--</span> X:<span class="value" id="vX">--</span> F:<span class="value" id="vF">--</span></div>
+            <div class="market-row"><span class="label">DUPLA CHANCE:</span>CE:<span class="value" id="dcCE">--</span> LTD:<span class="value" id="dcLTD">--</span> FE:<span class="value" id="dcFE">--</span></div>
+            <div class="market-row"><span class="label">AMBAS MARCAM:</span>SIM:<span class="value" id="am_s">--</span> NÃO:<span class="value" id="am_n">--</span></div>
+            <div class="market-row"><span class="label">OVER:</span>0.5:<span class="value" id="ov05">--</span> 1.5:<span class="value" id="ov15">--</span> 2.5:<span class="value" id="ov25">--</span></div>
+            <div class="market-row"><span class="label">UNDER:</span>3.5:<span class="value" id="un35">--</span> 4.5:<span class="value" id="un45">--</span> 5.5:<span class="value" id="un55">--</span></div>
+            <div class="market-row"><span class="label">GOL HT:</span>SIM:<span class="value" id="ht_s">--</span> NÃO:<span class="value" id="ht_n">--</span></div>
+            <div class="market-row"><span class="label">MÉDIA GOL HT:</span><span class="value" id="m_ht">--</span></div>
+            <div class="market-row"><span class="label">MARCA 1°:</span>C:<span class="value" id="mp_c">--</span> F:<span class="value" id="mp_f">--</span></div>
+            <div class="market-row"><span class="label">MÉDIA GOL PARTIDA:</span><span class="value" id="m_part">--</span></div>
+            <div class="market-row"><span class="label">REGRA DE PLACAR 2.5 OVER:</span><span class="value" id="r_placar">--</span></div>
 
             <div class="section-title">--------- SUGESTÕES ---------</div>
-            <div class="market-row">1° SUG: <span class="value" id="sug1">--</span></div>
-            <div class="market-row">2° SUG: <span class="value" id="sug2">--</span></div>
-            <div class="market-row">3° SUG: <span class="value" id="sug3">--</span></div>
+            <div class="market-row">1° SUG:<span class="value" id="sug1">--</span></div>
+            <div class="market-row">2° SUG:<span class="value" id="sug2">--</span></div>
+            <div class="market-row">3° SUG:<span class="value" id="sug3">--</span></div>
 
             <div class="section-title">----- REGRA 3 VS KMCOM -----</div>
             <div class="market-row"><span class="label">REGRA 3:</span> <span id="r3_box" class="badge">--</span></div>
@@ -219,16 +221,14 @@
                 setV('ht_s', cap(medHT * 60) + "%");
                 setV('ht_n', cap(100 - (medHT * 60)) + "%");
 
-                // Cálculo de Probabilidade 1X2
                 const p1 = (medAtaA / (medAtaA + medAtaB) * 100);
                 const p2 = (medAtaB / (medAtaA + medAtaB) * 100);
-                const px = 28; // Empate base
+                const px = 28;
 
                 setV('vC', Math.round(p1) + "%"); 
                 setV('vX', px + "%"); 
                 setV('vF', Math.round(p2) + "%");
 
-                // CORREÇÃO: Dupla Chance referenciando FE corretamente
                 setV('dcCE', cap(p1 + 20) + "%"); 
                 setV('dcLTD', "75%"); 
                 setV('dcFE', cap(p2 + 20) + "%"); 
