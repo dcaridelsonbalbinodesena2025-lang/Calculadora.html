@@ -15,6 +15,10 @@
             --accent-orange: #ff9500;
             --accent-blue: #007aff;
             --divider-color: #333;
+            --verde-limao: #90EE90;
+            --verde-escuro: #006400;
+            --azul-escuro: #00008B;
+            --amarelo: #FFFF00;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -278,18 +282,12 @@
             const expandedHeader = document.getElementById('expanded-header');
             const teamInputs = document.getElementById('team-inputs');
 
-            // Remove TIME A e TIME B (JG, GP, GC) da tela expandida
             teamInputs.style.display = 'none';
-
-            // Expande a tela e mostra botão voltar
-            // Sugestões já aparecem automaticamente via CSS
             display.classList.add('expanded');
             keypad.classList.add('hidden');
             backContainer.classList.add('show');
             expandedHeader.style.display = 'block';
             isExpanded = true;
-            
-            // Scroll para o topo
             display.scrollTop = 0;
         }
 
@@ -300,7 +298,6 @@
             const expandedHeader = document.getElementById('expanded-header');
             const teamInputs = document.getElementById('team-inputs');
 
-            // Volta ao estado normal
             display.classList.remove('expanded');
             keypad.classList.remove('hidden');
             backContainer.classList.remove('show');
@@ -308,7 +305,6 @@
             teamInputs.style.display = 'flex';
             isExpanded = false;
 
-            // Volta ao primeiro campo
             currentIndex = 0;
             currentString = "";
             updateDisplay();
@@ -324,11 +320,15 @@
             const jB = getVal('tb_jg'), gB = getVal('tb_gp'), cB = getVal('tb_gc');
 
             if (jA > 0 && jB > 0) {
+                // Cálculo média gol partida (mantido igual)
                 const mA = gA / jA, dA = cA / jA;
                 const mB = gB / jB, dB = cB / jB;
-                
                 const mediaPartida = (mA + dB + mB + dA) / 2;
-                const r3_val = (mA + dA) + (mB + dB);
+                
+                // Cálculo Regra 3: (GP/JG + GC/JG) Time A + (GP/JG + GC/JG) Time B
+                const regra3_timeA = (gA / jA) + (cA / jA);
+                const regra3_timeB = (gB / jB) + (cB / jB);
+                const r3_val = regra3_timeA + regra3_timeB;
 
                 document.getElementById('m_part').innerText = mediaPartida.toFixed(2);
                 document.getElementById('r_placar').innerText = r3_val.toFixed(2);
@@ -354,18 +354,55 @@
                 document.getElementById('sug1').innerText = mediaPartida > 2.5 ? "OVER 2.5" : "UNDER 3.5";
                 document.getElementById('sug2').innerText = "AMBAS NÃO";
                 document.getElementById('sug3').innerText = "DC 1X";
-                
-                const r3b = document.getElementById('r3_box');
-                r3b.innerText = r3_val > 5 ? "1.5 OVER GOL" : "0.5 OVER GOL";
-                r3b.style.backgroundColor = r3_val > 5 ? "green" : "orange";
-                r3b.style.color = "white";
 
-                const kcb = document.getElementById('kcom_box');
-                kcb.innerText = mediaPartida > 2.5 ? "2.5 OVER GOL" : "1.5 OVER GOL";
-                kcb.style.backgroundColor = "green";
-                kcb.style.color = "white";
+                // === NOVA LÓGICA K.COM ===
+                const kcom_box = document.getElementById('kcom_box');
+                if (mediaPartida < 2.00) {
+                    kcom_box.innerText = "4.5 UNDER GOL";
+                    kcom_box.style.backgroundColor = "red";
+                    kcom_box.style.color = "white";
+                } else if (mediaPartida >= 2.00 && mediaPartida <= 2.29) {
+                    kcom_box.innerText = "POSSÍVEL 0.5 OVER GOL";
+                    kcom_box.style.backgroundColor = "var(--amarelo)";
+                    kcom_box.style.color = "black";
+                } else if (mediaPartida >= 2.30 && mediaPartida <= 2.49) {
+                    kcom_box.innerText = "0.5 OVER GOL";
+                    kcom_box.style.backgroundColor = "var(--verde-limao)";
+                    kcom_box.style.color = "black";
+                } else if (mediaPartida >= 2.50 && mediaPartida <= 2.89) {
+                    kcom_box.innerText = "POSSÍVEL 1.5 OVER GOL";
+                    kcom_box.style.backgroundColor = "var(--amarelo)";
+                    kcom_box.style.color = "black";
+                } else if (mediaPartida >= 2.90 && mediaPartida <= 3.29) {
+                    kcom_box.innerText = "1.5 OVER GOL";
+                    kcom_box.style.backgroundColor = "var(--verde-escuro)";
+                    kcom_box.style.color = "white";
+                } else { // >= 3.30
+                    kcom_box.innerText = "2.5 OVER GOL";
+                    kcom_box.style.backgroundColor = "var(--azul-escuro)";
+                    kcom_box.style.color = "white";
+                }
+
+                // === NOVA LÓGICA REGRA 3 ===
+                const r3_box = document.getElementById('r3_box');
+                if (r3_val < 4) {
+                    r3_box.innerText = "4.5 UNDER GOL";
+                    r3_box.style.backgroundColor = "red";
+                    r3_box.style.color = "white";
+                } else if (r3_val >= 4 && r3_val <= 5) {
+                    r3_box.innerText = "0.5 OVER GOL";
+                    r3_box.style.backgroundColor = "var(--verde-limao)";
+                    r3_box.style.color = "black";
+                } else if (r3_val >= 6 && r3_val <= 7) {
+                    r3_box.innerText = "1.5 OVER GOL";
+                    r3_box.style.backgroundColor = "var(--verde-escuro)";
+                    r3_box.style.color = "white";
+                } else { // >= 8
+                    r3_box.innerText = "2.5 OVER GOL";
+                    r3_box.style.backgroundColor = "var(--azul-escuro)";
+                    r3_box.style.color = "white";
+                }
                 
-                // Expande a tela automaticamente
                 expandScreen();
             }
         }
